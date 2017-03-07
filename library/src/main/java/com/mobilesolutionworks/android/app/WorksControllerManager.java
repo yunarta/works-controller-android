@@ -12,79 +12,21 @@ import android.util.SparseArray;
  */
 public class WorksControllerManager {
 
-    SparseArray<ControllerInfo> mControllers;
+    private final SparseArray<ControllerInfo> mControllers;
+
+    private final WorksControllerLifecycleHook mLifecycleHook;
 
     public WorksControllerManager() {
         mControllers = new SparseArray<>();
+        mLifecycleHook = new WorksControllerLifecycleHook(this);
     }
 
-    /**
-     * Hook host dispatch pause to controller.
-     * <p>
-     * This method must be called by host.
-     */
-    public void dispatchPause() {
-        int size = mControllers.size();
-        for (int i = 0; i < size; i++) {
-            mControllers.valueAt(i).controller.onPaused();
-        }
+    public WorksControllerLifecycleHook getLifecycleHook() {
+        return mLifecycleHook;
     }
 
-    /**
-     * Hook host dispatch resume to controller.
-     * <p>
-     * This method must be called by host.
-     */
-    public void dispatchResume() {
-        int size = mControllers.size();
-        for (int i = 0; i < size; i++) {
-            mControllers.valueAt(i).controller.onResume();
-        }
-    }
-
-    /**
-     * Hook host dispatch destroy to controller.
-     * <p>
-     * This method must be called by host.
-     */
-    private void dispatchDestroy() {
-        int size = mControllers.size();
-        for (int i = 0; i < size; i++) {
-            mControllers.valueAt(i).controller.onDestroy();
-        }
-        mControllers.clear();
-    }
-
-    /**
-     * Hook host dispatch restore instance to controller.
-     * <p>
-     * This method must be called by host.
-     */
-    public void onRestoreInstanceState(Bundle state) {
-        if (state != null) {
-            int size = mControllers.size();
-            for (int i = 0; i < size; i++) {
-                Bundle bundle = state.getParcelable(":worksController:" + mControllers.keyAt(i));
-                mControllers.valueAt(i).controller.onViewStateRestored(bundle);
-            }
-        }
-    }
-
-    /**
-     * Hook host dispatch save instance state instance to controller.
-     * <p>
-     * This method must be called by host.
-     */
-    public void dispatchSaveInstanceState(Bundle state) {
-        int size = mControllers.size();
-        for (int i = 0; i < size; i++) {
-            ControllerInfo info = mControllers.valueAt(i);
-
-            Bundle bundle = new Bundle();
-            info.controller.onViewStateRestored(bundle);
-
-            state.putParcelable(":worksController:" + mControllers.keyAt(i), bundle);
-        }
+    SparseArray<ControllerInfo> getControllers() {
+        return mControllers;
     }
 
     public interface ControllerCallbacks<D extends WorksController> {
@@ -142,7 +84,7 @@ public class WorksControllerManager {
         }
     }
 
-    private class ControllerInfo<D extends WorksController> {
+    class ControllerInfo<D extends WorksController> {
 
         D controller;
 
@@ -204,7 +146,7 @@ public class WorksControllerManager {
         @Override
         public void onLoaderReset(android.support.v4.content.Loader<WorksControllerManager> loader) {
             Loader l = (Loader) loader;
-            l.getController().dispatchDestroy();
+            l.getController().getLifecycleHook().dispatchDestroy();
         }
     }
 }
