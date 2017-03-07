@@ -1,5 +1,6 @@
 package com.mobilesolutionworks.android.app;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.SparseArray;
 
@@ -53,6 +54,14 @@ public class WorksControllerLifecycleHook {
             controllers.valueAt(i).controller.onDestroy();
         }
         controllers.clear();
+    }
+
+    public void onConfigurationChanged(Configuration config) {
+        SparseArray<WorksControllerManager.ControllerInfo> controllers = mManager.getControllers();
+        int size = controllers.size();
+        for (int i = 0; i < size; i++) {
+            controllers.valueAt(i).controller.onConfigurationChanged(config);
+        }
     }
 
     /**
