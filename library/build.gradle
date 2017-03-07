@@ -11,9 +11,16 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
+        testApplicationId "com.mobilesolutionworks.android.app.test"
+        testInstrumentationRunner "test.runner.TestButlerTestRunner"
     }
+
+    sourceSets {
+        main {
+            androidTest.java.srcDirs += ['src/androidTest/mock']
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -24,9 +31,21 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
+
+    androidTestCompile('com.android.support.test:runner:0.5', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    androidTestCompile('com.android.support.test:rules:0.5', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    androidTestCompile('com.android.support.test.uiautomator:uiautomator-v18:2.1.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
     androidTestCompile('com.android.support.test.espresso:espresso-core:' + rootProject.ext.espressoLibVersion, {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    androidTestCompile 'com.linkedin.testbutler:test-butler-library:1.2.0'
+    androidTestCompile 'com.android.support:appcompat-v7:' + rootProject.ext.supportLibVersion
 
     provided 'com.android.support:appcompat-v7:' + rootProject.ext.supportLibVersion
     provided 'com.parse.bolts:bolts-tasks:1.4.0'
