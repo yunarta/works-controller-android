@@ -45,15 +45,11 @@ public class RotateActivityTest {
                 if (resumedActivities.isEmpty()) {
                     throw new RuntimeException("Could not change orientation");
                 }
-
-                for (Activity activity : resumedActivities) {
-                    System.out.println("mActivityTestRule.getActivity() = " + activity);
-                }
             }
         });
 
         TestButler.setRotation(Surface.ROTATION_90);
-        Thread.sleep(1500);
+        Thread.sleep(1);
 
         onView(isRoot()).perform(new ViewAction() {
             @Override
