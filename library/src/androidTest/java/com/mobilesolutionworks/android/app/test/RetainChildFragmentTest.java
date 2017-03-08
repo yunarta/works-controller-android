@@ -39,6 +39,7 @@ public class RetainChildFragmentTest {
     @Test
     public void useAppContext() throws Exception {
         // Context of the app under test.
+        final AtomicReference<Integer> activityHash = new AtomicReference<>();
         final AtomicReference<Integer> rootFragmentHash = new AtomicReference<>();
         final AtomicReference<Integer> childFragmentHash = new AtomicReference<>();
 
@@ -56,11 +57,10 @@ public class RetainChildFragmentTest {
             @Override
             public void perform(UiController uiController, View view) {
                 ArrayList<Activity> resumedActivities = new ArrayList<>(ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED));
-                if (resumedActivities.isEmpty()) {
-                    throw new RuntimeException("Could not change orientation");
-                }
 
                 RetainChildFragmentActivity activity = (RetainChildFragmentActivity) resumedActivities.get(0);
+                activityHash.set(System.identityHashCode(activity));
+
                 Fragment rootFragment = activity.getSupportFragmentManager().findFragmentById(R.id.fragment_container);
                 Assert.assertNotNull(rootFragment);
                 rootFragmentHash.set(System.identityHashCode(rootFragment));
@@ -97,11 +97,10 @@ public class RetainChildFragmentTest {
             @Override
             public void perform(UiController uiController, View view) {
                 ArrayList<Activity> resumedActivities = new ArrayList<>(ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED));
-                if (resumedActivities.isEmpty()) {
-                    throw new RuntimeException("Could not change orientation");
-                }
 
                 RetainChildFragmentActivity activity = (RetainChildFragmentActivity) resumedActivities.get(0);
+                Assert.assertNotSame("Could not change orientation", activityHash.get(), Integer.valueOf(System.identityHashCode(activity)));
+
                 Fragment rootFragment = activity.getSupportFragmentManager().findFragmentById(R.id.fragment_container);
                 Assert.assertNotNull(rootFragment);
                 Assert.assertEquals(rootFragmentHash.get(), Integer.valueOf(System.identityHashCode(rootFragment)));
