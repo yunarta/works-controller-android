@@ -1,4 +1,4 @@
-package com.mobilesolutionworks.android.app;
+package com.mobilesolutionworks.android.app.controller;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,21 +12,37 @@ import android.util.SparseArray;
  */
 public class WorksControllerManager {
 
-    private final SparseArray<ControllerInfo> mControllers;
+    private final SparseArray<WorksController> mControllers;
 
     private final WorksControllerLifecycleHook mLifecycleHook;
+
+    private final WorksMainScheduler mMainScheduler;
 
     public WorksControllerManager() {
         mControllers = new SparseArray<>();
         mLifecycleHook = new WorksControllerLifecycleHook(this);
+
+        mMainScheduler = new WorksMainScheduler();
     }
 
     public WorksControllerLifecycleHook getLifecycleHook() {
         return mLifecycleHook;
     }
 
-    SparseArray<ControllerInfo> getControllers() {
+    SparseArray<WorksController> getControllers() {
         return mControllers;
+    }
+
+    WorksMainScheduler getMainScheduler() {
+        return mMainScheduler;
+    }
+
+    void dispatchPause() {
+        mMainScheduler.pause();
+    }
+
+    void dispatchResume() {
+        mMainScheduler.resume();
     }
 
     public interface ControllerCallbacks<D extends WorksController> {
@@ -35,11 +51,6 @@ public class WorksControllerManager {
          * Called by implementation to create a Loader.
          */
         D onCreateController(int id, Bundle bundle);
-
-        /**
-         * Called when loading is finished.
-         */
-        void onLoadFinished(int id, Bundle bundle, D controller);
     }
 
     /**
@@ -52,23 +63,15 @@ public class WorksControllerManager {
      * @return returns WorksController implementation immediately, if one is already created before than it will be returned.
      */
     public <D extends WorksController> D initController(int id, Bundle args, ControllerCallbacks<D> callback) {
-        ControllerInfo<D> info = mControllers.get(id);
-        if (info == null) {
-            info = new ControllerInfo<>(callback);
-
+        WorksController controller = mControllers.get(id);
+        if (controller == null) {
             D newController = callback.onCreateController(id, args);
-            info.controller = newController;
-
-            callback.onLoadFinished(id, args, newController);
             newController.onCreate(args);
 
-            mControllers.put(id, info);
-        } else {
-            info.callback = callback;
-            info.callback.onLoadFinished(id, args, info.controller);
+            mControllers.put(id, controller);
         }
 
-        return (D) info.controller;
+        return (D) controller;
     }
 
     /**
@@ -77,21 +80,10 @@ public class WorksControllerManager {
      * This will call onDestroy of WorksController.
      */
     public void destroyLoader(int id) {
-        ControllerInfo info = mControllers.get(id);
-        if (info != null) {
-            info.controller.onDestroy();
+        WorksController controller = mControllers.get(id);
+        if (controller != null) {
             mControllers.remove(id);
-        }
-    }
-
-    class ControllerInfo<D extends WorksController> {
-
-        D controller;
-
-        ControllerCallbacks<D> callback;
-
-        public ControllerInfo(ControllerCallbacks<D> callback) {
-            this.callback = callback;
+            controller.onDestroy();
         }
     }
 
@@ -145,8 +137,10 @@ public class WorksControllerManager {
 
         @Override
         public void onLoaderReset(android.support.v4.content.Loader<WorksControllerManager> loader) {
-            Loader l = (Loader) loader;
-            l.getController().getLifecycleHook().dispatchDestroy();
+            WorksControllerManager controller = ((Loader) loader).getController();
+
+            controller.getLifecycleHook().dispatchDestroy();
+            controller.getMainScheduler().release();
         }
     }
 }

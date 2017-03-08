@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.mobilesolutionworks.android.app.controller.WorksControllerManager;
+
 /**
  * Activity host for WorksController.
  * <p>
@@ -32,7 +34,7 @@ public class WorksActivity extends AppCompatActivity {
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        mController.onRestoreInstanceState(savedInstanceState);
+        mController.getLifecycleHook().onRestoreInstanceState(savedInstanceState);
     }
 
     /**
@@ -47,18 +49,18 @@ public class WorksActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        mController.dispatchResume();
+        mController.getLifecycleHook().dispatchResume();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mController.dispatchPause();
+        mController.getLifecycleHook().dispatchPause();
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        mController.dispatchSaveInstanceState(outState);
+        mController.getLifecycleHook().dispatchSaveInstanceState(outState);
         super.onSaveInstanceState(outState);
     }
 }

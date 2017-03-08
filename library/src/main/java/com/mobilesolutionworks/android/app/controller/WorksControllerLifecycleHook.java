@@ -1,4 +1,4 @@
-package com.mobilesolutionworks.android.app;
+package com.mobilesolutionworks.android.app.controller;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -22,10 +22,11 @@ public class WorksControllerLifecycleHook {
      * This method must be called by host.
      */
     public void dispatchPause() {
-        SparseArray<WorksControllerManager.ControllerInfo> controllers = mManager.getControllers();
+        mManager.dispatchPause();
+        SparseArray<WorksController> controllers = mManager.getControllers();
         int size = controllers.size();
         for (int i = 0; i < size; i++) {
-            controllers.valueAt(i).controller.onPaused();
+            controllers.valueAt(i).onPaused();
         }
     }
 
@@ -35,10 +36,11 @@ public class WorksControllerLifecycleHook {
      * This method must be called by host.
      */
     public void dispatchResume() {
-        SparseArray<WorksControllerManager.ControllerInfo> controllers = mManager.getControllers();
+        mManager.dispatchResume();
+        SparseArray<WorksController> controllers = mManager.getControllers();
         int size = controllers.size();
         for (int i = 0; i < size; i++) {
-            controllers.valueAt(i).controller.onResume();
+            controllers.valueAt(i).onResume();
         }
     }
 
@@ -48,19 +50,19 @@ public class WorksControllerLifecycleHook {
      * This method must be called by host.
      */
     void dispatchDestroy() {
-        SparseArray<WorksControllerManager.ControllerInfo> controllers = mManager.getControllers();
+        SparseArray<WorksController> controllers = mManager.getControllers();
         int size = controllers.size();
         for (int i = 0; i < size; i++) {
-            controllers.valueAt(i).controller.onDestroy();
+            controllers.valueAt(i).onDestroy();
         }
         controllers.clear();
     }
 
     public void onConfigurationChanged(Configuration config) {
-        SparseArray<WorksControllerManager.ControllerInfo> controllers = mManager.getControllers();
+        SparseArray<WorksController> controllers = mManager.getControllers();
         int size = controllers.size();
         for (int i = 0; i < size; i++) {
-            controllers.valueAt(i).controller.onConfigurationChanged(config);
+            controllers.valueAt(i).onConfigurationChanged(config);
         }
     }
 
@@ -71,11 +73,11 @@ public class WorksControllerLifecycleHook {
      */
     public void onRestoreInstanceState(Bundle state) {
         if (state != null) {
-            SparseArray<WorksControllerManager.ControllerInfo> controllers = mManager.getControllers();
+            SparseArray<WorksController> controllers = mManager.getControllers();
             int size = controllers.size();
             for (int i = 0; i < size; i++) {
                 Bundle bundle = state.getParcelable(":worksController:" + controllers.keyAt(i));
-                controllers.valueAt(i).controller.onViewStateRestored(bundle);
+                controllers.valueAt(i).onViewStateRestored(bundle);
             }
         }
     }
@@ -86,13 +88,13 @@ public class WorksControllerLifecycleHook {
      * This method must be called by host.
      */
     public void dispatchSaveInstanceState(Bundle state) {
-        SparseArray<WorksControllerManager.ControllerInfo> controllers = mManager.getControllers();
+        SparseArray<WorksController> controllers = mManager.getControllers();
         int size = controllers.size();
         for (int i = 0; i < size; i++) {
-            WorksControllerManager.ControllerInfo info = controllers.valueAt(i);
+            WorksController info = controllers.valueAt(i);
 
             Bundle bundle = new Bundle();
-            info.controller.onViewStateRestored(bundle);
+            info.onViewStateRestored(bundle);
 
             state.putParcelable(":worksController:" + controllers.keyAt(i), bundle);
         }

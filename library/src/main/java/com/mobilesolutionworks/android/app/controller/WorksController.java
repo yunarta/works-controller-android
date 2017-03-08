@@ -1,5 +1,6 @@
-package com.mobilesolutionworks.android.app;
+package com.mobilesolutionworks.android.app.controller;
 
+import android.app.Fragment;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
@@ -14,12 +15,15 @@ import android.os.Bundle;
  * <p>
  * WorksController is a very basic skeleton for developer to extend and create functionality related to their requirement.
  * <p>
- * You might want to check {@link com.mobilesolutionworks.android.app.controller.TaskWorksController} to see a ready to
- * use implementation of WorksController that can be used to take care async operation termination.
- * <p>
  * Created by yunarta on 16/11/15.
  */
 public class WorksController {
+
+    WorksControllerManager mManager;
+
+    void setControllerManager(WorksControllerManager manager) {
+        mManager = manager;
+    }
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -47,5 +51,17 @@ public class WorksController {
 
     public void onConfigurationChanged(Configuration config) {
 
+    }
+
+    void runOnUIWhenIsReady(final Runnable runnable) {
+        mManager.getMainScheduler().runOnUIWhenIsReady(runnable);
+    }
+
+    void runOnMainThread(Runnable runnable) {
+        mManager.getMainScheduler().runOnMainThread(runnable);
+    }
+
+    void runOnMainThreadDelayed(Runnable runnable, long delay) {
+        mManager.getMainScheduler().runOnMainThreadDelayed(runnable, delay);
     }
 }
