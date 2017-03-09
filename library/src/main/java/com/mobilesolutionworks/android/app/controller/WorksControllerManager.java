@@ -1,4 +1,4 @@
-package com.mobilesolutionworks.android.app;
+package com.mobilesolutionworks.android.app.controller;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,79 +12,37 @@ import android.util.SparseArray;
  */
 public class WorksControllerManager {
 
-    SparseArray<ControllerInfo> mControllers;
+    private final SparseArray<WorksController> mControllers;
+
+    private final WorksControllerLifecycleHook mLifecycleHook;
+
+    private final WorksMainScheduler mMainScheduler;
 
     public WorksControllerManager() {
         mControllers = new SparseArray<>();
+        mLifecycleHook = new WorksControllerLifecycleHook(this);
+
+        mMainScheduler = new WorksMainScheduler();
     }
 
-    /**
-     * Hook host dispatch pause to controller.
-     * <p>
-     * This method must be called by host.
-     */
-    public void dispatchPause() {
-        int size = mControllers.size();
-        for (int i = 0; i < size; i++) {
-            mControllers.valueAt(i).controller.onPaused();
-        }
+    public WorksControllerLifecycleHook getLifecycleHook() {
+        return mLifecycleHook;
     }
 
-    /**
-     * Hook host dispatch resume to controller.
-     * <p>
-     * This method must be called by host.
-     */
-    public void dispatchResume() {
-        int size = mControllers.size();
-        for (int i = 0; i < size; i++) {
-            mControllers.valueAt(i).controller.onResume();
-        }
+    SparseArray<WorksController> getControllers() {
+        return mControllers;
     }
 
-    /**
-     * Hook host dispatch destroy to controller.
-     * <p>
-     * This method must be called by host.
-     */
-    private void dispatchDestroy() {
-        int size = mControllers.size();
-        for (int i = 0; i < size; i++) {
-            mControllers.valueAt(i).controller.onDestroy();
-        }
-        mControllers.clear();
+    WorksMainScheduler getMainScheduler() {
+        return mMainScheduler;
     }
 
-    /**
-     * Hook host dispatch restore instance to controller.
-     * <p>
-     * This method must be called by host.
-     */
-    public void onRestoreInstanceState(Bundle state) {
-        if (state != null) {
-            int size = mControllers.size();
-            for (int i = 0; i < size; i++) {
-                Bundle bundle = state.getParcelable(":worksController:" + mControllers.keyAt(i));
-                mControllers.valueAt(i).controller.onViewStateRestored(bundle);
-            }
-        }
+    void dispatchPause() {
+        mMainScheduler.pause();
     }
 
-    /**
-     * Hook host dispatch save instance state instance to controller.
-     * <p>
-     * This method must be called by host.
-     */
-    public void dispatchSaveInstanceState(Bundle state) {
-        int size = mControllers.size();
-        for (int i = 0; i < size; i++) {
-            ControllerInfo info = mControllers.valueAt(i);
-
-            Bundle bundle = new Bundle();
-            info.controller.onViewStateRestored(bundle);
-
-            state.putParcelable(":worksController:" + mControllers.keyAt(i), bundle);
-        }
+    void dispatchResume() {
+        mMainScheduler.resume();
     }
 
     public interface ControllerCallbacks<D extends WorksController> {
@@ -93,11 +51,6 @@ public class WorksControllerManager {
          * Called by implementation to create a Loader.
          */
         D onCreateController(int id, Bundle bundle);
-
-        /**
-         * Called when loading is finished.
-         */
-        void onLoadFinished(int id, Bundle bundle, D controller);
     }
 
     /**
@@ -110,23 +63,15 @@ public class WorksControllerManager {
      * @return returns WorksController implementation immediately, if one is already created before than it will be returned.
      */
     public <D extends WorksController> D initController(int id, Bundle args, ControllerCallbacks<D> callback) {
-        ControllerInfo<D> info = mControllers.get(id);
-        if (info == null) {
-            info = new ControllerInfo<>(callback);
-
+        WorksController controller = mControllers.get(id);
+        if (controller == null) {
             D newController = callback.onCreateController(id, args);
-            info.controller = newController;
-
-            callback.onLoadFinished(id, args, newController);
             newController.onCreate(args);
 
-            mControllers.put(id, info);
-        } else {
-            info.callback = callback;
-            info.callback.onLoadFinished(id, args, info.controller);
+            mControllers.put(id, controller);
         }
 
-        return (D) info.controller;
+        return (D) controller;
     }
 
     /**
@@ -135,21 +80,10 @@ public class WorksControllerManager {
      * This will call onDestroy of WorksController.
      */
     public void destroyLoader(int id) {
-        ControllerInfo info = mControllers.get(id);
-        if (info != null) {
-            info.controller.onDestroy();
+        WorksController controller = mControllers.get(id);
+        if (controller != null) {
             mControllers.remove(id);
-        }
-    }
-
-    private class ControllerInfo<D extends WorksController> {
-
-        D controller;
-
-        ControllerCallbacks<D> callback;
-
-        public ControllerInfo(ControllerCallbacks<D> callback) {
-            this.callback = callback;
+            controller.onDestroy();
         }
     }
 
@@ -203,8 +137,10 @@ public class WorksControllerManager {
 
         @Override
         public void onLoaderReset(android.support.v4.content.Loader<WorksControllerManager> loader) {
-            Loader l = (Loader) loader;
-            l.getController().dispatchDestroy();
+            WorksControllerManager controller = ((Loader) loader).getController();
+
+            controller.getLifecycleHook().dispatchDestroy();
+            controller.getMainScheduler().release();
         }
     }
 }
