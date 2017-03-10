@@ -19,16 +19,17 @@ before_install:
     - export JAVA7_HOME=/usr/lib/jvm/java-7-oracle
     - export JAVA8_HOME=/usr/lib/jvm/java-8-oracle
     - export JAVA_HOME=$JAVA8_HOME
-# as per http://blog.travis-ci.com/2014-12-17-faster-builds-with-container-based-infrastructure/
+
 sudo: required
 
 addons:
   sonarqube:
-    token:
-       secure: "luxGgGn1fBOThDK4/NBx+kbZn8hbpP0PZdEF6kFpC9d6eG4VFjkb4IES1jQtMcxsWMvnkfydcgstZYOfIii/nU3jQrYqH3gmpD7944g0x399UCl9XqFWHM9XErHnBC91Mu7daWaOqTAFBBqRk73UJ+e3WqV/BBbp4tcKRBJjxxNHTI+zOiuAiiRQ5p4Wf3qn5LHWurpMaW1dlDW0U9k6iGLlQ2vYb57+7Z9mIGK9lhPRlaJykGTlL7zd/RzcJjt6GvvZNQ6wG6EN9Rb/AzO3mxNDDUvxPvushjlACUYD02t9gGQsKdQaFYUegp25NtZTp7HPcqMoGHAlkWekTsiUiG+iHpAPztJJwsQj6a7Ri4NvYQkQcuXT3+qkbHj7cmDp6Nses+FG7yqRISjX4PN3jzMhZsbioHC4B7oNbOJx8cYPi+ROzkGRARPklVxvWP/e08E7BTg/m1l9ETiENpinCtAQOPUK51bwoJPlpe5WVyDkhmFHgX0MGXONbedKPXewpcYgDLj5y0zXhGUHhzXyGpbxlp7NcPaWNBV1tmnz0GqnNvWDfQAKp59yQOfGkrDmyq+S2p0h6izkzOZAc2NavXCfC2GmaFDTIOWCVy109zI4BqJIvXhVAgaHX9zx2fzmmNyxzMJarxu1+/QoilulEsWCYw4WuNDiAUEd+QWBh7k="
     branches:
-        - travis
         - master
+        - develop
+    token:
+      secure: "CVvb6nAOdT3M/xNg3G1dr3ISW4tFRYNGhSYVH3JMicKpiWnrjlE5a9gDd0XJK7HRvEYb4XINerUlL739pmdsKHpWoRNwIMxfMl4qWpfdGG42/3nCyrdmbqQcUqrRLwK/Z8rg85HFCvgxEXLygUAxQYs6zt/Hm7sEo49e4dTSQ7ifSoZTl7Td2UCO4AxqK9TA4CBYNp4A2ZXYMZK4PmHY6tr3TiT2Sc8JSOgY0agCD9RMd1QkOMNECdlSTO7TRPyhIQkUDKq9OytHyKISoXgWxOSN5O+p7sqDOVfjyoxhExaNPzjvq0eXkAMrJ7LsxbEy1QGqhgJNLE9SEk6/032ogwH1bGwLHd6IlNj8Bn5RmZtQRq/+aT5UIgzWloMVr41MF298X4d4Jo30wH6vj5ImGKmjWC6dVZX95KdxqiWpYaZJvw34btqMUvz2b2p/OAgce6LwQ8ZB5/exVM+SaM6at7ugtyAikSdt+Qe0vQMIleGJ5+A+TaOl9IQ8KgcnZ4FOfH7fhwy6uFqp369Org7t0qj9/t/3RS0tnxrUOZtez5pPa1qu7Y+RPeLOFtoOsqzobngb/Y3FcprAfDCE2fFPoAVvgi/1iJFpEuz6YDTxbakI8At5MKozG3mAChuUbFQRGwk595cQpJtzhJCZ9gVfsf89u/WFHsATv3TCUBxLf/A="
+
 script:
     - pwd
     - sonar-scanner
