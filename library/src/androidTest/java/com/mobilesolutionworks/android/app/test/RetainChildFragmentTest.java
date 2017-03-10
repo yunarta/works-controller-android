@@ -72,16 +72,16 @@ public class RetainChildFragmentTest {
         });
 
         onView(withId(R.id.button)).perform(ViewActions.click());
-        Thread.sleep(1);
+//        Thread.sleep(1);
 
         TestButler.setRotation(Surface.ROTATION_90);
-        Thread.sleep(1);
+//        Thread.sleep(1);
 
         TestButler.setRotation(Surface.ROTATION_0);
-        Thread.sleep(1);
+//        Thread.sleep(1);
 
         pressBack();
-        Thread.sleep(1);
+//        Thread.sleep(1);
 
         onView(isRoot()).perform(new ViewAction() {
             @Override

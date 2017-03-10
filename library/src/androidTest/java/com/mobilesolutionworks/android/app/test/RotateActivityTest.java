@@ -49,7 +49,6 @@ public class RotateActivityTest {
         });
 
         TestButler.setRotation(Surface.ROTATION_90);
-        Thread.sleep(1);
 
         onView(isRoot()).perform(new ViewAction() {
             @Override
