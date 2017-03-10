@@ -5,6 +5,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.view.View;
 
+import com.mobilesolutionworks.android.app.controller.WorksControllerManager;
+
 /**
  * DialogFragment host for WorksController.
  * <p>
@@ -29,18 +31,18 @@ public class WorksDialogFragment extends DialogFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mController.onRestoreInstanceState(savedInstanceState);
+        mController.getLifecycleHook().onRestoreInstanceState(savedInstanceState);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mController.dispatchPause();
+        mController.getLifecycleHook().dispatchPause();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mController.dispatchResume();
+        mController.getLifecycleHook().dispatchResume();
     }
 }
