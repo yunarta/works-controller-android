@@ -1,0 +1,37 @@
+language: android
+jdk:
+#    - oraclejdk7
+    - oraclejdk8
+android:
+  components:
+    - platform-tools
+    - tools
+    - build-tools-25.0.2
+    - android-25
+    - extra-android-support
+    - extra-android-m2repository
+  license:
+    - 'ConstraintLayout.*'
+before_install:
+    - mkdir "$ANDROID_HOME/licenses" || true
+    - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
+    - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
+    - export JAVA7_HOME=/usr/lib/jvm/java-7-oracle
+    - export JAVA8_HOME=/usr/lib/jvm/java-8-oracle
+    - export JAVA_HOME=$JAVA8_HOME
+# as per http://blog.travis-ci.com/2014-12-17-faster-builds-with-container-based-infrastructure/
+sudo: required
+
+addons:
+  sonarqube:
+    token:
+       secure: "luxGgGn1fBOThDK4/NBx+kbZn8hbpP0PZdEF6kFpC9d6eG4VFjkb4IES1jQtMcxsWMvnkfydcgstZYOfIii/nU3jQrYqH3gmpD7944g0x399UCl9XqFWHM9XErHnBC91Mu7daWaOqTAFBBqRk73UJ+e3WqV/BBbp4tcKRBJjxxNHTI+zOiuAiiRQ5p4Wf3qn5LHWurpMaW1dlDW0U9k6iGLlQ2vYb57+7Z9mIGK9lhPRlaJykGTlL7zd/RzcJjt6GvvZNQ6wG6EN9Rb/AzO3mxNDDUvxPvushjlACUYD02t9gGQsKdQaFYUegp25NtZTp7HPcqMoGHAlkWekTsiUiG+iHpAPztJJwsQj6a7Ri4NvYQkQcuXT3+qkbHj7cmDp6Nses+FG7yqRISjX4PN3jzMhZsbioHC4B7oNbOJx8cYPi+ROzkGRARPklVxvWP/e08E7BTg/m1l9ETiENpinCtAQOPUK51bwoJPlpe5WVyDkhmFHgX0MGXONbedKPXewpcYgDLj5y0zXhGUHhzXyGpbxlp7NcPaWNBV1tmnz0GqnNvWDfQAKp59yQOfGkrDmyq+S2p0h6izkzOZAc2NavXCfC2GmaFDTIOWCVy109zI4BqJIvXhVAgaHX9zx2fzmmNyxzMJarxu1+/QoilulEsWCYw4WuNDiAUEd+QWBh7k="
+    branches:
+        - travis
+        - master
+script:
+    - pwd
+    - sonar-scanner
+    - ./gradlew clean assemble check
+after_success:
+    - ./gradlew coveralls
