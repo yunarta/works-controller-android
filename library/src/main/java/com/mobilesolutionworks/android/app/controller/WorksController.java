@@ -1,6 +1,5 @@
 package com.mobilesolutionworks.android.app.controller;
 
-import android.app.Fragment;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
@@ -26,31 +25,31 @@ public class WorksController {
     }
 
     public void onCreate(Bundle savedInstanceState) {
-
+        // Lifecycle event called when controller is created
     }
 
     public void onPaused() {
-
+        // Lifecycle event called when host is paused
     }
 
     public void onResume() {
-
+        // Lifecycle event called when host is resumed
     }
 
     public void onDestroy() {
-
+        // Lifecycle event called when controlled is destroyed
     }
 
     public void onViewStateRestored(Bundle state) {
-
+        // Lifecycle event called when host is view state is restored
     }
 
     public void onSaveInstanceState(Bundle outState) {
-
+        // Lifecycle event called when host is want to save instance state
     }
 
     public void onConfigurationChanged(Configuration config) {
-
+        // Lifecycle event called when host has configuration changed
     }
 
     void runOnUIWhenIsReady(final Runnable runnable) {

@@ -132,7 +132,7 @@ public class WorksControllerManager {
 
         @Override
         public void onLoadFinished(android.support.v4.content.Loader<WorksControllerManager> loader, WorksControllerManager data) {
-
+            // we dont have to take care this callback
         }
 
         @Override

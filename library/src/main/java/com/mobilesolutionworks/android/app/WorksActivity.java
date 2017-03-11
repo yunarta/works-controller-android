@@ -13,15 +13,10 @@ import com.mobilesolutionworks.android.app.controller.WorksControllerManager;
  */
 public class WorksActivity extends AppCompatActivity {
 
-//    private SparseArray<FragmentTrackInfo> mTrackInfoMap;
-
     /**
      * Controller manager.
      */
     private WorksControllerManager mController;
-
-    public WorksActivity() {
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
