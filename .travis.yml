@@ -1,6 +1,5 @@
 language: android
 jdk:
-#    - oraclejdk7
     - oraclejdk8
 android:
   components:
@@ -19,20 +18,22 @@ before_install:
     - export JAVA7_HOME=/usr/lib/jvm/java-7-oracle
     - export JAVA8_HOME=/usr/lib/jvm/java-8-oracle
     - export JAVA_HOME=$JAVA8_HOME
-
-sudo: required
-
+sudo: false
 addons:
   sonarqube:
+    token:
+       secure: "dbSkqeD410EKG1baVpXqurWMrWjG3N9XacJQ2MEHAIKrfzvuTxvKy4ng7N2qNnz9cFWWviblMv93JH+jdNnRqB2hXnDfwC+vLCP3pUqmVtPVFuylPYVnba3bb3YVO7OqENHt+vnlWC222tri+jZcBiEsj32yCt8LphKuRCV65Oxey9b5eKLe/68qAdyHcBX/IuABvpfGnLgiEJlX+6TpOcbnyYlNNibfWUKQgKJLbjo2huYIwtipZXosWLLkYRORMavhrzFqqexjUtHPgUafr9affTBqqoBlP+17g1LVNz+bmAuQP4rn2nYyAc/ndlJ9MHSTYt//4u+7IEL6u2Je4KhZIneEurs7NkI2BSpPziqcG3z9fW2ah43cBS9PZw+/zv5GQUu+zEI8RT2bSTfayTTgNT+y6N3duJXrVmVwp7QmY1f3LakyrM70bBGzwmamkKMihIKeTJPEs39/kEOnpIgRZrX9s4691mQDixATV5YhFXCaqkFqBY0cN0z1hiq138slkb9rMklKgqFVMdnsbYUSjygkRYo6Ydk1Y21wOMtVfFD78xBti/bZVXxoBA49Dz/2YTaq6oLCx+PA3AE2f/KsDC0XVF43W6eRiWuOATGIQYtNKBaUKUzSMMsbQ0yn3n7A7cpyXUUwh55Hk5NI49JQILySCiCCW4TlM8naoOI="
     branches:
         - master
         - develop
-    token:
-      secure: "CVvb6nAOdT3M/xNg3G1dr3ISW4tFRYNGhSYVH3JMicKpiWnrjlE5a9gDd0XJK7HRvEYb4XINerUlL739pmdsKHpWoRNwIMxfMl4qWpfdGG42/3nCyrdmbqQcUqrRLwK/Z8rg85HFCvgxEXLygUAxQYs6zt/Hm7sEo49e4dTSQ7ifSoZTl7Td2UCO4AxqK9TA4CBYNp4A2ZXYMZK4PmHY6tr3TiT2Sc8JSOgY0agCD9RMd1QkOMNECdlSTO7TRPyhIQkUDKq9OytHyKISoXgWxOSN5O+p7sqDOVfjyoxhExaNPzjvq0eXkAMrJ7LsxbEy1QGqhgJNLE9SEk6/032ogwH1bGwLHd6IlNj8Bn5RmZtQRq/+aT5UIgzWloMVr41MF298X4d4Jo30wH6vj5ImGKmjWC6dVZX95KdxqiWpYaZJvw34btqMUvz2b2p/OAgce6LwQ8ZB5/exVM+SaM6at7ugtyAikSdt+Qe0vQMIleGJ5+A+TaOl9IQ8KgcnZ4FOfH7fhwy6uFqp369Org7t0qj9/t/3RS0tnxrUOZtez5pPa1qu7Y+RPeLOFtoOsqzobngb/Y3FcprAfDCE2fFPoAVvgi/1iJFpEuz6YDTxbakI8At5MKozG3mAChuUbFQRGwk595cQpJtzhJCZ9gVfsf89u/WFHsATv3TCUBxLf/A="
-
 script:
-    - pwd
+    - android list targets
+    - echo no | android create avd --force -n emulator -t android-21 --abi armeabi-v7a
+    - emulator -avd emulator -no-audio -no-window &
+    - android-wait-for-emulator
+    - wget https://bintray.com/linkedin/maven/download_file?file_path=com%2Flinkedin%2Ftestbutler%2Ftest-butler-app%2F1.2.0%2Ftest-butler-app-1.2.0.apk -O test-butler-app-1.2.0.apk
+    - adb install test-butler-app-1.2.0.apk
+    - ./gradlew clean assemble connectedCheck
     - sonar-scanner
-    - ./gradlew clean assemble check
 after_success:
     - ./gradlew coveralls
