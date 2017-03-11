@@ -45,6 +45,7 @@ public class WorksControllerManager {
         mMainScheduler.resume();
     }
 
+    @FunctionalInterface
     public interface ControllerCallbacks<D extends WorksController> {
 
         /**
