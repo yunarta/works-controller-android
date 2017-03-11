@@ -1,4 +1,4 @@
-package com.mobilesolutionworks.android.app.test;
+package com.mobilesolutionworks.android.app.test.sdk;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -23,14 +23,14 @@ public class EmptyFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.empty_fragment, container, false);
+        return inflater.inflate(com.mobilesolutionworks.android.app.test.R.layout.empty_fragment, container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        TextView id = (TextView) view.findViewById(R.id.textView);
+        TextView id = (TextView) view.findViewById(com.mobilesolutionworks.android.app.test.R.id.textView);
         id.setText("empty");
     }
 }

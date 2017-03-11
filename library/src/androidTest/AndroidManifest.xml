@@ -11,7 +11,7 @@
                 <action android:name="android.intent.action.MAIN"/>
             </intent-filter>
         </activity>
-        <activity android:name=".RetainChildFragmentActivity">
+        <activity android:name=".sdk.RetainChildFragmentActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
             </intent-filter>

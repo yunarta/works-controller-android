@@ -12,6 +12,7 @@ import android.view.Surface;
 import android.view.View;
 
 import com.linkedin.android.testbutler.TestButler;
+import com.mobilesolutionworks.android.app.test.sdk.RetainChildFragmentActivity;
 
 import junit.framework.Assert;
 
@@ -72,16 +73,12 @@ public class RetainChildFragmentTest {
         });
 
         onView(withId(R.id.button)).perform(ViewActions.click());
-//        Thread.sleep(1);
 
         TestButler.setRotation(Surface.ROTATION_90);
-//        Thread.sleep(1);
 
         TestButler.setRotation(Surface.ROTATION_0);
-//        Thread.sleep(1);
 
         pressBack();
-//        Thread.sleep(1);
 
         onView(isRoot()).perform(new ViewAction() {
             @Override
@@ -99,7 +96,7 @@ public class RetainChildFragmentTest {
                 ArrayList<Activity> resumedActivities = new ArrayList<>(ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED));
 
                 RetainChildFragmentActivity activity = (RetainChildFragmentActivity) resumedActivities.get(0);
-                Assert.assertNotSame("Could not change orientation", activityHash.get(), Integer.valueOf(System.identityHashCode(activity)));
+                Assert.assertNotSame("Could not change orientation", activityHash.get(), System.identityHashCode(activity));
 
                 Fragment rootFragment = activity.getSupportFragmentManager().findFragmentById(R.id.fragment_container);
                 Assert.assertNotNull(rootFragment);
@@ -107,7 +104,7 @@ public class RetainChildFragmentTest {
 
                 Fragment child = rootFragment.getChildFragmentManager().findFragmentByTag("child");
                 Assert.assertNotNull(child);
-                Assert.assertNotSame("If this is equals, then Android Support solved this problem", childFragmentHash.get(), Integer.valueOf(System.identityHashCode(child)));
+                Assert.assertNotSame("If this is equals, then Android Support solved this problem", childFragmentHash.get(), System.identityHashCode(child));
             }
         });
     }
