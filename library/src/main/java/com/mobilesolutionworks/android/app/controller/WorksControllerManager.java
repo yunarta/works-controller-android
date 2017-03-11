@@ -69,7 +69,8 @@ public class WorksControllerManager {
             D newController = callback.onCreateController(id, args);
             newController.onCreate(args);
 
-            mControllers.put(id, controller);
+            mControllers.put(id, newController);
+            controller = newController;
         }
 
         return (D) controller;
