@@ -37,3 +37,5 @@ script:
     - sonar-scanner
 after_success:
     - ./gradlew coveralls
+notifications:
+    email: false
