@@ -1,9 +1,9 @@
-package com.mobilesolutionworks.android.app.test;
+package com.mobilesolutionworks.android.app.test.complex;
 
 import android.app.Activity;
-import android.app.Application;
 import android.support.test.espresso.UiController;
 import android.support.test.espresso.action.ViewActions;
+import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
 import android.support.test.runner.lifecycle.Stage;
@@ -13,8 +13,10 @@ import android.view.View;
 
 import com.linkedin.android.testbutler.TestButler;
 import com.mobilesolutionworks.android.app.controller.WorksController;
+import com.mobilesolutionworks.android.app.test.base.RotationTest;
+import com.mobilesolutionworks.android.app.test.configuration.TestWorksController;
+import com.mobilesolutionworks.android.app.test.util.HostAndController;
 import com.mobilesolutionworks.android.app.test.util.PerformRootAction;
-import com.mobilesolutionworks.android.app.test.util.ResumeLatch;
 import com.mobilesolutionworks.android.app.test.works.EmptyWorksFragment;
 import com.mobilesolutionworks.android.app.test.works.RetainWorksControllerActivity;
 
@@ -47,7 +49,7 @@ import static junit.framework.Assert.assertNull;
  * </ul>
  * Created by yunarta on 9/3/17.
  */
-public class ControllerInWorksFragmentTest {
+public class NestedWorksFragmentTest extends RotationTest {
 
     @Rule
     public ActivityTestRule<RetainWorksControllerActivity> mActivityTestRule = new ActivityTestRule<>(RetainWorksControllerActivity.class);
@@ -56,16 +58,8 @@ public class ControllerInWorksFragmentTest {
     public void testControllerRetainBehavior() throws Exception {
         // Context of the app under test.
         final AtomicReference<Integer> activityHash = new AtomicReference<>();
-        final AtomicReference<Integer> rootFragmentHash = new AtomicReference<>();
-        final AtomicReference<Integer> childFragmentHash = new AtomicReference<>();
-
-        final AtomicReference<Integer> rootControllerHash = new AtomicReference<>();
-        final AtomicReference<Integer> childControllerHash = new AtomicReference<>();
-
-        ResumeLatch latch = new ResumeLatch();
-
-        Application application = mActivityTestRule.getActivity().getApplication();
-        application.registerActivityLifecycleCallbacks(latch);
+        final HostAndController<WorksController> fragmentCheck = new HostAndController<>();
+        final HostAndController<WorksController> nestedFragmentCheck = new HostAndController<>();
 
         onView(isRoot()).perform(new PerformRootAction() {
             @Override
@@ -75,21 +69,18 @@ public class ControllerInWorksFragmentTest {
                 RetainWorksControllerActivity activity = (RetainWorksControllerActivity) resumedActivities.get(0);
                 activityHash.set(System.identityHashCode(activity));
 
-                EmptyWorksFragment rootFragment = (EmptyWorksFragment) activity.getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-                assertNotNull(rootFragment);
-                rootFragmentHash.set(System.identityHashCode(rootFragment));
-                rootControllerHash.set(System.identityHashCode(rootFragment.getController()));
+                EmptyWorksFragment root = (EmptyWorksFragment) activity.getSupportFragmentManager().findFragmentById(com.mobilesolutionworks.android.app.test.R.id.fragment_container);
+                fragmentCheck.set(root);
 
-                EmptyWorksFragment child = (EmptyWorksFragment) rootFragment.getChildFragmentManager().findFragmentByTag("child");
-                assertNotNull(child);
-                childFragmentHash.set(System.identityHashCode(child));
-                childControllerHash.set(System.identityHashCode(child.getController()));
+                EmptyWorksFragment nested = (EmptyWorksFragment) root.getChildFragmentManager().findFragmentByTag("child");
+                nestedFragmentCheck.set(nested);
+
             }
         });
 
         final AtomicReference<WeakReference<WorksController>> addedFragmentWorksController = new AtomicReference<>();
 
-        onView(withId(R.id.button)).perform(ViewActions.click());
+        onView(ViewMatchers.withId(com.mobilesolutionworks.android.app.test.R.id.button)).perform(ViewActions.click());
         onView(isRoot()).perform(new PerformRootAction() {
             @Override
             public void perform(UiController uiController, View view) {
@@ -98,7 +89,7 @@ public class ControllerInWorksFragmentTest {
                 RetainWorksControllerActivity activity = (RetainWorksControllerActivity) resumedActivities.get(0);
                 assertNotSame("Could not change orientation", activityHash.get(), System.identityHashCode(activity));
 
-                EmptyWorksFragment rootFragment = (EmptyWorksFragment) activity.getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+                EmptyWorksFragment rootFragment = (EmptyWorksFragment) activity.getSupportFragmentManager().findFragmentById(com.mobilesolutionworks.android.app.test.R.id.fragment_container);
                 WorksController controller = rootFragment.getController();
 
                 addedFragmentWorksController.set(new WeakReference<>(controller));
@@ -106,18 +97,18 @@ public class ControllerInWorksFragmentTest {
         });
 
         TestButler.setRotation(Surface.ROTATION_90);
-        latch.await();
+        mLatch.await();
 
         TestButler.setRotation(Surface.ROTATION_0);
-        latch.await();
+        mLatch.await();
 
         pressBack();
 
         TestButler.setRotation(Surface.ROTATION_90);
-        latch.await();
+        mLatch.await();
 
         TestButler.setRotation(Surface.ROTATION_0);
-        latch.await();
+        mLatch.await();
 
         Runtime.getRuntime().gc();
         assertNull(addedFragmentWorksController.get().get());
@@ -130,15 +121,11 @@ public class ControllerInWorksFragmentTest {
                 RetainWorksControllerActivity activity = (RetainWorksControllerActivity) resumedActivities.get(0);
                 assertNotSame("Could not change orientation", activityHash.get(), System.identityHashCode(activity));
 
-                EmptyWorksFragment rootFragment = (EmptyWorksFragment) activity.getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-                assertNotNull(rootFragment);
-                assertNotSame("Non retained fragment being maintained over rotation", rootFragmentHash.get(), System.identityHashCode(rootFragment));
-                assertEquals("Works controller instance is not maintained in fragment", rootControllerHash.get(), Integer.valueOf(System.identityHashCode(rootFragment.getController())));
+                EmptyWorksFragment root = (EmptyWorksFragment) activity.getSupportFragmentManager().findFragmentById(com.mobilesolutionworks.android.app.test.R.id.fragment_container);
+                fragmentCheck.validate(root);
 
-                EmptyWorksFragment child = (EmptyWorksFragment) rootFragment.getChildFragmentManager().findFragmentByTag("child");
-                assertNotNull(child);
-                assertNotSame("Non retained nested fragment being maintained over rotation", childFragmentHash.get(), System.identityHashCode(child));
-                assertEquals("Works controller instance is not maintained in nested fragment", childControllerHash.get(), Integer.valueOf(System.identityHashCode(child.getController())));
+                EmptyWorksFragment nested = (EmptyWorksFragment) root.getChildFragmentManager().findFragmentByTag("child");
+                nestedFragmentCheck.validate(nested);
             }
         });
     }

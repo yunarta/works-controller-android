@@ -1,9 +1,9 @@
-package com.mobilesolutionworks.android.app.test;
+package com.mobilesolutionworks.android.app.test.sdk;
 
 import android.app.Activity;
-import android.app.Application;
 import android.support.test.espresso.UiController;
 import android.support.test.espresso.action.ViewActions;
+import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
 import android.support.test.runner.lifecycle.Stage;
@@ -12,9 +12,9 @@ import android.view.Surface;
 import android.view.View;
 
 import com.linkedin.android.testbutler.TestButler;
+import com.mobilesolutionworks.android.app.test.base.RotationTest;
 import com.mobilesolutionworks.android.app.test.sdk.RetainChildFragmentActivity;
 import com.mobilesolutionworks.android.app.test.util.PerformRootAction;
-import com.mobilesolutionworks.android.app.test.util.ResumeLatch;
 
 import junit.framework.Assert;
 
@@ -40,7 +40,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
  * </ul>
  * Created by yunarta on 9/3/17.
  */
-public class RetainNestedFragmentTest {
+public class RetainNestedFragmentTest extends RotationTest {
 
     @Rule
     public ActivityTestRule<RetainChildFragmentActivity> mActivityTestRule = new ActivityTestRule<>(RetainChildFragmentActivity.class);
@@ -52,11 +52,6 @@ public class RetainNestedFragmentTest {
         final AtomicReference<Integer> rootFragmentHash = new AtomicReference<>();
         final AtomicReference<Integer> childFragmentHash = new AtomicReference<>();
 
-        ResumeLatch latch = new ResumeLatch();
-
-        Application application = mActivityTestRule.getActivity().getApplication();
-        application.registerActivityLifecycleCallbacks(latch);
-
         onView(isRoot()).perform(new PerformRootAction() {
             @Override
             public void perform(UiController uiController, View view) {
@@ -65,7 +60,7 @@ public class RetainNestedFragmentTest {
                 RetainChildFragmentActivity activity = (RetainChildFragmentActivity) resumedActivities.get(0);
                 activityHash.set(System.identityHashCode(activity));
 
-                Fragment rootFragment = activity.getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+                Fragment rootFragment = activity.getSupportFragmentManager().findFragmentById(com.mobilesolutionworks.android.app.test.R.id.fragment_container);
                 Assert.assertNotNull(rootFragment);
                 rootFragmentHash.set(System.identityHashCode(rootFragment));
 
@@ -75,13 +70,13 @@ public class RetainNestedFragmentTest {
             }
         });
 
-        onView(withId(R.id.button)).perform(ViewActions.click());
+        onView(ViewMatchers.withId(com.mobilesolutionworks.android.app.test.R.id.button)).perform(ViewActions.click());
 
         TestButler.setRotation(Surface.ROTATION_90);
-        latch.await();
+        mLatch.await();
 
         TestButler.setRotation(Surface.ROTATION_0);
-        latch.await();
+        mLatch.await();
 
         pressBack();
 
@@ -93,7 +88,7 @@ public class RetainNestedFragmentTest {
                 RetainChildFragmentActivity activity = (RetainChildFragmentActivity) resumedActivities.get(0);
                 Assert.assertNotSame("Could not change orientation", activityHash.get(), System.identityHashCode(activity));
 
-                Fragment rootFragment = activity.getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+                Fragment rootFragment = activity.getSupportFragmentManager().findFragmentById(com.mobilesolutionworks.android.app.test.R.id.fragment_container);
                 Assert.assertNotNull(rootFragment);
                 Assert.assertEquals("Root fragment is different with previous instance", rootFragmentHash.get(), Integer.valueOf(System.identityHashCode(rootFragment)));
 

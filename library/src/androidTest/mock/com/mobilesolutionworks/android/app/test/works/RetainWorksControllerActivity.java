@@ -17,7 +17,7 @@ public class RetainWorksControllerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(com.mobilesolutionworks.android.app.test.R.layout.retain_child_fragment_activity);
+        setContentView(com.mobilesolutionworks.android.app.test.R.layout.fragment_host_activity);
         findViewById(com.mobilesolutionworks.android.app.test.R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -1,4 +1,4 @@
-package com.mobilesolutionworks.android.app.test;
+package com.mobilesolutionworks.android.app.test.basic;
 
 import android.app.Activity;
 import android.os.Handler;
@@ -6,6 +6,7 @@ import android.os.HandlerThread;
 import android.os.Looper;
 import android.support.test.espresso.UiController;
 import android.support.test.espresso.action.ViewActions;
+import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
 import android.support.test.runner.lifecycle.Stage;
@@ -13,7 +14,6 @@ import android.view.View;
 
 import com.mobilesolutionworks.android.app.controller.WorksController;
 import com.mobilesolutionworks.android.app.test.util.PerformRootAction;
-import com.mobilesolutionworks.android.app.test.util.WaitForIdle;
 import com.mobilesolutionworks.android.app.test.works.SchedulerTestActivity;
 import com.mobilesolutionworks.android.app.test.works.SchedulerTestFragment;
 import com.mobilesolutionworks.android.app.test.works.StateWorksFragment;
@@ -28,7 +28,6 @@ import java.util.concurrent.atomic.AtomicReference;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static junit.framework.Assert.assertEquals;
 
 /**
@@ -57,7 +56,7 @@ public class WorksMainSchedulerTest {
 
                 SchedulerTestActivity activity = (SchedulerTestActivity) resumedActivities.get(0);
 
-                SchedulerTestFragment rootFragment = (SchedulerTestFragment) activity.getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+                SchedulerTestFragment rootFragment = (SchedulerTestFragment) activity.getSupportFragmentManager().findFragmentById(com.mobilesolutionworks.android.app.test.R.id.fragment_container);
                 fragment.set(new WeakReference<>(rootFragment));
                 controller.set(new WeakReference<>(rootFragment.getController()));
             }
@@ -120,7 +119,7 @@ public class WorksMainSchedulerTest {
             }
         });
 
-        onView(withId(R.id.button)).perform(ViewActions.click());
+        onView(ViewMatchers.withId(com.mobilesolutionworks.android.app.test.R.id.button)).perform(ViewActions.click());
 
         onView(isRoot()).perform(new PerformRootAction() {
             @Override

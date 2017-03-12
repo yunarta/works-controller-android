@@ -5,6 +5,7 @@ import android.app.Application;
 import android.os.Bundle;
 
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by yunarta on 12/3/17.
@@ -18,9 +19,10 @@ public class ResumeLatch implements Application.ActivityLifecycleCallbacks {
     }
 
     public void await() throws InterruptedException {
-        mLatch.await();
+        mLatch.await(5, TimeUnit.SECONDS);
         reset();
     }
+
     public void reset() {
         mLatch = new CountDownLatch(1);
     }
