@@ -2,6 +2,7 @@ package com.mobilesolutionworks.android.app.controller;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.util.SparseArray;
@@ -76,6 +77,17 @@ public class WorksControllerManager {
         }
 
         return (D) controller;
+    }
+
+    /**
+     * Destroy associanted WorksController.
+     * <p>
+     * This will call onDestroy of WorksController.
+     */
+    @Nullable
+    public WorksController getController(int id) {
+        WorksController controller = mControllers.get(id);
+        return controller != null ? controller : null;
     }
 
     /**
