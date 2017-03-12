@@ -13,6 +13,7 @@ import android.view.View;
 import com.linkedin.android.testbutler.TestButler;
 import com.mobilesolutionworks.android.app.controller.WorksController;
 import com.mobilesolutionworks.android.app.test.util.PerformRootAction;
+import com.mobilesolutionworks.android.app.test.util.WaitForIdle;
 import com.mobilesolutionworks.android.app.test.works.EmptyWorksFragment;
 import com.mobilesolutionworks.android.app.test.works.RetainWorksControllerActivity;
 
@@ -104,7 +105,10 @@ public class ControllerInWorksFragmentTest {
         pressBack();
 
         TestButler.setRotation(Surface.ROTATION_90);
+        onView(isRoot()).perform(new WaitForIdle());
+
         TestButler.setRotation(Surface.ROTATION_0);
+        onView(isRoot()).perform(new WaitForIdle());
 
         Runtime.getRuntime().gc();
         assertNull(addedFragmentWorksController.get().get());
