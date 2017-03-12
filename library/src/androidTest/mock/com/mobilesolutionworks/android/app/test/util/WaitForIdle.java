@@ -9,8 +9,19 @@ import android.view.View;
 
 public class WaitForIdle extends PerformRootAction {
 
+    private int mMillisDelay;
+
+    public WaitForIdle() {
+        this(100);
+    }
+
+    public WaitForIdle(int millisDelay) {
+        mMillisDelay = millisDelay;
+    }
+
     @Override
     public void perform(UiController uiController, View view) {
-
+        uiController.loopMainThreadForAtLeast(mMillisDelay);
+        uiController.loopMainThreadUntilIdle();
     }
 }

@@ -52,15 +52,15 @@ public class WorksController {
         // Lifecycle event called when host has configuration changed
     }
 
-    void runOnUIWhenIsReady(final Runnable runnable) {
+    public void runOnUIWhenIsReady(final Runnable runnable) {
         mManager.getMainScheduler().runOnUIWhenIsReady(runnable);
     }
 
-    void runOnMainThread(Runnable runnable) {
+    public void runOnMainThread(Runnable runnable) {
         mManager.getMainScheduler().runOnMainThread(runnable);
     }
 
-    void runOnMainThreadDelayed(Runnable runnable, long delay) {
+    public void runOnMainThreadDelayed(Runnable runnable, long delay) {
         mManager.getMainScheduler().runOnMainThreadDelayed(runnable, delay);
     }
 }

@@ -7,14 +7,12 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
 import android.support.test.runner.lifecycle.Stage;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.Surface;
 import android.view.View;
 
 import com.linkedin.android.testbutler.TestButler;
 import com.mobilesolutionworks.android.app.controller.WorksController;
 import com.mobilesolutionworks.android.app.test.util.PerformRootAction;
-import com.mobilesolutionworks.android.app.test.util.WaitForIdle;
 import com.mobilesolutionworks.android.app.test.works.EmptyWorksFragment;
 import com.mobilesolutionworks.android.app.test.works.RetainWorksControllerActivity;
 
