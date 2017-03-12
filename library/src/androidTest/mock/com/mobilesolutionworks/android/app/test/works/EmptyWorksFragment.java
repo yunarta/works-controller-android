@@ -2,7 +2,7 @@ package com.mobilesolutionworks.android.app.test.works;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +25,7 @@ public class EmptyWorksFragment extends WorksFragment {
         super.onCreate(savedInstanceState);
         mController = getControllerManager().initController(0, null, new WorksControllerManager.ControllerCallbacks<WorksController>() {
             @Override
-            public WorksController onCreateController(int id, Bundle bundle) {
+            public WorksController onCreateController(int id, Bundle args) {
                 return new WorksController();
             }
         });
@@ -47,5 +47,11 @@ public class EmptyWorksFragment extends WorksFragment {
 
         TextView id = (TextView) view.findViewById(com.mobilesolutionworks.android.app.test.R.id.textView);
         id.setText("empty");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mController = null;
     }
 }

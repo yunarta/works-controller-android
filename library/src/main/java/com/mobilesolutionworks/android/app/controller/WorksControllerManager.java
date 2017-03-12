@@ -3,6 +3,8 @@ package com.mobilesolutionworks.android.app.controller;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
+import android.util.Log;
 import android.util.SparseArray;
 
 /**
@@ -51,7 +53,7 @@ public class WorksControllerManager {
         /**
          * Called by implementation to create a Loader.
          */
-        D onCreateController(int id, Bundle bundle);
+        D onCreateController(int id, Bundle args);
     }
 
     /**
@@ -67,6 +69,7 @@ public class WorksControllerManager {
         WorksController controller = mControllers.get(id);
         if (controller == null) {
             D newController = callback.onCreateController(id, args);
+            newController.setControllerManager(this);
             newController.onCreate(args);
 
             mControllers.put(id, newController);
@@ -81,7 +84,7 @@ public class WorksControllerManager {
      * <p>
      * This will call onDestroy of WorksController.
      */
-    public void destroyLoader(int id) {
+    public void destroyController(int id) {
         WorksController controller = mControllers.get(id);
         if (controller != null) {
             mControllers.remove(id);
@@ -89,16 +92,23 @@ public class WorksControllerManager {
         }
     }
 
+    private void release() {
+        getLifecycleHook().dispatchDestroy();
+        getMainScheduler().release();
+        mControllers.clear();
+
+    }
+
     /**
      * Loader implementation to create the WorksController.
      * <p>
      * This can be used when developer requires to use activities that is not subclass of WorksActivity.
      */
-    public static class Loader extends android.support.v4.content.Loader<WorksControllerManager> {
+    public static class InternalLoader extends android.support.v4.content.Loader<WorksControllerManager> {
 
         private WorksControllerManager mData;
 
-        public Loader(Context context) {
+        public InternalLoader(Context context) {
             super(context);
             mData = new WorksControllerManager();
         }
@@ -129,20 +139,18 @@ public class WorksControllerManager {
 
         @Override
         public android.support.v4.content.Loader<WorksControllerManager> onCreateLoader(int id, Bundle args) {
-            return new Loader(mContext);
+            return new InternalLoader(mContext);
         }
 
         @Override
-        public void onLoadFinished(android.support.v4.content.Loader<WorksControllerManager> loader, WorksControllerManager data) {
+        public void onLoadFinished(Loader<WorksControllerManager> loader, WorksControllerManager data) {
             // we dont have to take care this callback
         }
 
         @Override
-        public void onLoaderReset(android.support.v4.content.Loader<WorksControllerManager> loader) {
-            WorksControllerManager controller = ((Loader) loader).getController();
-
-            controller.getLifecycleHook().dispatchDestroy();
-            controller.getMainScheduler().release();
+        public void onLoaderReset(Loader<WorksControllerManager> loader) {
+            WorksControllerManager controller = ((InternalLoader) loader).getController();
+            controller.release();
         }
     }
 }

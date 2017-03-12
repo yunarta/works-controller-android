@@ -24,7 +24,7 @@ public class WorksController {
         mManager = manager;
     }
 
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle arguments) {
         // Lifecycle event called when controller is created
     }
 
@@ -40,7 +40,7 @@ public class WorksController {
         // Lifecycle event called when controlled is destroyed
     }
 
-    public void onViewStateRestored(Bundle state) {
+    public void onRestoreInstanceState(Bundle state) {
         // Lifecycle event called when host is view state is restored
     }
 
