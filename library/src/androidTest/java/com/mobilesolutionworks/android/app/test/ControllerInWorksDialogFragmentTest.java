@@ -1,18 +1,17 @@
 package com.mobilesolutionworks.android.app.test;
 
 import android.app.Activity;
+import android.app.Application;
 import android.support.test.espresso.UiController;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
 import android.support.test.runner.lifecycle.Stage;
-import android.support.v4.app.Fragment;
 import android.view.Surface;
 import android.view.View;
 
 import com.linkedin.android.testbutler.TestButler;
-import com.mobilesolutionworks.android.app.controller.WorksController;
 import com.mobilesolutionworks.android.app.test.util.PerformRootAction;
-import com.mobilesolutionworks.android.app.test.util.WaitForIdle;
+import com.mobilesolutionworks.android.app.test.util.ResumeLatch;
 import com.mobilesolutionworks.android.app.test.works.WorksActivityImpl;
 import com.mobilesolutionworks.android.app.test.works.WorksDialogFragmentImpl;
 
@@ -37,10 +36,15 @@ public class ControllerInWorksDialogFragmentTest {
     public ActivityTestRule<WorksActivityImpl> mActivityTestRule = new ActivityTestRule<>(WorksActivityImpl.class);
 
     @Test
-    public void testControllerInActivity() {
+    public void testControllerInActivity() throws InterruptedException {
         // Context of the app under test.
         final AtomicReference<Integer> dialogHash = new AtomicReference<>();
         final AtomicReference<Integer> dialogControllerHash = new AtomicReference<>();
+
+        ResumeLatch latch = new ResumeLatch();
+
+        Application application = mActivityTestRule.getActivity().getApplication();
+        application.registerActivityLifecycleCallbacks(latch);
 
         onView(isRoot()).perform(new PerformRootAction() {
             @Override
@@ -68,10 +72,10 @@ public class ControllerInWorksDialogFragmentTest {
         });
 
         TestButler.setRotation(Surface.ROTATION_90);
-        onView(isRoot()).perform(new WaitForIdle());
+        latch.await();
 
         TestButler.setRotation(Surface.ROTATION_0);
-        onView(isRoot()).perform(new WaitForIdle());
+        latch.await();
 
         onView(isRoot()).perform(new PerformRootAction() {
             @Override

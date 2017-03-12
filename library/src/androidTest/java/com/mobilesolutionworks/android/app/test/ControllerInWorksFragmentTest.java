@@ -1,6 +1,7 @@
 package com.mobilesolutionworks.android.app.test;
 
 import android.app.Activity;
+import android.app.Application;
 import android.support.test.espresso.UiController;
 import android.support.test.espresso.action.ViewActions;
 import android.support.test.rule.ActivityTestRule;
@@ -13,7 +14,7 @@ import android.view.View;
 import com.linkedin.android.testbutler.TestButler;
 import com.mobilesolutionworks.android.app.controller.WorksController;
 import com.mobilesolutionworks.android.app.test.util.PerformRootAction;
-import com.mobilesolutionworks.android.app.test.util.WaitForIdle;
+import com.mobilesolutionworks.android.app.test.util.ResumeLatch;
 import com.mobilesolutionworks.android.app.test.works.EmptyWorksFragment;
 import com.mobilesolutionworks.android.app.test.works.RetainWorksControllerActivity;
 
@@ -61,6 +62,11 @@ public class ControllerInWorksFragmentTest {
         final AtomicReference<Integer> rootControllerHash = new AtomicReference<>();
         final AtomicReference<Integer> childControllerHash = new AtomicReference<>();
 
+        ResumeLatch latch = new ResumeLatch();
+
+        Application application = mActivityTestRule.getActivity().getApplication();
+        application.registerActivityLifecycleCallbacks(latch);
+
         onView(isRoot()).perform(new PerformRootAction() {
             @Override
             public void perform(UiController uiController, View view) {
@@ -100,15 +106,18 @@ public class ControllerInWorksFragmentTest {
         });
 
         TestButler.setRotation(Surface.ROTATION_90);
+        latch.await();
+
         TestButler.setRotation(Surface.ROTATION_0);
+        latch.await();
 
         pressBack();
 
         TestButler.setRotation(Surface.ROTATION_90);
-        onView(isRoot()).perform(new WaitForIdle());
+        latch.await();
 
         TestButler.setRotation(Surface.ROTATION_0);
-        onView(isRoot()).perform(new WaitForIdle());
+        latch.await();
 
         Runtime.getRuntime().gc();
         assertNull(addedFragmentWorksController.get().get());

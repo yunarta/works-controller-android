@@ -1,6 +1,7 @@
 package com.mobilesolutionworks.android.app.test;
 
 import android.app.Activity;
+import android.app.Application;
 import android.support.test.espresso.UiController;
 import android.support.test.espresso.action.ViewActions;
 import android.support.test.rule.ActivityTestRule;
@@ -13,7 +14,7 @@ import android.view.View;
 import com.linkedin.android.testbutler.TestButler;
 import com.mobilesolutionworks.android.app.test.sdk.RetainChildFragmentActivity;
 import com.mobilesolutionworks.android.app.test.util.PerformRootAction;
-import com.mobilesolutionworks.android.app.test.util.WaitForIdle;
+import com.mobilesolutionworks.android.app.test.util.ResumeLatch;
 
 import junit.framework.Assert;
 
@@ -21,7 +22,6 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -52,6 +52,11 @@ public class RetainNestedFragmentTest {
         final AtomicReference<Integer> rootFragmentHash = new AtomicReference<>();
         final AtomicReference<Integer> childFragmentHash = new AtomicReference<>();
 
+        ResumeLatch latch = new ResumeLatch();
+
+        Application application = mActivityTestRule.getActivity().getApplication();
+        application.registerActivityLifecycleCallbacks(latch);
+
         onView(isRoot()).perform(new PerformRootAction() {
             @Override
             public void perform(UiController uiController, View view) {
@@ -71,16 +76,14 @@ public class RetainNestedFragmentTest {
         });
 
         onView(withId(R.id.button)).perform(ViewActions.click());
-        onView(isRoot()).perform(new WaitForIdle());
 
         TestButler.setRotation(Surface.ROTATION_90);
-        onView(isRoot()).perform(new WaitForIdle());
+        latch.await();
 
         TestButler.setRotation(Surface.ROTATION_0);
-        onView(isRoot()).perform(new WaitForIdle());
+        latch.await();
 
         pressBack();
-        onView(isRoot()).perform(new WaitForIdle());
 
         onView(isRoot()).perform(new PerformRootAction() {
             @Override
