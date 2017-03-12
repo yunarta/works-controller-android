@@ -45,7 +45,7 @@ import static junit.framework.Assert.assertNull;
  * </ul>
  * Created by yunarta on 9/3/17.
  */
-public class RetainWorksControllerTest {
+public class ControllerInWorksFragmentTest {
 
     @Rule
     public ActivityTestRule<RetainWorksControllerActivity> mActivityTestRule = new ActivityTestRule<>(RetainWorksControllerActivity.class);
