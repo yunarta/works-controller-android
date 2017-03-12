@@ -29,10 +29,17 @@ import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 /**
+ * Overview
+ * <p>
+ * As per support lib 25.1.0, {@link Fragment#setRetainInstance(boolean)} is now working on nested
+ * fragment, however if the nested fragment is moved to back stack along with the parent after certain
+ * configuration changes the nested fragment will be destroyed.
+ * <ul>
+ * <li>Test whether the behavior as per premise above is correct</li>
+ * </ul>
  * Created by yunarta on 9/3/17.
  */
-
-public class RetainChildFragmentTest {
+public class RetainNestedFragmentTest {
 
     @Rule
     public ActivityTestRule<RetainChildFragmentActivity> mActivityTestRule = new ActivityTestRule<>(RetainChildFragmentActivity.class);
@@ -100,11 +107,11 @@ public class RetainChildFragmentTest {
 
                 Fragment rootFragment = activity.getSupportFragmentManager().findFragmentById(R.id.fragment_container);
                 Assert.assertNotNull(rootFragment);
-                Assert.assertEquals(rootFragmentHash.get(), Integer.valueOf(System.identityHashCode(rootFragment)));
+                Assert.assertEquals("Root fragment is different with previous instance", rootFragmentHash.get(), Integer.valueOf(System.identityHashCode(rootFragment)));
 
                 Fragment child = rootFragment.getChildFragmentManager().findFragmentByTag("child");
                 Assert.assertNotNull(child);
-                Assert.assertNotSame("If this is equals, then Android Support solved this problem", childFragmentHash.get(), System.identityHashCode(child));
+                Assert.assertNotSame("If this is failed, it means Android Support retain nested fragment in back stack", childFragmentHash.get(), System.identityHashCode(child));
             }
         });
     }

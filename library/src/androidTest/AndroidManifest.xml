@@ -6,11 +6,6 @@
     <uses-sdk tools:overrideLibrary="android.support.test.uiautomator.v18"/>
 
     <application android:theme="@style/Theme.AppCompat.Light">
-        <activity android:name=".RotateActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-            </intent-filter>
-        </activity>
         <activity android:name=".sdk.RetainChildFragmentActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

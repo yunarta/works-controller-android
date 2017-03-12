@@ -32,9 +32,18 @@ import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 /**
+ * Overview
+ * <p>
+ * As per support lib 25.1.0, {@link Fragment#setRetainInstance(boolean)} is now working on nested
+ * fragment, however if the nested fragment is moved to back stack along with the parent after certain
+ * configuration changes the nested fragment will be destroyed.
+ *
+ *
+ * <ul>
+ * <li>Test whether the behavior as per premise above is correct</li>
+ * </ul>
  * Created by yunarta on 9/3/17.
  */
-
 public class RetainWorksControllerTest {
 
     @Rule
@@ -108,13 +117,13 @@ public class RetainWorksControllerTest {
 
                 EmptyWorksFragment rootFragment = (EmptyWorksFragment) activity.getSupportFragmentManager().findFragmentById(R.id.fragment_container);
                 Assert.assertNotNull(rootFragment);
-                Assert.assertNotSame(rootFragmentHash.get(), Integer.valueOf(System.identityHashCode(rootFragment)));
-                Assert.assertEquals(rootControllerHash.get(), Integer.valueOf(System.identityHashCode(rootFragment.getController())));
+                Assert.assertNotSame("Non retained fragment being maintained over rotation", rootFragmentHash.get(), Integer.valueOf(System.identityHashCode(rootFragment)));
+                Assert.assertEquals("Works controller instance is not maintained in fragment", rootControllerHash.get(), Integer.valueOf(System.identityHashCode(rootFragment.getController())));
 
                 EmptyWorksFragment child = (EmptyWorksFragment) rootFragment.getChildFragmentManager().findFragmentByTag("child");
                 Assert.assertNotNull(child);
-                Assert.assertNotSame("If this is equals, then Android Support solved this problem", childFragmentHash.get(), System.identityHashCode(child));
-                Assert.assertEquals(childControllerHash.get(), Integer.valueOf(System.identityHashCode(child.getController())));
+                Assert.assertNotSame("Non retained nested fragment being maintained over rotation", childFragmentHash.get(), System.identityHashCode(child));
+                Assert.assertEquals("Works controller instance is not maintained in nested fragment", childControllerHash.get(), Integer.valueOf(System.identityHashCode(child.getController())));
             }
         });
     }
