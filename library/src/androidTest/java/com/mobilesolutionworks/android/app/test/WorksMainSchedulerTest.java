@@ -81,14 +81,12 @@ public class WorksMainSchedulerTest {
                     @Override
                     public void run() {
                         assertEquals(Thread.currentThread(), Looper.getMainLooper().getThread());
-                        assertEquals(StateWorksFragment.State.RESUME, fragment.get().get().getState());
                     }
                 });
                 controller.get().get().runOnMainThreadDelayed(new Runnable() {
                     @Override
                     public void run() {
                         assertEquals(Thread.currentThread(), Looper.getMainLooper().getThread());
-                        assertEquals(StateWorksFragment.State.RESUME, fragment.get().get().getState());
                     }
                 }, 10);
             }

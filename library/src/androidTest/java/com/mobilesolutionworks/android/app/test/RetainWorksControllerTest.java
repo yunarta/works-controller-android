@@ -52,8 +52,6 @@ public class RetainWorksControllerTest {
 
     @Test
     public void testControllerRetainBehavior() throws Exception {
-
-
         // Context of the app under test.
         final AtomicReference<Integer> activityHash = new AtomicReference<>();
         final AtomicReference<Integer> rootFragmentHash = new AtomicReference<>();
