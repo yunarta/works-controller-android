@@ -1,5 +1,6 @@
 package com.mobilesolutionworks.android.app;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -29,9 +30,21 @@ public class WorksDialogFragment extends DialogFragment {
     }
 
     @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mController.getLifecycleHook().onConfigurationChanged(newConfig);
+    }
+
+    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mController.getLifecycleHook().onRestoreInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        mController.getLifecycleHook().dispatchSaveInstanceState(outState);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
