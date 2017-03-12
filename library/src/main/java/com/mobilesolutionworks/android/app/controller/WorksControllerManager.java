@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
-import android.util.Log;
 import android.util.SparseArray;
 
 /**
@@ -92,13 +91,6 @@ public class WorksControllerManager {
         }
     }
 
-    private void release() {
-        getLifecycleHook().dispatchDestroy();
-        getMainScheduler().release();
-        mControllers.clear();
-
-    }
-
     /**
      * Loader implementation to create the WorksController.
      * <p>
@@ -150,7 +142,9 @@ public class WorksControllerManager {
         @Override
         public void onLoaderReset(Loader<WorksControllerManager> loader) {
             WorksControllerManager controller = ((InternalLoader) loader).getController();
-            controller.release();
+            controller.getLifecycleHook().dispatchDestroy();
+            controller.getMainScheduler().release();
+            controller.mControllers.clear();
         }
     }
 }
