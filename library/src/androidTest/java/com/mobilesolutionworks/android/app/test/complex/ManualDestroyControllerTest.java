@@ -75,6 +75,9 @@ public class ManualDestroyControllerTest extends RotationTest {
 
                 WorksActivityImpl activity = (WorksActivityImpl) resumedActivities.get(0);
                 activity.getControllerManager().destroyController(0);
+
+                // calling destroy two times should not crash the app
+                activity.getControllerManager().destroyController(0);
             }
         });
 
