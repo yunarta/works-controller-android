@@ -11,11 +11,6 @@ import android.view.View;
 
 import com.linkedin.android.testbutler.TestButler;
 import com.mobilesolutionworks.android.app.test.base.RotationTest;
-import com.mobilesolutionworks.android.app.test.configuration.TestWorksActivity;
-import com.mobilesolutionworks.android.app.test.configuration.TestWorksController;
-import com.mobilesolutionworks.android.app.test.configuration.TestWorksDialogFragment;
-import com.mobilesolutionworks.android.app.test.configuration.TestWorksFragment;
-import com.mobilesolutionworks.android.app.test.util.ConfigurationChangeLatch;
 import com.mobilesolutionworks.android.app.test.util.HostAndController;
 import com.mobilesolutionworks.android.app.test.util.PerformRootAction;
 
@@ -26,7 +21,6 @@ import java.util.ArrayList;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
-import static org.junit.Assert.assertEquals;
 
 /**
  * Created by yunarta on 12/3/17.

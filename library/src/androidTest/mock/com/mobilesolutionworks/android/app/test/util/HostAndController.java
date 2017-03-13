@@ -1,7 +1,7 @@
 package com.mobilesolutionworks.android.app.test.util;
 
 import com.mobilesolutionworks.android.app.controller.WorksController;
-import com.mobilesolutionworks.android.app.test.works.GetController;
+import com.mobilesolutionworks.android.app.test.GetController;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;

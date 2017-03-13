@@ -11,29 +11,29 @@
                 <action android:name="android.intent.action.MAIN"/>
             </intent-filter>
         </activity>
-        <activity android:name=".works.RetainWorksControllerActivity">
+        <activity android:name=".nested.RetainWorksControllerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
             </intent-filter>
         </activity>
-        <activity android:name=".works.SchedulerTestActivity">
+        <activity android:name=".basic.SchedulerTestActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
             </intent-filter>
         </activity>
-        <activity android:name=".works.WorksActivityImpl">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".configuration.TestWorksActivity">
+        <activity android:name=".complex.WorksActivityImpl">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
             </intent-filter>
         </activity>
         <activity
-            android:name=".configuration.ConfigurationChangesTestWorksActivity"
+            android:name=".basic.TestWorksActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".basic.ConfigurationChangesTestWorksActivity"
             android:configChanges="keyboardHidden|orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

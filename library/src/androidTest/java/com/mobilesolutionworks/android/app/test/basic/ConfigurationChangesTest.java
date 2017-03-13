@@ -11,11 +11,6 @@ import android.view.View;
 
 import com.linkedin.android.testbutler.TestButler;
 import com.mobilesolutionworks.android.app.test.base.RotationTest;
-import com.mobilesolutionworks.android.app.test.configuration.ConfigurationChangesTestWorksActivity;
-import com.mobilesolutionworks.android.app.test.configuration.TestWorksActivity;
-import com.mobilesolutionworks.android.app.test.configuration.TestWorksController;
-import com.mobilesolutionworks.android.app.test.configuration.TestWorksDialogFragment;
-import com.mobilesolutionworks.android.app.test.configuration.TestWorksFragment;
 import com.mobilesolutionworks.android.app.test.util.ConfigurationChangeLatch;
 import com.mobilesolutionworks.android.app.test.util.HostAndController;
 import com.mobilesolutionworks.android.app.test.util.PerformRootAction;

@@ -1,4 +1,4 @@
-package com.mobilesolutionworks.android.app.test.works;
+package com.mobilesolutionworks.android.app.test;
 
 import com.mobilesolutionworks.android.app.controller.WorksController;
 

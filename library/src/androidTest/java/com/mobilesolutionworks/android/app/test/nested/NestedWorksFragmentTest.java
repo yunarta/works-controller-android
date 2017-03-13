@@ -1,4 +1,4 @@
-package com.mobilesolutionworks.android.app.test.complex;
+package com.mobilesolutionworks.android.app.test.nested;
 
 import android.app.Activity;
 import android.support.test.espresso.UiController;
@@ -14,11 +14,8 @@ import android.view.View;
 import com.linkedin.android.testbutler.TestButler;
 import com.mobilesolutionworks.android.app.controller.WorksController;
 import com.mobilesolutionworks.android.app.test.base.RotationTest;
-import com.mobilesolutionworks.android.app.test.configuration.TestWorksController;
 import com.mobilesolutionworks.android.app.test.util.HostAndController;
 import com.mobilesolutionworks.android.app.test.util.PerformRootAction;
-import com.mobilesolutionworks.android.app.test.works.EmptyWorksFragment;
-import com.mobilesolutionworks.android.app.test.works.RetainWorksControllerActivity;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -30,9 +27,6 @@ import java.util.concurrent.atomic.AtomicReference;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNotSame;
 import static junit.framework.Assert.assertNull;
 

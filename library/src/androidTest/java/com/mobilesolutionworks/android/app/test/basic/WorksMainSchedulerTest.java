@@ -14,9 +14,6 @@ import android.view.View;
 
 import com.mobilesolutionworks.android.app.controller.WorksController;
 import com.mobilesolutionworks.android.app.test.util.PerformRootAction;
-import com.mobilesolutionworks.android.app.test.works.SchedulerTestActivity;
-import com.mobilesolutionworks.android.app.test.works.SchedulerTestFragment;
-import com.mobilesolutionworks.android.app.test.works.StateWorksFragment;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -42,9 +39,9 @@ public class WorksMainSchedulerTest {
     @Test
     public void testRunOnUIWhenIsReady() throws Exception {
         // Context of the app under test.
-        final AtomicReference<StateWorksFragment.State> runningState1 = new AtomicReference<>();
-        final AtomicReference<StateWorksFragment.State> runningState2 = new AtomicReference<>();
-        final AtomicReference<StateWorksFragment.State> runningState3 = new AtomicReference<>();
+        final AtomicReference<SchedulerWorksFragment.State> runningState1 = new AtomicReference<>();
+        final AtomicReference<SchedulerWorksFragment.State> runningState2 = new AtomicReference<>();
+        final AtomicReference<SchedulerWorksFragment.State> runningState3 = new AtomicReference<>();
 
         final AtomicReference<WeakReference<SchedulerTestFragment>> fragment = new AtomicReference<>();
         final AtomicReference<WeakReference<WorksController>> controller = new AtomicReference<>();
@@ -97,7 +94,7 @@ public class WorksMainSchedulerTest {
         onView(isRoot()).perform(new PerformRootAction() {
             @Override
             public void perform(UiController uiController, View view) {
-                assertEquals(StateWorksFragment.State.RESUME, fragment.get().get().getState());
+                assertEquals(SchedulerWorksFragment.State.RESUME, fragment.get().get().getState());
                 controller.get().get().runOnUIWhenIsReady(new Runnable() {
                     @Override
                     public void run() {
@@ -109,14 +106,14 @@ public class WorksMainSchedulerTest {
                     @Override
                     public void run() {
                         assertEquals(Thread.currentThread(), Looper.getMainLooper().getThread());
-                        assertEquals(StateWorksFragment.State.RESUME, fragment.get().get().getState());
+                        assertEquals(SchedulerWorksFragment.State.RESUME, fragment.get().get().getState());
                     }
                 });
                 controller.get().get().runOnMainThreadDelayed(new Runnable() {
                     @Override
                     public void run() {
                         assertEquals(Thread.currentThread(), Looper.getMainLooper().getThread());
-                        assertEquals(StateWorksFragment.State.RESUME, fragment.get().get().getState());
+                        assertEquals(SchedulerWorksFragment.State.RESUME, fragment.get().get().getState());
                     }
                 }, 10);
             }
@@ -127,7 +124,7 @@ public class WorksMainSchedulerTest {
         onView(isRoot()).perform(new PerformRootAction() {
             @Override
             public void perform(UiController uiController, View view) {
-                assertEquals(StateWorksFragment.State.PAUSE, fragment.get().get().getState());
+                assertEquals(SchedulerWorksFragment.State.PAUSE, fragment.get().get().getState());
                 controller.get().get().runOnUIWhenIsReady(new Runnable() {
                     @Override
                     public void run() {
@@ -142,9 +139,9 @@ public class WorksMainSchedulerTest {
         onView(isRoot()).perform(new PerformRootAction() {
             @Override
             public void perform(UiController uiController, View view) {
-                assertEquals(StateWorksFragment.State.RESUME, runningState1.get());
-                assertEquals(StateWorksFragment.State.RESUME, runningState2.get());
-                assertEquals(StateWorksFragment.State.RESUME, runningState3.get());
+                assertEquals(SchedulerWorksFragment.State.RESUME, runningState1.get());
+                assertEquals(SchedulerWorksFragment.State.RESUME, runningState2.get());
+                assertEquals(SchedulerWorksFragment.State.RESUME, runningState3.get());
             }
         });
     }

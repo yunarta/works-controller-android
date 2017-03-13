@@ -1,27 +1,25 @@
-package com.mobilesolutionworks.android.app.test.works;
+package com.mobilesolutionworks.android.app.test.basic;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.mobilesolutionworks.android.app.WorksFragment;
 import com.mobilesolutionworks.android.app.controller.WorksController;
 import com.mobilesolutionworks.android.app.controller.WorksControllerManager;
 import com.mobilesolutionworks.android.app.test.R;
 
 /**
- * Created by yunarta on 9/3/17.
+ * Created by yunarta on 12/3/17.
  */
 
-public class EmptyWorksFragment extends WorksFragment implements GetController<WorksController> {
+public class SchedulerTestFragment extends SchedulerWorksFragment {
 
     private WorksController mController;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mController = getControllerManager().initController(0, null, new WorksControllerManager.ControllerCallbacks<WorksController>() {
             @Override
@@ -38,15 +36,17 @@ public class EmptyWorksFragment extends WorksFragment implements GetController<W
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.empty_fragment, container, false);
+        return inflater.inflate(R.layout.scheduler_test_fragment, null, false);
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onResume() {
+        super.onResume();
+    }
 
-        TextView id = (TextView) view.findViewById(com.mobilesolutionworks.android.app.test.R.id.textView);
-        id.setText("empty");
+    @Override
+    public void onPause() {
+        super.onPause();
     }
 
     @Override

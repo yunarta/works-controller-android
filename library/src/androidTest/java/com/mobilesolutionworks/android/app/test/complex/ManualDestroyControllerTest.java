@@ -14,7 +14,6 @@ import com.mobilesolutionworks.android.app.controller.WorksController;
 import com.mobilesolutionworks.android.app.controller.WorksControllerManager;
 import com.mobilesolutionworks.android.app.test.base.RotationTest;
 import com.mobilesolutionworks.android.app.test.util.PerformRootAction;
-import com.mobilesolutionworks.android.app.test.works.WorksActivityImpl;
 
 import junit.framework.Assert;
 

@@ -1,11 +1,11 @@
-package com.mobilesolutionworks.android.app.test.configuration;
+package com.mobilesolutionworks.android.app.test.basic;
 
 import android.os.Bundle;
 
 import com.mobilesolutionworks.android.app.WorksActivity;
 import com.mobilesolutionworks.android.app.controller.WorksControllerManager;
+import com.mobilesolutionworks.android.app.test.GetController;
 import com.mobilesolutionworks.android.app.test.R;
-import com.mobilesolutionworks.android.app.test.works.GetController;
 
 /**
  * Created by yunarta on 12/3/17.

@@ -1,11 +1,9 @@
-package com.mobilesolutionworks.android.app.test.works;
+package com.mobilesolutionworks.android.app.test.nested;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.TextView;
-
-import com.mobilesolutionworks.android.app.test.sdk.ChildFragment;
 
 /**
  * Created by yunarta on 9/3/17.

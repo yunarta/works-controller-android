@@ -1,4 +1,4 @@
-package com.mobilesolutionworks.android.app.test.configuration;
+package com.mobilesolutionworks.android.app.test.basic;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.mobilesolutionworks.android.app.WorksFragment;
 import com.mobilesolutionworks.android.app.controller.WorksControllerManager;
-import com.mobilesolutionworks.android.app.test.works.GetController;
+import com.mobilesolutionworks.android.app.test.GetController;
 
 /**
  * Created by yunarta on 9/3/17.

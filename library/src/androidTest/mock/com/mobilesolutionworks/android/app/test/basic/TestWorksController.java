@@ -1,4 +1,4 @@
-package com.mobilesolutionworks.android.app.test.configuration;
+package com.mobilesolutionworks.android.app.test.basic;
 
 import android.content.res.Configuration;
 

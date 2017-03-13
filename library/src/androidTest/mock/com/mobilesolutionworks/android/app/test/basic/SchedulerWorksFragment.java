@@ -1,4 +1,4 @@
-package com.mobilesolutionworks.android.app.test.works;
+package com.mobilesolutionworks.android.app.test.basic;
 
 import android.os.Bundle;
 
@@ -8,7 +8,7 @@ import com.mobilesolutionworks.android.app.WorksFragment;
  * Created by yunarta on 12/3/17.
  */
 
-public class StateWorksFragment extends WorksFragment {
+public class SchedulerWorksFragment extends WorksFragment {
 
     public enum State {
         BEGIN,

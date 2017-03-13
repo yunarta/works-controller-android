@@ -1,4 +1,4 @@
-package com.mobilesolutionworks.android.app.test.works;
+package com.mobilesolutionworks.android.app.test.nested;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,7 +9,7 @@ import android.view.View;
  * Created by yunarta on 9/3/17.
  */
 
-public class SchedulerTestActivity extends AppCompatActivity {
+public class RetainWorksControllerActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -27,7 +27,7 @@ public class SchedulerTestActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(com.mobilesolutionworks.android.app.test.R.id.fragment_container, new SchedulerTestFragment(), "root")
+                    .replace(com.mobilesolutionworks.android.app.test.R.id.fragment_container, new RootWorksFragment(), "root")
                     .commitNow();
         }
     }

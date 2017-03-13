@@ -1,4 +1,4 @@
-package com.mobilesolutionworks.android.app.test.works;
+package com.mobilesolutionworks.android.app.test.nested;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

@@ -1,18 +1,16 @@
-package com.mobilesolutionworks.android.app.test.works;
+package com.mobilesolutionworks.android.app.test.basic;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-
-import com.mobilesolutionworks.android.app.test.sdk.EmptyFragment;
-import com.mobilesolutionworks.android.app.test.sdk.RootFragment;
 
 /**
  * Created by yunarta on 9/3/17.
  */
 
-public class RetainWorksControllerActivity extends AppCompatActivity {
+public class SchedulerTestActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -23,14 +21,14 @@ public class RetainWorksControllerActivity extends AppCompatActivity {
             public void onClick(View v) {
                 getSupportFragmentManager().beginTransaction()
                         .addToBackStack("back-stack")
-                        .replace(com.mobilesolutionworks.android.app.test.R.id.fragment_container, new EmptyWorksFragment(), "stack")
+                        .replace(com.mobilesolutionworks.android.app.test.R.id.fragment_container, new Fragment(), "stack")
                         .commit();
             }
         });
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(com.mobilesolutionworks.android.app.test.R.id.fragment_container, new RootWorksFragment(), "root")
+                    .replace(com.mobilesolutionworks.android.app.test.R.id.fragment_container, new SchedulerTestFragment(), "root")
                     .commitNow();
         }
     }
