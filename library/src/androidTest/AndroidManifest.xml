@@ -6,12 +6,35 @@
     <uses-sdk tools:overrideLibrary="android.support.test.uiautomator.v18"/>
 
     <application android:theme="@style/Theme.AppCompat.Light">
-        <activity android:name=".RotateActivity">
+        <activity android:name=".sdk.RetainChildFragmentActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
             </intent-filter>
         </activity>
-        <activity android:name=".RetainChildFragmentActivity">
+        <activity android:name=".works.RetainWorksControllerActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".works.SchedulerTestActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".works.WorksActivityImpl">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".configuration.TestWorksActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".configuration.ConfigurationChangesTestWorksActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
             </intent-filter>

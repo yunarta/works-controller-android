@@ -93,3 +93,4 @@ custom.properties
 /build
 /captures
 .externalNativeBuild
+.sonar

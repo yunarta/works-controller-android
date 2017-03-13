@@ -1,4 +1,4 @@
-package com.mobilesolutionworks.android.app.test;
+package com.mobilesolutionworks.android.app.test.sdk;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -25,7 +25,7 @@ public class RootFragment extends EmptyFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        TextView id = (TextView) view.findViewById(R.id.textView);
+        TextView id = (TextView) view.findViewById(com.mobilesolutionworks.android.app.test.R.id.textView);
         id.setText("child");
     }
 

@@ -77,7 +77,7 @@ public class WorksControllerLifecycleHook {
             int size = controllers.size();
             for (int i = 0; i < size; i++) {
                 Bundle bundle = state.getParcelable(":worksController:" + controllers.keyAt(i));
-                controllers.valueAt(i).onViewStateRestored(bundle);
+                controllers.valueAt(i).onRestoreInstanceState(bundle);
             }
         }
     }
@@ -91,10 +91,10 @@ public class WorksControllerLifecycleHook {
         SparseArray<WorksController> controllers = mManager.getControllers();
         int size = controllers.size();
         for (int i = 0; i < size; i++) {
-            WorksController info = controllers.valueAt(i);
+            WorksController controller = controllers.valueAt(i);
 
             Bundle bundle = new Bundle();
-            info.onViewStateRestored(bundle);
+            controller.onSaveInstanceState(bundle);
 
             state.putParcelable(":worksController:" + controllers.keyAt(i), bundle);
         }

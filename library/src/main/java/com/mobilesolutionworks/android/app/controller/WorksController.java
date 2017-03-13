@@ -1,6 +1,5 @@
 package com.mobilesolutionworks.android.app.controller;
 
-import android.app.Fragment;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
@@ -25,43 +24,43 @@ public class WorksController {
         mManager = manager;
     }
 
-    public void onCreate(Bundle savedInstanceState) {
-
+    public void onCreate(Bundle arguments) {
+        // Lifecycle event called when controller is created
     }
 
     public void onPaused() {
-
+        // Lifecycle event called when host is paused
     }
 
     public void onResume() {
-
+        // Lifecycle event called when host is resumed
     }
 
     public void onDestroy() {
-
+        // Lifecycle event called when controlled is destroyed
     }
 
-    public void onViewStateRestored(Bundle state) {
-
+    public void onRestoreInstanceState(Bundle state) {
+        // Lifecycle event called when host is view state is restored
     }
 
     public void onSaveInstanceState(Bundle outState) {
-
+        // Lifecycle event called when host is want to save instance state
     }
 
     public void onConfigurationChanged(Configuration config) {
-
+        // Lifecycle event called when host has configuration changed
     }
 
-    void runOnUIWhenIsReady(final Runnable runnable) {
+    public void runOnUIWhenIsReady(final Runnable runnable) {
         mManager.getMainScheduler().runOnUIWhenIsReady(runnable);
     }
 
-    void runOnMainThread(Runnable runnable) {
+    public void runOnMainThread(Runnable runnable) {
         mManager.getMainScheduler().runOnMainThread(runnable);
     }
 
-    void runOnMainThreadDelayed(Runnable runnable, long delay) {
+    public void runOnMainThreadDelayed(Runnable runnable, long delay) {
         mManager.getMainScheduler().runOnMainThreadDelayed(runnable, delay);
     }
 }
