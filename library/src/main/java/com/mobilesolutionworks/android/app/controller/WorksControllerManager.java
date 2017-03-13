@@ -20,11 +20,14 @@ public class WorksControllerManager {
 
     private final WorksMainScheduler mMainScheduler;
 
+    private Context mContext;
+
     public WorksControllerManager() {
         mControllers = new SparseArray<>();
         mLifecycleHook = new WorksControllerLifecycleHook(this);
 
         mMainScheduler = new WorksMainScheduler();
+
     }
 
     public WorksControllerLifecycleHook getLifecycleHook() {
@@ -45,6 +48,14 @@ public class WorksControllerManager {
 
     void dispatchResume() {
         mMainScheduler.resume();
+    }
+
+    public void updateContext(Context context) {
+        mContext = context.getApplicationContext();
+    }
+
+    Context getContext() {
+        return mContext;
     }
 
     @FunctionalInterface

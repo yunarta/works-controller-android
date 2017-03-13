@@ -1,5 +1,6 @@
 package com.mobilesolutionworks.android.app.controller;
 
+import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
@@ -22,6 +23,10 @@ public class WorksController {
 
     void setControllerManager(WorksControllerManager manager) {
         mManager = manager;
+    }
+
+    public Context getContext() {
+        return mManager.getContext();
     }
 
     public void onCreate(Bundle arguments) {

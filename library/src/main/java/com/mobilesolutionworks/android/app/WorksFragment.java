@@ -23,6 +23,7 @@ public class WorksFragment extends Fragment {
 
         WorksControllerManager.InternalLoader loader = (WorksControllerManager.InternalLoader) getLoaderManager().initLoader(0, null, new WorksControllerManager.LoaderCallbacks(getActivity().getApplicationContext()));
         mController = loader.getController();
+        mController.updateContext(getContext());
     }
 
     public WorksControllerManager getControllerManager() {

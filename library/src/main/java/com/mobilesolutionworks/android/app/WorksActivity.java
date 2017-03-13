@@ -25,6 +25,7 @@ public class WorksActivity extends AppCompatActivity {
 
         WorksControllerManager.InternalLoader loader = (WorksControllerManager.InternalLoader) getSupportLoaderManager().initLoader(0, null, new WorksControllerManager.LoaderCallbacks(this));
         mController = loader.getController();
+        mController.updateContext(this);
     }
 
     @Override

@@ -21,6 +21,7 @@ public class WorksDialogFragment extends DialogFragment {
 
         WorksControllerManager.InternalLoader loader = (WorksControllerManager.InternalLoader) getLoaderManager().initLoader(0, null, new WorksControllerManager.LoaderCallbacks(getActivity()));
         mController = loader.getController();
+        mController.updateContext(getContext());
     }
 
     @Override
