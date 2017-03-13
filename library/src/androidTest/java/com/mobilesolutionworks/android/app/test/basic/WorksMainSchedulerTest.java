@@ -57,8 +57,11 @@ public class WorksMainSchedulerTest {
                 SchedulerTestActivity activity = (SchedulerTestActivity) resumedActivities.get(0);
 
                 SchedulerTestFragment rootFragment = (SchedulerTestFragment) activity.getSupportFragmentManager().findFragmentById(com.mobilesolutionworks.android.app.test.R.id.fragment_container);
+                WorksController c = rootFragment.getController();
+                assertEquals(activity.getApplicationContext(), c.getContext());
+
                 fragment.set(new WeakReference<>(rootFragment));
-                controller.set(new WeakReference<>(rootFragment.getController()));
+                controller.set(new WeakReference<>(c));
             }
         });
 
