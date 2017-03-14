@@ -2,7 +2,6 @@ package com.mobilesolutionworks.android.app.test.util;
 
 import android.content.ComponentCallbacks;
 import android.content.res.Configuration;
-import android.util.Log;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;

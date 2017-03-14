@@ -48,7 +48,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:' + rootProject.ext.supportLibVersion
     compile 'com.parse.bolts:bolts-tasks:1.4.0'
 
-    compile project(':library')
+    compile project(':core')
 
     testCompile 'junit:junit:4.12'
     compile 'com.android.support.constraint:constraint-layout:1.0.1'

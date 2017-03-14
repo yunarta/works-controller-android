@@ -13,7 +13,6 @@ import android.view.View;
 
 import com.linkedin.android.testbutler.TestButler;
 import com.mobilesolutionworks.android.app.test.base.RotationTest;
-import com.mobilesolutionworks.android.app.test.sdk.RetainChildFragmentActivity;
 import com.mobilesolutionworks.android.app.test.util.PerformRootAction;
 
 import junit.framework.Assert;
@@ -27,7 +26,6 @@ import java.util.concurrent.atomic.AtomicReference;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 /**
  * Overview
