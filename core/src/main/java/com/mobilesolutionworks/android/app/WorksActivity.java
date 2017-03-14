@@ -44,6 +44,7 @@ public class WorksActivity extends AppCompatActivity implements WorkControllerHo
      *
      * @return controller manager.
      */
+    @Override
     public WorksControllerManager getControllerManager() {
         return mController;
     }

@@ -25,6 +25,7 @@ public class WorksFragment extends Fragment implements WorkControllerHost {
         mController = loader.getController();
     }
 
+    @Override
     public WorksControllerManager getControllerManager() {
         return mController;
     }

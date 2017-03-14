@@ -29,6 +29,7 @@ public class WorksDialogFragment extends DialogFragment implements WorkControlle
         mController.getLifecycleHook().onRestoreInstanceState(savedInstanceState);
     }
 
+    @Override
     public WorksControllerManager getControllerManager() {
         return mController;
     }
