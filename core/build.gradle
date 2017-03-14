@@ -58,7 +58,6 @@ dependencies {
     androidTestCompile 'com.android.support:appcompat-v7:' + rootProject.ext.supportLibVersion
 
     provided 'com.android.support:appcompat-v7:' + rootProject.ext.supportLibVersion
-    provided 'com.parse.bolts:bolts-tasks:1.4.0'
 
     testCompile 'junit:junit:4.12'
 }
