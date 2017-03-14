@@ -14,7 +14,7 @@ public abstract class HostWorksController<H extends WorkControllerHost> extends 
 
     private H mHost;
 
-    public void updateHost(H host) {
+    void updateHost(H host) {
         mHost = host;
     }
 
@@ -22,8 +22,24 @@ public abstract class HostWorksController<H extends WorkControllerHost> extends 
         return mHost;
     }
 
-    public static <C extends HostWorksController<H>, H extends WorkControllerHost> C create(H host, int id, Bundle args, WorksControllerManager.ControllerCallbacks<C> callback) {
-        C controller = host.getControllerManager().initController(id, args, callback);
+    @Override
+    public void onCreate(Bundle arguments) {
+        super.onCreate(arguments);
+        if (mHost == null) {
+            throw new IllegalStateException("HostWorksController can only be created using HostWorksController.create function");
+        }
+    }
+
+    public static <C extends HostWorksController<H>, H extends WorkControllerHost> C create(final H host, int id, Bundle args, final WorksControllerManager.ControllerCallbacks<C> callback) {
+        C controller = host.getControllerManager().initController(id, args, new WorksControllerManager.ControllerCallbacks<C>() {
+            @Override
+            public C onCreateController(int id, Bundle args) {
+                C c = callback.onCreateController(id, args);
+                c.updateHost(host);
+                return c;
+            }
+        });
+
         controller.updateHost(host);
         return controller;
     }
