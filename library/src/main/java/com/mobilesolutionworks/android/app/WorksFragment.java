@@ -21,9 +21,8 @@ public class WorksFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        WorksControllerManager.InternalLoader loader = (WorksControllerManager.InternalLoader) getLoaderManager().initLoader(0, null, new WorksControllerManager.LoaderCallbacks(getActivity().getApplicationContext()));
+        WorksControllerManager.Loader loader = (WorksControllerManager.Loader) getLoaderManager().initLoader(0, null, new WorksControllerManager.LoaderCallbacks(getActivity().getApplicationContext()));
         mController = loader.getController();
-        mController.updateContext(getContext());
     }
 
     public WorksControllerManager getControllerManager() {

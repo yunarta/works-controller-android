@@ -4,8 +4,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.util.SparseArray;
+
+import java.lang.ref.WeakReference;
 
 /**
  * Controller manager where WorksController will be created and persisted.
@@ -50,7 +51,7 @@ public class WorksControllerManager {
         mMainScheduler.resume();
     }
 
-    public void updateContext(Context context) {
+    void updateContext(Context context) {
         mContext = context.getApplicationContext();
     }
 
@@ -119,11 +120,11 @@ public class WorksControllerManager {
      * <p>
      * This can be used when developer requires to use activities that is not subclass of WorksActivity.
      */
-    public static class InternalLoader extends android.support.v4.content.Loader<WorksControllerManager> {
+    public static class Loader extends android.support.v4.content.Loader<WorksControllerManager> {
 
         private WorksControllerManager mData;
 
-        public InternalLoader(Context context) {
+        public Loader(Context context) {
             super(context);
             mData = new WorksControllerManager();
         }
@@ -146,25 +147,25 @@ public class WorksControllerManager {
      */
     public static class LoaderCallbacks implements LoaderManager.LoaderCallbacks<WorksControllerManager> {
 
-        private Context mContext;
+        private WeakReference<Context> mContext;
 
         public LoaderCallbacks(Context context) {
-            mContext = context.getApplicationContext();
+            mContext = new WeakReference<>(context.getApplicationContext());
         }
 
         @Override
         public android.support.v4.content.Loader<WorksControllerManager> onCreateLoader(int id, Bundle args) {
-            return new InternalLoader(mContext);
+            return new Loader(mContext.get());
         }
 
         @Override
-        public void onLoadFinished(Loader<WorksControllerManager> loader, WorksControllerManager data) {
-            // we dont have to take care this callback
+        public void onLoadFinished(android.support.v4.content.Loader loader, WorksControllerManager data) {
+            ((Loader) loader).getController().updateContext(mContext.get());
         }
 
         @Override
-        public void onLoaderReset(Loader<WorksControllerManager> loader) {
-            WorksControllerManager controller = ((InternalLoader) loader).getController();
+        public void onLoaderReset(android.support.v4.content.Loader loader) {
+            WorksControllerManager controller = ((Loader) loader).getController();
             controller.getLifecycleHook().dispatchDestroy();
             controller.getMainScheduler().release();
             controller.mControllers.clear();
