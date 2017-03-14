@@ -11,7 +11,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testApplicationId "com.mobilesolutionworks.android.app.test"
+        testApplicationId "com.mobilesolutionworks.android.controller.test"
         testInstrumentationRunner "test.runner.TestButlerTestRunner"
     }
 
