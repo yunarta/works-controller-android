@@ -12,7 +12,7 @@ import com.mobilesolutionworks.android.app.controller.WorksControllerManager;
  * <p>
  * Created by yunarta on 19/11/15.
  */
-public class WorksActivity extends AppCompatActivity {
+public class WorksActivity extends AppCompatActivity implements WorkControllerHost {
 
     /**
      * Controller manager.

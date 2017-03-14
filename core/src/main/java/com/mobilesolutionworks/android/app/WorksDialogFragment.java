@@ -11,7 +11,7 @@ import com.mobilesolutionworks.android.app.controller.WorksControllerManager;
  * <p>
  * Created by yunarta on 19/11/15.
  */
-public class WorksDialogFragment extends DialogFragment {
+public class WorksDialogFragment extends DialogFragment implements WorkControllerHost {
 
     private WorksControllerManager mController;
 

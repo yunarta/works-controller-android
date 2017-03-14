@@ -13,7 +13,7 @@ import com.mobilesolutionworks.android.app.controller.WorksControllerManager;
  * <p>
  * Created by yunarta on 19/11/15.
  */
-public class WorksFragment extends Fragment {
+public class WorksFragment extends Fragment implements WorkControllerHost {
 
     private WorksControllerManager mController;
 

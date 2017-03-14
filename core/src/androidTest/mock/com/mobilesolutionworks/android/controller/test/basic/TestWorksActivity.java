@@ -32,7 +32,6 @@ public class TestWorksActivity extends WorksActivity implements GetController<Te
                     .replace(R.id.fragment_container, new TestWorksFragment(), "root")
                     .commitNow();
         }
-
     }
 
     @Override
