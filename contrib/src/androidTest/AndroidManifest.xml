@@ -1,0 +1,16 @@
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.mobilesolutionworks.android.controller.contrib.test">
+
+    <uses-sdk tools:overrideLibrary="android.support.test.uiautomator.v18"/>
+
+    <application android:theme="@style/Theme.AppCompat.Light">
+        <activity android:name=".basic.HostWorksControllerActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </activity>
+
+    </application>
+</manifest>

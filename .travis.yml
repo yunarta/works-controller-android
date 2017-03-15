@@ -34,7 +34,8 @@ script:
     - wget https://bintray.com/linkedin/maven/download_file?file_path=com%2Flinkedin%2Ftestbutler%2Ftest-butler-app%2F1.2.0%2Ftest-butler-app-1.2.0.apk -O test-butler-app-1.2.0.apk
     - adb install test-butler-app-1.2.0.apk
     - ./gradlew clean assemble connectedCheck
-    - sonar-scanner
+    - chmod +x run_scanner.sh
+    - ./run_scanner.sh
 after_success:
     - ./gradlew coveralls
 notifications:
