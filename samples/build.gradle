@@ -1,8 +1,16 @@
+plugins {
+    id "me.tatarka.retrolambda" version "3.6.0"
+}
 apply plugin: 'com.android.application'
+
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
+
+    dataBinding {
+        enabled = true
+    }
 
     defaultConfig {
         applicationId "com.mobilesolutionworks.android.controller.samples"
@@ -19,6 +27,11 @@ android {
         lintOptions {
             abortOnError false
         }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     buildTypes {
@@ -46,10 +59,13 @@ dependencies {
     })
 
     compile 'com.android.support:appcompat-v7:' + rootProject.ext.supportLibVersion
+    compile 'com.android.support:design:' + rootProject.ext.supportLibVersion
+    compile 'com.android.support:recyclerview-v7:' + rootProject.ext.supportLibVersion
     compile 'com.parse.bolts:bolts-tasks:1.4.0'
 
     compile project(':core')
+    compile project(':contrib')
 
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support.constraint:constraint-layout:1.0.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }
