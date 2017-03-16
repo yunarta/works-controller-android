@@ -166,6 +166,7 @@ public class WorksControllerManager {
         Loader(Context context) {
             super(context);
             mData = new WorksControllerManager();
+            mData.updateContext(getContext());
         }
 
         @Override

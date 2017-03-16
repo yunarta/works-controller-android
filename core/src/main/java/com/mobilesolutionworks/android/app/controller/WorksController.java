@@ -5,6 +5,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 
 /**
  * The main class of this library.
@@ -35,6 +36,14 @@ public class WorksController {
     @NonNull
     public Context getContext() {
         return mManager.getContext();
+    }
+
+    /**
+     * Get string from context
+     */
+    @NonNull
+    public String getString(@StringRes int id) {
+        return mManager.getContext().getString(id);
     }
 
     /**
