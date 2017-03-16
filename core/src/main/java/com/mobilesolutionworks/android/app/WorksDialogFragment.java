@@ -2,6 +2,7 @@ package com.mobilesolutionworks.android.app;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 
 import com.mobilesolutionworks.android.app.controller.WorksControllerManager;
