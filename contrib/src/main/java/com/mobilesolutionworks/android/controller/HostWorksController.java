@@ -2,26 +2,35 @@ package com.mobilesolutionworks.android.controller;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.mobilesolutionworks.android.app.WorkControllerHost;
 import com.mobilesolutionworks.android.app.controller.WorksController;
 import com.mobilesolutionworks.android.app.controller.WorksControllerManager;
 
+import java.lang.ref.WeakReference;
+
 /**
+ * Controller with host storing feature.
+ * <p>
+ * In actual development, developer will most likely use this class rather than WorksController.
+ * As the host is updated  after device rotation, the controller can consider that the host is
+ * always available when making update in {@link #runOnUIWhenIsReady(Runnable)} scope.
+ * <p>
  * Created by yunarta on 15/3/17.
  */
 
 public abstract class HostWorksController<H extends WorkControllerHost> extends WorksController {
 
-    private H mHost;
+    private WeakReference<H> mHost;
 
     void updateHost(H host) {
-        mHost = host;
+        mHost = new WeakReference<>(host);
     }
 
     @NonNull
     public H getHost() {
-        return mHost;
+        return mHost.get();
     }
 
     @Override
@@ -32,7 +41,7 @@ public abstract class HostWorksController<H extends WorkControllerHost> extends 
         }
     }
 
-    public static <C extends HostWorksController<H>, H extends WorkControllerHost> C create(final H host, int id, Bundle args, final WorksControllerManager.ControllerCallbacks<C> callback) {
+    public static <C extends HostWorksController<H>, H extends WorkControllerHost> C create(@NonNull final H host, int id, @Nullable Bundle args, @NonNull final WorksControllerManager.ControllerCallbacks<C> callback) {
         C controller = host.getControllerManager().initController(id, args, new WorksControllerManager.ControllerCallbacks<C>() {
             @Override
             public C onCreateController(int id, Bundle args) {
