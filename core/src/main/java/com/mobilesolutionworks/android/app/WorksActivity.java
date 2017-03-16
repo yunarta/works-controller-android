@@ -2,6 +2,7 @@ package com.mobilesolutionworks.android.app;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
@@ -27,6 +28,17 @@ public class WorksActivity extends AppCompatActivity implements WorkControllerHo
         mController = loader.getController();
     }
 
+    /**
+     * Get controller manager to create individual controller.
+     *
+     * @return controller manager.
+     */
+    @Override
+    @NonNull
+    public WorksControllerManager getControllerManager() {
+        return mController;
+    }
+
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -37,16 +49,6 @@ public class WorksActivity extends AppCompatActivity implements WorkControllerHo
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         mController.getLifecycleHook().onConfigurationChanged(newConfig);
-    }
-
-    /**
-     * Get controller manager to create individual controller.
-     *
-     * @return controller manager.
-     */
-    @Override
-    public WorksControllerManager getControllerManager() {
-        return mController;
     }
 
     @Override

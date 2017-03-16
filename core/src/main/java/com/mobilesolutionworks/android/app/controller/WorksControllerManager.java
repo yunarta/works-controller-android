@@ -15,15 +15,30 @@ import java.lang.ref.WeakReference;
  */
 public class WorksControllerManager {
 
+    /**
+     * Collection of created controllers.
+     */
     private final SparseArray<WorksController> mControllers;
 
+    /**
+     * Lifecycle hook.
+     */
     private final WorksControllerLifecycleHook mLifecycleHook;
 
+    /**
+     * Main scheduler.
+     */
     private final WorksMainScheduler mMainScheduler;
 
+    /**
+     * Application context.
+     */
     private Context mContext;
 
-    public WorksControllerManager() {
+    /**
+     * Create instance of controller manager.
+     */
+    protected WorksControllerManager() {
         mControllers = new SparseArray<>();
         mLifecycleHook = new WorksControllerLifecycleHook(this);
 
@@ -31,30 +46,53 @@ public class WorksControllerManager {
 
     }
 
+    /**
+     * Get lifecycle hook for the host to dispatch their lifecycle event.
+     *
+     * @return lifecycle hook instance.
+     */
     public WorksControllerLifecycleHook getLifecycleHook() {
         return mLifecycleHook;
     }
 
+    /**
+     * Get controller.
+     */
     SparseArray<WorksController> getControllers() {
         return mControllers;
     }
 
+    /**
+     * Get main scheduler.
+     */
     WorksMainScheduler getMainScheduler() {
         return mMainScheduler;
     }
 
+    /**
+     * Dispatch pause, called by lifecycle hook.
+     */
     void dispatchPause() {
         mMainScheduler.pause();
     }
 
+    /**
+     * Dispatch resume, called by lifecycle hook.
+     */
     void dispatchResume() {
         mMainScheduler.resume();
     }
 
+    /**
+     * Update context when the host is recreated.
+     */
     void updateContext(Context context) {
         mContext = context.getApplicationContext();
     }
 
+    /**
+     * Get application context.
+     */
     Context getContext() {
         return mContext;
     }
@@ -65,17 +103,17 @@ public class WorksControllerManager {
         /**
          * Called by implementation to create a Loader.
          */
-        D onCreateController(int id, Bundle args);
+        D onCreateController(int id, @Nullable Bundle args);
     }
 
     /**
      * Init a WorksController.
      *
-     * @param id       A unique identifier for this loader.
-     * @param args     Optional arguments or a Activity/Fragment saved instance state.
-     * @param callback Interface the ControllerManager will call to report about
+     * @param id       a unique identifier for this loader.
+     * @param args     optional arguments .
+     * @param callback interface that controller manager will call to report about
      *                 changes in the state of the loader.  Required.
-     * @return returns WorksController implementation immediately, if one is already created before than it will be returned.
+     * @return returns controller implementation immediately, if one is already created before than it will be returned.
      */
     public <D extends WorksController> D initController(int id, Bundle args, ControllerCallbacks<D> callback) {
         WorksController controller = mControllers.get(id);
@@ -92,9 +130,10 @@ public class WorksControllerManager {
     }
 
     /**
-     * Destroy associanted WorksController.
-     * <p>
-     * This will call onDestroy of WorksController.
+     * Get controller by id.
+     *
+     * @param id the id that controller was created
+     * @return associated controller is exist.
      */
     @Nullable
     public WorksController getController(int id) {
@@ -103,9 +142,9 @@ public class WorksControllerManager {
     }
 
     /**
-     * Destroy associanted WorksController.
+     * Destroy associated controller.
      * <p>
-     * This will call onDestroy of WorksController.
+     * This will call onDestroy of controller.
      */
     public void destroyController(int id) {
         WorksController controller = mControllers.get(id);
@@ -124,7 +163,7 @@ public class WorksControllerManager {
 
         private WorksControllerManager mData;
 
-        public Loader(Context context) {
+        Loader(Context context) {
             super(context);
             mData = new WorksControllerManager();
         }

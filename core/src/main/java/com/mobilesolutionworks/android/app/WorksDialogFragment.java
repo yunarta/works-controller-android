@@ -13,6 +13,9 @@ import com.mobilesolutionworks.android.app.controller.WorksControllerManager;
  */
 public class WorksDialogFragment extends DialogFragment implements WorkControllerHost {
 
+    /**
+     * Controller manager.
+     */
     private WorksControllerManager mController;
 
     @Override
@@ -23,15 +26,21 @@ public class WorksDialogFragment extends DialogFragment implements WorkControlle
         mController = loader.getController();
     }
 
+    /**
+     * Get controller manager to create individual controller.
+     *
+     * @return controller manager.
+     */
+    @Override
+    @NonNull
+    public WorksControllerManager getControllerManager() {
+        return mController;
+    }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mController.getLifecycleHook().onRestoreInstanceState(savedInstanceState);
-    }
-
-    @Override
-    public WorksControllerManager getControllerManager() {
-        return mController;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.mobilesolutionworks.android.controller;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 
 import com.mobilesolutionworks.android.app.WorkControllerHost;
 import com.mobilesolutionworks.android.app.controller.WorksController;
@@ -18,6 +19,7 @@ public abstract class HostWorksController<H extends WorkControllerHost> extends 
         mHost = host;
     }
 
+    @NonNull
     public H getHost() {
         return mHost;
     }

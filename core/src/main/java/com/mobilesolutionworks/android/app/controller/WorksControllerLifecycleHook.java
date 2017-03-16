@@ -5,14 +5,23 @@ import android.os.Bundle;
 import android.util.SparseArray;
 
 /**
+ * Exposed hook for host to pass their lifecycle.
+ * <p>
  * Created by yunarta on 8/3/17.
  */
-
 public class WorksControllerLifecycleHook {
 
+    /**
+     * Controller manager reference.
+     */
     private final WorksControllerManager mManager;
 
-    public WorksControllerLifecycleHook(WorksControllerManager manager) {
+    /**
+     * Create instance of lifecycle hook.
+     *
+     * @param manager manager instance.
+     */
+    WorksControllerLifecycleHook(WorksControllerManager manager) {
         mManager = manager;
     }
 
@@ -77,7 +86,9 @@ public class WorksControllerLifecycleHook {
             int size = controllers.size();
             for (int i = 0; i < size; i++) {
                 Bundle bundle = state.getParcelable(":worksController:" + controllers.keyAt(i));
-                controllers.valueAt(i).onRestoreInstanceState(bundle);
+                if (bundle != null) {
+                    controllers.valueAt(i).onRestoreInstanceState(bundle);
+                }
             }
         }
     }
