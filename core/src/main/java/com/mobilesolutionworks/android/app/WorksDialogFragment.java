@@ -23,7 +23,7 @@ public class WorksDialogFragment extends DialogFragment implements WorkControlle
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        WorksControllerManager.Loader loader = (WorksControllerManager.Loader) getLoaderManager().initLoader(0, null, new WorksControllerManager.LoaderCallbacks(getActivity()));
+        WorksControllerManager.ControllerManager loader = (WorksControllerManager.ControllerManager) getLoaderManager().initLoader(0, null, new WorksControllerManager.ControllerManagerLoaderCallbacks(getActivity()));
         mController = loader.getController();
     }
 

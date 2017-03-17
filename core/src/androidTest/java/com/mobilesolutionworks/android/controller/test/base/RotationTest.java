@@ -12,7 +12,7 @@ import org.junit.Before;
  * Created by yunarta on 12/3/17.
  */
 
-public class RotationTest {
+public abstract class RotationTest {
 
     protected ResumeLatch mLatch;
 
