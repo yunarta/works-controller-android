@@ -22,6 +22,7 @@ import java.util.ArrayList;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by yunarta on 12/3/17.
@@ -77,6 +78,8 @@ public class StandardTest extends RotationTest {
 
                 TestWorksDialogFragment dialog = (TestWorksDialogFragment) activity.getSupportFragmentManager().findFragmentByTag("dialog");
                 dialogCheck.validate(dialog);
+
+                assertEquals(mActivityTestRule.getActivity().getString(R.string.string_resource), fragment.getController().getString(R.string.string_resource));
             }
         });
     }
