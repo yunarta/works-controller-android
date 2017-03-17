@@ -5,8 +5,8 @@ buildscript {
         jcenter()
     }
     dependencies {
-        if (project.hasProperty("useEAP")) {
-            classpath 'com.android.tools.build:gradle:2.5.0-alpha-preview-01'
+        if (project.hasProperty("customBuildTools")) {
+            classpath 'com.android.tools.build:gradle:' + project["customBuildTools"]
         } else {
             classpath 'com.android.tools.build:gradle:2.3.0'
         }
