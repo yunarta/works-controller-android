@@ -12,7 +12,7 @@ import java.lang.ref.WeakReference;
  * Created by yunarta on 17/3/17.
  */
 
-public class DataBinding {
+public interface DataBinding {
 
     public static class ViewHolder<U, V extends ViewDataBinding> extends RecyclerView.ViewHolder {
 
@@ -38,7 +38,7 @@ public class DataBinding {
         }
     }
 
-    public static abstract class Adapter<U> extends RecyclerView.Adapter<ViewHolder<U, ? extends ViewDataBinding>> {
+    public abstract static class Adapter<U> extends RecyclerView.Adapter<ViewHolder<U, ? extends ViewDataBinding>> {
 
         private WeakReference<LayoutInflater> mInflater;
 
@@ -58,7 +58,7 @@ public class DataBinding {
         }
     }
 
-    public static abstract class SingleTypeAdapter<U, V extends ViewDataBinding> extends RecyclerView.Adapter<ViewHolder<U, V>> {
+    public abstract static class SingleTypeAdapter<U, V extends ViewDataBinding> extends RecyclerView.Adapter<ViewHolder<U, V>> {
 
         private WeakReference<LayoutInflater> mInflater;
 

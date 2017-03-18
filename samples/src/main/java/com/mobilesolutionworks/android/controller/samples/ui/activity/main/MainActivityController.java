@@ -28,7 +28,7 @@ public class MainActivityController extends HostWorksController<MainActivity> {
     }
 
     public void onItemSelected(DemoItem item) {
-
+        getContext().startActivity(item.intent);
     }
 
     public RecyclerView.Adapter getAdapter() {

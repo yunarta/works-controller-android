@@ -8,13 +8,13 @@ import android.content.Intent;
 
 public class DemoItem {
 
-    public String title;
+    public final String title;
 
-    public String subtitle;
+    public final String subtitle;
 
-    public Intent intent;
+    public final Intent intent;
 
-    public DemoItem(String title, String subtitle, Intent intent) {
+    DemoItem(String title, String subtitle, Intent intent) {
         this.title = title;
         this.subtitle = subtitle;
         this.intent = intent;
