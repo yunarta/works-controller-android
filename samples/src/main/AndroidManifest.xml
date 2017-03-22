@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          package="com.mobilesolutionworks.android.controller.samples">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.mobilesolutionworks.android.controller.samples">
 
-    <uses-sdk tools:overrideLibrary="android.support.test.uiautomator.v18"/>
+    <uses-sdk tools:overrideLibrary="android.support.test.uiautomator.v18" />
 
     <application
         android:allowBackup="true"
@@ -14,8 +14,25 @@
 
         <activity android:name=".ui.activity.main.MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.activity.demo1.Demo1Activity">
+            <intent-filter>
+                <action android:name="${applicationId}.action.DEMO1" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.activity.demo2.Demo2Activity">
+            <intent-filter>
+                <action android:name="${applicationId}.action.DEMO2" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.activity.demo2.GivingResultActivity">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
     </application>

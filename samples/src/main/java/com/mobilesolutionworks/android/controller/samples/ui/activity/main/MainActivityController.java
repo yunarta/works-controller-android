@@ -44,6 +44,7 @@ public class MainActivityController extends HostWorksController<MainActivity> {
             mItems = new ArrayList<>();
 
             mItems.add(new DemoItem(getString(R.string.demo1_title), getString(R.string.demo1_subtitle), new Intent(packageName + ".action.DEMO1")));
+            mItems.add(new DemoItem(getString(R.string.demo2_title), getString(R.string.demo2_subtitle), new Intent(packageName + ".action.DEMO2")));
         }
 
         @Override

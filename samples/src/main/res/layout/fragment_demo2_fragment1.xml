@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="fragment"
+            type="com.mobilesolutionworks.android.controller.samples.ui.activity.demo2.Demo2Fragment1" />
+
+        <variable
+            name="controller"
+            type="com.mobilesolutionworks.android.controller.samples.ui.activity.demo2.Demo2Fragment1Controller" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/ctrl1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> fragment.dispatchStartActivityForResult()}"
+            android:text="@string/demo2_fragment1_startActivityForResult"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+        <TextView
+            android:id="@+id/ctrl2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/demo2_fragment1_noResult"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+</layout>
