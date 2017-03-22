@@ -43,6 +43,18 @@ public class Demo2Fragment1 extends WorksFragment {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        Log.d("[demo][demo2]", this + " onPause()");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("[demo][demo2]", this + " onResume()");
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         mController = null;
@@ -57,15 +69,26 @@ public class Demo2Fragment1 extends WorksFragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             Log.d("[demo][demo2]", this + " onActivityResult() is called");
-            final FragmentDemo2Fragment1Binding binding = DataBindingUtil.findBinding(getView());
-            if (binding != null) {
-                binding.ctrl2.setText(R.string.demo2_fragment1_withResult);
+            final Runnable runnable = () -> {
+                final FragmentDemo2Fragment1Binding binding = DataBindingUtil.findBinding(getView());
+                if (binding != null) {
+                    binding.ctrl2.setText(R.string.demo2_fragment1_withResult);
+                }
+            };
+
+            if ("TO_CONTROLLER".equals(data.getAction())) {
+                mController.runOnUIWhenIsReady(runnable);
+            } else {
+                runnable.run();
             }
 
-            getFragmentManager().beginTransaction()
-                    .addToBackStack(null)
-                    .replace(R.id.fragment_container, new Demo2Fragment2())
-                    .commit();
+            final boolean pushFragment = data.getBooleanExtra("push_fragment", true);
+            if (pushFragment) {
+                getFragmentManager().beginTransaction()
+                        .addToBackStack(null)
+                        .replace(R.id.fragment_container, new Demo2Fragment2())
+                        .commit();
+            }
         }
     }
 }

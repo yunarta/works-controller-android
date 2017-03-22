@@ -2,7 +2,10 @@
     <string name="app_name">Works Controller Sample</string>
 
     <string name="activity_givingResult_title">SetResult Activity</string>
-    <string name="activity_givingResult_setResult">Call SetResult</string>
+    <string name="activity_givingResult_setResult">SetResult #1</string>
+    <string name="activity_givingResult_setResult2">SetResult #2</string>
+    <string name="activity_givingResult_setResult3">SetResult #3</string>
+    <string name="activity_givingResult_setResult4">SetResult #4</string>
 
     <string name="demo1_title">Rotation Demo</string>
     <string name="demo1_subtitle">Implement continuous counter in Activity that persist during rotation</string>
@@ -11,7 +14,8 @@
     <string name="demo1_controller_instance">Controller Instance stays the same</string>
 
     <string name="demo2_title">Fragment Transaction Demo</string>
-    <string name="demo2_subtitle">What?</string>
+    <string name="demo2_subtitle">Receiving onActivityResult and push a fragment immediately</string>
+
     <string name="demo2_fragment1_startActivityForResult">Start Activity For Result</string>
     <string name="demo2_fragment1_noResult">No RESULT</string>
     <string name="demo2_fragment1_withResult">With RESULT</string>

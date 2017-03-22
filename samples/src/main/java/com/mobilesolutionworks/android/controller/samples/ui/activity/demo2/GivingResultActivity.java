@@ -1,6 +1,7 @@
 package com.mobilesolutionworks.android.controller.samples.ui.activity.demo2;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -25,7 +26,28 @@ public class GivingResultActivity extends AppCompatActivity {
     }
 
     public void dispatchSetResult() {
-        setResult(Activity.RESULT_OK);
+        setResult(Activity.RESULT_OK, new Intent("TO_FRAGMENT"));
+        finish();
+    }
+
+    public void dispatchSetResult2() {
+        setResult(Activity.RESULT_OK, new Intent("TO_CONTROLLER"));
+        finish();
+    }
+
+    public void dispatchSetResult3() {
+        final Intent intent = new Intent("TO_FRAGMENT");
+        intent.putExtra("push_fragment", false);
+
+        setResult(Activity.RESULT_OK, intent);
+        finish();
+    }
+
+    public void dispatchSetResult4() {
+        final Intent intent = new Intent("TO_CONTROLLER");
+        intent.putExtra("push_fragment", false);
+
+        setResult(Activity.RESULT_OK, intent);
         finish();
     }
 }
