@@ -5,8 +5,8 @@ apply plugin: 'com.android.application'
 
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdkVersion properties.get('COMPILE_SDK_VERSION', 25)
+    buildToolsVersion properties.get('BUILD_TOOLS_VERSION', '25.0.2')
 
     dataBinding {
         enabled = true
@@ -15,17 +15,23 @@ android {
     defaultConfig {
         applicationId "com.mobilesolutionworks.android.controller.samples"
 
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
+        minSdkVersion properties.get('MIN_SDK_VERSION', 16)
+        targetSdkVersion properties.get('TARGET_SDK_VERSION', 25)
 
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
-    android {
-        lintOptions {
-            abortOnError false
+    lintOptions {
+        abortOnError false
+    }
+
+    signingConfigs {
+        makeAPK {
+            storeFile new File(projectDir.absolutePath, "keystore.jks")
+            storePassword "123456"
+            keyAlias "key0"
+            keyPassword "123456"
         }
     }
 
@@ -38,34 +44,18 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.makeAPK
         }
     }
 }
 
+def supportLibVersion = properties.get('SUPPORT_LIB_VERSION', '25.1.0')
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-
-    androidTestCompile('com.android.support.test:runner:0.6-alpha', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    androidTestCompile('com.android.support.test:rules:0.6-alpha', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    androidTestCompile('com.android.support.test.uiautomator:uiautomator-v18:2.1.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    androidTestCompile('com.android.support.test.espresso:espresso-core:' + rootProject.ext.espressoLibVersion, {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-
-    compile 'com.android.support:appcompat-v7:' + rootProject.ext.supportLibVersion
-    compile 'com.android.support:design:' + rootProject.ext.supportLibVersion
-    compile 'com.android.support:recyclerview-v7:' + rootProject.ext.supportLibVersion
-    compile 'com.parse.bolts:bolts-tasks:1.4.0'
-
-    compile project(':core')
-    compile project(':contrib')
-
-    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:' + supportLibVersion
+    compile 'com.android.support:design:' + supportLibVersion
+    compile 'com.android.support:recyclerview-v7:' + supportLibVersion
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+
+    compile project(':contrib')
+    compile project(':core')
 }

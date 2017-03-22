@@ -1,21 +1,19 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdkVersion properties.get('COMPILE_SDK_VERSION', 25)
+    buildToolsVersion properties.get('BUILD_TOOLS_VERSION', '25.0.2')
 
     defaultConfig {
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
+        minSdkVersion properties.get('MIN_SDK_VERSION', 16)
+        targetSdkVersion properties.get('TARGET_SDK_VERSION', 25)
 
         versionCode 1
         versionName "1.0"
     }
 
-    android {
-        lintOptions {
-            abortOnError false
-        }
+    lintOptions {
+        abortOnError false
     }
 
     buildTypes {
@@ -30,9 +28,8 @@ android {
     }
 }
 
+def supportLibVersion = properties.get('SUPPORT_LIB_VERSION', '25.1.0')
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-
     compile('com.android.support.test:runner:0.6-alpha', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -42,10 +39,11 @@ dependencies {
     compile('com.android.support.test.uiautomator:uiautomator-v18:2.1.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile('com.android.support.test.espresso:espresso-core:' + rootProject.ext.espressoLibVersion, {
+    compile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+
     compile 'com.linkedin.testbutler:test-butler-library:1.2.0'
-    compile 'com.android.support:appcompat-v7:' + rootProject.ext.supportLibVersion
+    compile 'com.android.support:appcompat-v7:' + supportLibVersion
     compile 'junit:junit:4.12'
 }
