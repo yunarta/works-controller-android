@@ -1,4 +1,11 @@
 apply plugin: 'com.android.library'
+apply plugin: 'maven'
+
+def enablePublishing = properties.containsKey('enablePublishing')
+if (enablePublishing) {
+    println "* CONTRIB PUBLISHING = ENABLED"
+    apply from: rootProject.file('gradle/publish.gradle')
+}
 
 android {
     compileSdkVersion properties.get('COMPILE_SDK_VERSION', 25)
@@ -45,3 +52,10 @@ dependencies {
     provided 'com.android.support:appcompat-v7:' + supportLibVersion
     compile project(':core')
 }
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+artifacts.add('archives', sourcesJar)

@@ -1,4 +1,14 @@
 apply plugin: 'com.android.library'
+apply plugin: 'maven'
+
+def enablePublishing = properties.containsKey('enablePublishing')
+if (enablePublishing) {
+    println "* CORE PUBLISHING = ENABLED"
+    apply from: rootProject.file('gradle/publish.gradle')
+}
+
+project.group = properties.get('POM_GROUP')
+version = properties.get('POM_VERSION')
 
 android {
     compileSdkVersion properties.get('COMPILE_SDK_VERSION', 25)
@@ -9,7 +19,7 @@ android {
         targetSdkVersion properties.get('TARGET_SDK_VERSION', 25)
 
         versionCode 1
-        versionName version
+        versionName properties.get('POM_VERSION')
 
         testApplicationId "com.mobilesolutionworks.android.controller.test"
         testInstrumentationRunner "test.runner.TestButlerTestRunner"
@@ -44,3 +54,10 @@ dependencies {
 
     provided 'com.android.support:appcompat-v7:' + supportLibVersion
 }
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+artifacts.add('archives', sourcesJar)
