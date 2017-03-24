@@ -2,6 +2,7 @@ package com.mobilesolutionworks.android.app.controller;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.NonNull;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -39,7 +40,13 @@ class WorksMainScheduler {
         mObservable.deleteObservers();
     }
 
-    void runOnUIWhenIsReady(final Runnable runnable) {
+    /**
+     * Run the specified runnable after the host enter resumed state.
+     * <p>
+     * This method will solve many problem like Fragment transaction problems,
+     * or background updates that need to be notified to host.
+     */
+    void runOnUIWhenIsReady(@NonNull final Runnable runnable) {
         if (mIsPaused) {
             mObservable.addObserver(new Observer() {
                 @Override
@@ -62,7 +69,7 @@ class WorksMainScheduler {
      *
      * @param runnable runnable to run.
      */
-    void runOnMainThread(Runnable runnable) {
+    void runOnMainThread(@NonNull Runnable runnable) {
         if (Looper.getMainLooper().getThread() == Thread.currentThread()) {
             runnable.run();
         } else {
@@ -78,7 +85,7 @@ class WorksMainScheduler {
      *
      * @param runnable runnable to run.
      */
-    void runOnMainThreadDelayed(Runnable runnable, long delay) {
+    void runOnMainThreadDelayed(@NonNull Runnable runnable, long delay) {
         mHandler.postDelayed(runnable, delay);
     }
 

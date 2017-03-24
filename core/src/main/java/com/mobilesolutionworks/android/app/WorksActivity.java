@@ -2,6 +2,7 @@ package com.mobilesolutionworks.android.app;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
@@ -23,8 +24,19 @@ public class WorksActivity extends AppCompatActivity implements WorkControllerHo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        WorksControllerManager.Loader loader = (WorksControllerManager.Loader) getSupportLoaderManager().initLoader(0, null, new WorksControllerManager.LoaderCallbacks(this));
+        WorksControllerManager.ControllerManager loader = (WorksControllerManager.ControllerManager) getSupportLoaderManager().initLoader(0, null, new WorksControllerManager.ControllerManagerLoaderCallbacks(this));
         mController = loader.getController();
+    }
+
+    /**
+     * Get controller manager to create individual controller.
+     *
+     * @return controller manager.
+     */
+    @Override
+    @NonNull
+    public WorksControllerManager getControllerManager() {
+        return mController;
     }
 
     @Override
@@ -37,16 +49,6 @@ public class WorksActivity extends AppCompatActivity implements WorkControllerHo
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         mController.getLifecycleHook().onConfigurationChanged(newConfig);
-    }
-
-    /**
-     * Get controller manager to create individual controller.
-     *
-     * @return controller manager.
-     */
-    @Override
-    public WorksControllerManager getControllerManager() {
-        return mController;
     }
 
     @Override
