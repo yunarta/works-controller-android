@@ -3,7 +3,7 @@ package com.mobilesolutionworks.android.controller.samples.ui.activity.demo1;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.mobilesolutionworks.android.controller.HostWorksController;
+import com.mobilesolutionworks.android.app.controller.HostWorksController;
 
 /**
  * Created by yunarta on 19/3/17.
