@@ -40,7 +40,9 @@ public abstract class HostWorksController<H extends WorkControllerHost> extends 
         }
     }
 
+    @SuppressWarnings("squid:S1604")
     public static <C extends HostWorksController<H>, H extends WorkControllerHost> C create(@NonNull final H host, int id, @Nullable Bundle args, @NonNull final WorksControllerManager.ControllerCallbacks<C> callback) {
+        // SuppressWarnings("squid:S1604")
         C controller = host.getControllerManager().initController(id, args, new WorksControllerManager.ControllerCallbacks<C>() {
             @Override
             public C onCreateController(int id, Bundle args) {
