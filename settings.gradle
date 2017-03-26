@@ -1,4 +1,3 @@
 include ':samples'
 include ':core'
-include ':contrib'
 include ':test-utility'

@@ -1,12 +1,10 @@
-package com.mobilesolutionworks.android.controller;
+package com.mobilesolutionworks.android.app.controller;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.mobilesolutionworks.android.app.WorkControllerHost;
-import com.mobilesolutionworks.android.app.controller.WorksController;
-import com.mobilesolutionworks.android.app.controller.WorksControllerManager;
 
 import java.lang.ref.WeakReference;
 

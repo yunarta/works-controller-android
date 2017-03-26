@@ -69,6 +69,7 @@ public class Demo2Fragment1 extends WorksFragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             Log.d("[demo][demo2]", this + " onActivityResult() is called");
+            Log.d("[demo][demo2]", this + " fragment is in resumed state " + isResumed());
             final Runnable runnable = () -> {
                 final FragmentDemo2Fragment1Binding binding = DataBindingUtil.findBinding(getView());
                 if (binding != null) {
