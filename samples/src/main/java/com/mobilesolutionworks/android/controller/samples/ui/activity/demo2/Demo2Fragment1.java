@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mobilesolutionworks.android.app.WorksFragment;
-import com.mobilesolutionworks.android.controller.HostWorksController;
+import com.mobilesolutionworks.android.app.controller.HostWorksController;
 import com.mobilesolutionworks.android.controller.samples.R;
 import com.mobilesolutionworks.android.controller.samples.databinding.FragmentDemo2Fragment1Binding;
 
@@ -69,6 +69,7 @@ public class Demo2Fragment1 extends WorksFragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             Log.d("[demo][demo2]", this + " onActivityResult() is called");
+            Log.d("[demo][demo2]", this + " fragment is in resumed state " + isResumed());
             final Runnable runnable = () -> {
                 final FragmentDemo2Fragment1Binding binding = DataBindingUtil.findBinding(getView());
                 if (binding != null) {
@@ -77,7 +78,7 @@ public class Demo2Fragment1 extends WorksFragment {
             };
 
             if ("TO_CONTROLLER".equals(data.getAction())) {
-                mController.runOnUIWhenIsReady(runnable);
+                mController.runWhenUiIsReady(runnable);
             } else {
                 runnable.run();
             }

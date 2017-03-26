@@ -70,7 +70,7 @@ public class WorksMainSchedulerTest {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                controller.get().get().runOnUIWhenIsReady(new Runnable() {
+                controller.get().get().runWhenUiIsReady(new Runnable() {
                     @Override
                     public void run() {
                         assertEquals(Thread.currentThread(), Looper.getMainLooper().getThread());
@@ -96,7 +96,7 @@ public class WorksMainSchedulerTest {
             @Override
             public void perform(UiController uiController, View view) {
                 assertEquals(SchedulerWorksFragment.State.RESUME, fragment.get().get().getState());
-                controller.get().get().runOnUIWhenIsReady(new Runnable() {
+                controller.get().get().runWhenUiIsReady(new Runnable() {
                     @Override
                     public void run() {
                         assertEquals(Thread.currentThread(), Looper.getMainLooper().getThread());
@@ -126,7 +126,7 @@ public class WorksMainSchedulerTest {
             @Override
             public void perform(UiController uiController, View view) {
                 assertEquals(SchedulerWorksFragment.State.PAUSE, fragment.get().get().getState());
-                controller.get().get().runOnUIWhenIsReady(new Runnable() {
+                controller.get().get().runWhenUiIsReady(new Runnable() {
                     @Override
                     public void run() {
                         assertEquals(Thread.currentThread(), Looper.getMainLooper().getThread());

@@ -113,8 +113,8 @@ public class WorksController {
      *
      * @param runnable runnable object.
      */
-    public void runOnUIWhenIsReady(@NonNull Runnable runnable) {
-        mManager.getMainScheduler().runOnUIWhenIsReady(runnable);
+    public void runWhenUiIsReady(@NonNull Runnable runnable) {
+        mManager.getMainScheduler().runWhenUiIsReady(runnable);
     }
 
     /**

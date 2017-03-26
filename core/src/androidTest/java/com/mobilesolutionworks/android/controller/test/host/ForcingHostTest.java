@@ -1,4 +1,4 @@
-package com.mobilesolutionworks.android.controller.contrib.test.basic;
+package com.mobilesolutionworks.android.controller.test.host;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -9,7 +9,7 @@ import android.support.test.runner.lifecycle.Stage;
 import android.view.View;
 
 import com.mobilesolutionworks.android.app.controller.WorksControllerManager;
-import com.mobilesolutionworks.android.controller.contrib.test.util.HostAndHostController;
+import com.mobilesolutionworks.android.controller.test.util.HostAndHostController;
 import com.mobilesolutionworks.android.controller.test.util.PerformRootAction;
 
 import org.junit.Assert;

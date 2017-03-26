@@ -1,7 +1,8 @@
-package com.mobilesolutionworks.android.controller.contrib.test.util;
+package com.mobilesolutionworks.android.controller.test.util;
 
-import com.mobilesolutionworks.android.controller.HostWorksController;
-import com.mobilesolutionworks.android.controller.contrib.test.GetController;
+
+import com.mobilesolutionworks.android.app.controller.HostWorksController;
+import com.mobilesolutionworks.android.controller.test.GetController;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;

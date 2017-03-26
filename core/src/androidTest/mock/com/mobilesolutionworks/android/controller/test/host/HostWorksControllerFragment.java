@@ -1,12 +1,12 @@
-package com.mobilesolutionworks.android.controller.contrib.test.basic;
+package com.mobilesolutionworks.android.controller.test.host;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.mobilesolutionworks.android.app.WorksFragment;
+import com.mobilesolutionworks.android.app.controller.HostWorksController;
 import com.mobilesolutionworks.android.app.controller.WorksControllerManager;
-import com.mobilesolutionworks.android.controller.HostWorksController;
-import com.mobilesolutionworks.android.controller.contrib.test.GetController;
+import com.mobilesolutionworks.android.controller.test.GetController;
 
 /**
  * Created by yunarta on 15/3/17.

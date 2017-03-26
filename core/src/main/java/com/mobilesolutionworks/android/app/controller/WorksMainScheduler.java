@@ -46,7 +46,8 @@ class WorksMainScheduler {
      * This method will solve many problem like Fragment transaction problems,
      * or background updates that need to be notified to host.
      */
-    void runOnUIWhenIsReady(@NonNull final Runnable runnable) {
+    void runWhenUiIsReady(@NonNull
+                          final Runnable runnable) {
         if (mIsPaused) {
             mObservable.addObserver(new Observer() {
                 @Override
@@ -65,7 +66,7 @@ class WorksMainScheduler {
      * or it will be executed when the queue on main thread is available.
      * <p>
      * This execution does not guarantee the UI is ready, if you want to run something only when
-     * the UI is ready use {@link #runOnUIWhenIsReady(Runnable)} instead.
+     * the UI is ready use {@link #runWhenUiIsReady(Runnable)} instead.
      *
      * @param runnable runnable to run.
      */
@@ -81,7 +82,7 @@ class WorksMainScheduler {
      * Run the specified runnable delayed on main thread.
      * <p>
      * This execution does not guarantee the UI is ready, if you want to run something only when
-     * the UI is ready use {@link #runOnUIWhenIsReady(Runnable)} instead.
+     * the UI is ready use {@link #runWhenUiIsReady(Runnable)} instead.
      *
      * @param runnable runnable to run.
      */

@@ -1,4 +1,4 @@
-package com.mobilesolutionworks.android.controller.contrib.test.basic;
+package com.mobilesolutionworks.android.controller.test.host;
 
 import android.app.Activity;
 import android.app.Application;
@@ -12,8 +12,8 @@ import android.view.Surface;
 import android.view.View;
 
 import com.linkedin.android.testbutler.TestButler;
-import com.mobilesolutionworks.android.controller.contrib.test.R;
-import com.mobilesolutionworks.android.controller.contrib.test.util.HostAndHostController;
+import com.mobilesolutionworks.android.controller.test.R;
+import com.mobilesolutionworks.android.controller.test.util.HostAndHostController;
 import com.mobilesolutionworks.android.controller.test.util.PerformRootAction;
 import com.mobilesolutionworks.android.controller.test.util.ResumeLatch;
 
