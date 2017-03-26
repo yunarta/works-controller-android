@@ -15,7 +15,7 @@ import java.lang.ref.WeakReference;
  * <p>
  * In actual development, developer will most likely use this class rather than WorksController.
  * As the host is updated  after device rotation, the controller can consider that the host is
- * always available when making update in {@link #runOnUIWhenIsReady(Runnable)} scope.
+ * always available when making update in {@link #runWhenUiIsReady(Runnable)} scope.
  * <p>
  * Created by yunarta on 15/3/17.
  */
@@ -36,6 +36,7 @@ public abstract class HostWorksController<H extends WorkControllerHost> extends 
     @Override
     public void onCreate(Bundle arguments) {
         super.onCreate(arguments);
+
         if (mHost == null) {
             throw new IllegalStateException("HostWorksController can only be created using HostWorksController.create function");
         }

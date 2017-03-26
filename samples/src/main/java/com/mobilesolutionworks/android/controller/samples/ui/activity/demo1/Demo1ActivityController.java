@@ -25,7 +25,7 @@ public class Demo1ActivityController extends HostWorksController<Demo1Activity> 
         mThread = new Thread(() -> {
             while (mRunning && mCounter <= 9999) {
                 mCounter++;
-                runOnUIWhenIsReady(() -> {
+                runWhenUiIsReady(() -> {
                     getHost().postNumber(mCounter);
                 });
 

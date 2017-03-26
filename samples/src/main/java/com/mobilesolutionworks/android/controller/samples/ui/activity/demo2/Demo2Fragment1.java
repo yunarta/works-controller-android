@@ -77,7 +77,7 @@ public class Demo2Fragment1 extends WorksFragment {
             };
 
             if ("TO_CONTROLLER".equals(data.getAction())) {
-                mController.runOnUIWhenIsReady(runnable);
+                mController.runWhenUiIsReady(runnable);
             } else {
                 runnable.run();
             }
