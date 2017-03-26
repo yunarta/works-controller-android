@@ -81,7 +81,6 @@ captures/
 CHANGELOG.md
 build-numbers.properties
 /test
-/gradle.properties
 custom.properties
 
 *.iml

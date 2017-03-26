@@ -11,12 +11,13 @@ the front end.
 
 In very basic, as long your Activity in still in task stacks or your Fragment is fragment stacks,
 even tough they are recreated during device orientation, the controller are not.
-![Activity Fragment Controller](https://raw.githubusercontent.com/wiki/mobilesolutionworks/works-controller-android/Images/ActivityFragmentControllerDiagram.png)
 
 So yes, you can even run your asynchronous task without worrying that the host which is the Activity
 or Fragment gets recreated. And we also provides you with a way to make sure the result will be delivered
 to the correct host.
 
+You can read more detail on how the [Controller Lifecycle](https://github.com/mobilesolutionworks/works-controller-android/wiki/Controller-Lifecycle)
+ 
 ## Creating Controller
 Below is the snippet to create a controller, the controller manager will only call the callback and
 then creates the controller implementation only when the controller for the specified id has not been
@@ -91,8 +92,7 @@ controller.runWhenUiIsReady(new Runnable() {
 
 Add this line in your `dependencies` section in your build.gradle
 ```groovy
-compile 'com.mobilesolutionworks:controller-core:1.0.0'
-compile 'com.mobilesolutionworks:controller-contrib:1.0.0'
+compile 'com.mobilesolutionworks:controller-core:1.1.0'
 ```
 
 ### Start using Controller
