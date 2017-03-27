@@ -137,8 +137,7 @@ public class WorksControllerManager {
      */
     @Nullable
     public WorksController getController(int id) {
-        WorksController controller = mControllers.get(id);
-        return controller;
+        return mControllers.get(id);
     }
 
     /**
