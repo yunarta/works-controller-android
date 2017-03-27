@@ -20,28 +20,15 @@ import java.lang.ref.WeakReference;
 
 public abstract class HostWorksController<H extends WorkControllerHost> extends WorksController {
 
+    /**
+     * Hold weak reference to host.
+     */
     private WeakReference<H> mHost;
 
-    void updateHost(H host) {
-        mHost = new WeakReference<>(host);
-    }
-
-    @NonNull
-    public H getHost() {
-        return mHost.get();
-    }
-
-    @Override
-    public void onCreate(Bundle arguments) {
-        super.onCreate(arguments);
-
-        if (mHost == null) {
-            throw new IllegalStateException("HostWorksController can only be created using HostWorksController.create function");
-        }
-    }
-
     @SuppressWarnings("squid:S1604")
-    public static <C extends HostWorksController<H>, H extends WorkControllerHost> C create(@NonNull final H host, int id, @Nullable Bundle args, @NonNull final WorksControllerManager.ControllerCallbacks<C> callback) {
+    public static <C extends HostWorksController<H>, H extends WorkControllerHost> C create(@NonNull
+                                                                                            final H host, int id, @Nullable Bundle args, @NonNull
+                                                                                            final WorksControllerManager.ControllerCallbacks<C> callback) {
         // SuppressWarnings("squid:S1604")
         C controller = host.getControllerManager().initController(id, args, new WorksControllerManager.ControllerCallbacks<C>() {
             @Override
@@ -54,5 +41,28 @@ public abstract class HostWorksController<H extends WorkControllerHost> extends 
 
         controller.updateHost(host);
         return controller;
+    }
+
+    /**
+     * Update host, called by controller create callback.
+     *
+     * @param host host for this controller.
+     */
+    void updateHost(H host) {
+        mHost = new WeakReference<>(host);
+    }
+
+    @Nullable
+    public H getHost() {
+        return mHost.get();
+    }
+
+    @Override
+    public void onCreate(Bundle arguments) {
+        super.onCreate(arguments);
+
+        if (mHost == null) {
+            throw new IllegalStateException("HostWorksController can only be created using HostWorksController.create function");
+        }
     }
 }
