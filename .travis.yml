@@ -37,4 +37,4 @@ script:
 after_success:
     - ./gradlew coveralls
 notifications:
-    email: false
+    email: true
