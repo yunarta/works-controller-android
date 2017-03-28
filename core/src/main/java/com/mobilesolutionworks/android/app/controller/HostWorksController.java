@@ -65,4 +65,10 @@ public abstract class HostWorksController<H extends WorkControllerHost> extends 
             throw new IllegalStateException("HostWorksController can only be created using HostWorksController.create function");
         }
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mHost = null;
+    }
 }
