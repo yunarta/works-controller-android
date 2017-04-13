@@ -26,7 +26,10 @@ public class Demo1ActivityController extends HostWorksController<Demo1Activity> 
             while (mRunning && mCounter <= 9999) {
                 mCounter++;
                 runWhenUiIsReady(() -> {
-                    getHost().postNumber(mCounter);
+                    Demo1Activity host = getHost();
+                    if (host != null) {
+                        host.postNumber(mCounter);
+                    }
                 });
 
                 try {

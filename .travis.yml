@@ -37,4 +37,4 @@ script:
 after_success:
     - ./gradlew coveralls
 notifications:
-    email: true
+  slack: mobilesolutionworks:byd8liUU5IfPUfhBagB6NUYC
