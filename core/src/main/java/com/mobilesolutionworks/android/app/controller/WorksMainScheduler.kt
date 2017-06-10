@@ -2,6 +2,7 @@ package com.mobilesolutionworks.android.app.controller
 
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 
 import java.util.Observable
 import java.util.Observer
@@ -49,7 +50,7 @@ internal class WorksMainScheduler {
     fun runWhenUiIsReady(runnable: Runnable) {
         if (mIsPaused) {
             mObservable.addObserver(object : Observer {
-                override fun update(o: Observable, arg: Any) {
+                override fun update(o: Observable, arg: Any?) {
                     mObservable.deleteObserver(this)
                     runOnMainThread(runnable)
                 }
