@@ -1,4 +1,7 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'maven'
 
 def enablePublishing = properties.containsKey('enablePublishing')
@@ -37,7 +40,7 @@ android {
 
     buildTypes {
         debug {
-            testCoverageEnabled = true
+            testCoverageEnabled = false
         }
 
         release {
@@ -53,6 +56,8 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
     provided 'com.android.support:appcompat-v7:' + supportLibVersion
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    kapt "com.android.databinding:compiler:$android_gradle_version"
 }
 
 task sourcesJar(type: Jar) {
@@ -61,3 +66,6 @@ task sourcesJar(type: Jar) {
 }
 
 artifacts.add('archives', sourcesJar)
+repositories {
+    mavenCentral()
+}

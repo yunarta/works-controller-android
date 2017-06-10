@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion properties.get('COMPILE_SDK_VERSION', 25)
@@ -18,7 +19,7 @@ android {
 
     buildTypes {
         debug {
-            testCoverageEnabled = true
+            testCoverageEnabled = false
         }
 
         release {
@@ -46,4 +47,8 @@ dependencies {
     compile 'com.linkedin.testbutler:test-butler-library:1.2.0'
     compile 'com.android.support:appcompat-v7:' + supportLibVersion
     compile 'junit:junit:4.12'
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+}
+repositories {
+    mavenCentral()
 }
