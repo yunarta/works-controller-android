@@ -195,3 +195,6 @@ Simple solution
 of WorksActivity and WorksFragment into your base classes as well
 3. Then you can use controller in your project right away
 
+## Running TEst
+
+In order to run the test properly, you need to install [Test Butler](https://github.com/linkedin/test-butler) into your simulator since the unit test will test rotating the device programmatically.
