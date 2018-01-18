@@ -2,10 +2,7 @@ package com.mobilesolutionworks.android.app.controller
 
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
-
-import java.util.Observable
-import java.util.Observer
+import java.util.*
 
 /**
  * Created by yunarta on 8/3/17.
@@ -13,23 +10,21 @@ import java.util.Observer
 
 internal class WorksMainScheduler {
 
-    private val mHandler: Handler
+    private val mHandler = Handler(Looper.getMainLooper())
 
-    private val mObservable: PublicObservable
-
-    private var mIsPaused: Boolean = false
-
-    init {
-        mHandler = Handler(Looper.getMainLooper())
-        mObservable = PublicObservable()
-
-        mIsPaused = true
+    private val mObservable = object : Observable() {
+        public override fun setChanged() {
+            super.setChanged()
+        }
     }
+
+    private var mIsPaused = true
 
     fun resume() {
         mIsPaused = false
         mObservable.setChanged()
         mObservable.notifyObservers()
+        mObservable.deleteObservers()
     }
 
     fun pause() {
@@ -43,18 +38,12 @@ internal class WorksMainScheduler {
     /**
      * Run the specified runnable after the host enter resumed state.
      *
-     *
      * This method will solve many problem like Fragment transaction problems,
      * or background updates that need to be notified to host.
      */
     fun runWhenUiIsReady(runnable: Runnable) {
         if (mIsPaused) {
-            mObservable.addObserver(object : Observer {
-                override fun update(o: Observable, arg: Any?) {
-                    mObservable.deleteObserver(this)
-                    runOnMainThread(runnable)
-                }
-            })
+            mObservable.addObserver { _, _ -> runOnMainThread(runnable) }
         } else {
             runOnMainThread(runnable)
         }
@@ -64,10 +53,9 @@ internal class WorksMainScheduler {
      * Run the specified runnable immediately if the caller is currently on main thread,
      * or it will be executed when the queue on main thread is available.
      *
-     *
      * This execution does not guarantee the UI is ready, if you want to run something only when
      * the UI is ready use [.runWhenUiIsReady] instead.
-
+     *
      * @param runnable runnable to run.
      */
     fun runOnMainThread(runnable: Runnable) {
@@ -81,22 +69,12 @@ internal class WorksMainScheduler {
     /**
      * Run the specified runnable delayed on main thread.
      *
-     *
      * This execution does not guarantee the UI is ready, if you want to run something only when
      * the UI is ready use [.runWhenUiIsReady] instead.
-
+     *
      * @param runnable runnable to run.
      */
     fun runOnMainThreadDelayed(runnable: Runnable, delay: Long) {
         mHandler.postDelayed(runnable, delay)
     }
-
-    private class PublicObservable : Observable() {
-
-        public override fun setChanged() {
-            super.setChanged()
-        }
-
-    }
-
 }
