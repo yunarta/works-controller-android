@@ -101,7 +101,7 @@ pipeline {
 
             steps {
                 echo "Build"
-                sh './gradlew worksCreatePublication'
+                sh './gradlew worksGeneratePublication'
             }
         }
 
