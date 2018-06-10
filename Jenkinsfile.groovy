@@ -205,8 +205,11 @@ def doPublish() {
 
 def notifyDownstream() {
     if (fileExists(".notify")) {
+
         def job = readFile file: ".notify"
-        build job: "github/yunarta/works-controller-android/${job}", propagate: false
+        def encodedJob = java.net.URLEncoder.encode(job, "UTF-8")
+
+        build job: "github/yunarta/works-controller-android/${encodedJob}", propagate: false
     }
 }
 
