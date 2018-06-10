@@ -16,31 +16,29 @@ pipeline {
         stage('Checkout') {
             steps {
                 checkout scm
+                seedReset()
             }
         }
 
-        stage("Build") {
-            when {
-                not {
-                    branch "release/*"
-                }
-            }
-
+        stage("Test & Analyze") {
             options {
                 retry(2)
             }
 
             steps {
+                seedGrow("test")
+
                 echo "Build for test and analyze"
                 sh '''./gradlew detektCheck -q'''
                 androidEmulator command: "start", avd: "android-19"
 
-                sh '''echo "Execute test"
+                sh """echo "Execute test"
                         wget https://dl.bintray.com/linkedin/maven/com/linkedin/testbutler/test-butler-app/1.3.2/test-butler-app-1.3.2.apk -O test-butler-app.apk
                         $ANDROID_HOME/platform-tools/adb install -r test-butler-app.apk
-                        ./gradlew cleanTest jacocoTestReport -PignoreFailures=true'''
+                        ./gradlew cleanTest jacocoTestReport -PignoreFailures=${
+                    seedEval("test", [1: "true", "else": "false"])
+                }"""
             }
-
             post {
                 always {
                     androidEmulator command: "stop"
@@ -54,7 +52,6 @@ pipeline {
                     branch "release/*"
                 }
             }
-
             steps {
                 echo "Publishing test and analyze result"
 
