@@ -3,14 +3,12 @@ package com.mobilesolutionworks.android.controller.samples.ui.activity.main
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
-
 import com.mobilesolutionworks.android.app.controller.HostWorksController
 import com.mobilesolutionworks.android.app.controller.WorksControllerManager
 import com.mobilesolutionworks.android.controller.samples.R
 import com.mobilesolutionworks.android.controller.samples.databinding.CellDemoItemBinding
 import com.mobilesolutionworks.android.controller.samples.ui.databinding.DataBinding
-
-import java.util.ArrayList
+import java.util.*
 
 /**
  * Created by yunarta on 17/3/17.
@@ -35,6 +33,11 @@ class MainActivityController(manager: WorksControllerManager) : HostWorksControl
 
     private inner class DemoItemAdapter : DataBinding.SingleTypeAdapter<Void, CellDemoItemBinding>() {
 
+        override val itemLayout: Int
+            get() {
+                return R.layout.cell_demo_item
+            }
+
         private val mItems: MutableList<DemoItem>
 
         init {
@@ -53,10 +56,6 @@ class MainActivityController(manager: WorksControllerManager) : HostWorksControl
 
         override fun getItemCount(): Int {
             return mItems.size
-        }
-
-        override fun getItemLayout(): Int {
-            return R.layout.cell_demo_item
         }
     }
 }

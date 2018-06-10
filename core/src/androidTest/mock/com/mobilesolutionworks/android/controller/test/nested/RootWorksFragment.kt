@@ -21,10 +21,10 @@ class RootWorksFragment : EmptyWorksFragment() {
         }
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val id = view?.findViewById(R.id.textView) as TextView
+        val id = view.findViewById(R.id.textView) as TextView
         id.text = "child"
     }
 

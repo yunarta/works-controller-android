@@ -22,14 +22,14 @@ class TestWorksFragment : WorksFragment(), GetController<TestWorksController> {
         controller = controllerManager.initController(0, null, ::TestWorksController)
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater!!.inflate(R.layout.empty_fragment, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.empty_fragment, container, false)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val id = view!!.findViewById(R.id.textView) as TextView
+        val id = view.findViewById(R.id.textView) as TextView
         id.text = "empty"
     }
 

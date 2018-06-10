@@ -29,7 +29,7 @@ class Demo2Fragment1 : WorksFragment() {
         mController = HostWorksController.create(this, 0, null, ::Demo2Fragment1Controller)
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         Log.d("[demo][demo2]", this.toString() + " onCreateView() is called")
 
         val binding = DataBindingUtil.inflate<FragmentDemo2Fragment1Binding>(inflater!!, R.layout.fragment_demo2_fragment1, null, false)
@@ -63,9 +63,10 @@ class Demo2Fragment1 : WorksFragment() {
             Log.d("[demo][demo2]", this.toString() + " onActivityResult() is called")
             Log.d("[demo][demo2]", this.toString() + " fragment is in resumed state " + isResumed)
             val runnable = {
-                val binding = DataBindingUtil.findBinding<FragmentDemo2Fragment1Binding>(view)
-                if (binding != null) {
-                    binding.ctrl2.setText(R.string.demo2_fragment1_withResult)
+                view?.let {
+                    DataBindingUtil.findBinding<FragmentDemo2Fragment1Binding>(it)?.apply {
+                        ctrl2.setText(R.string.demo2_fragment1_withResult)
+                    }
                 }
             }
 
@@ -77,10 +78,11 @@ class Demo2Fragment1 : WorksFragment() {
 
             val pushFragment = data.getBooleanExtra("push_fragment", true)
             if (pushFragment) {
-                fragmentManager.beginTransaction()
-                      .addToBackStack(null)
-                      .replace(R.id.fragment_container, Demo2Fragment2())
-                      .commit()
+                fragmentManager?.apply {
+                    beginTransaction().addToBackStack(null)
+                            .replace(R.id.fragment_container, Demo2Fragment2())
+                            .commit()
+                }
             }
         }
     }

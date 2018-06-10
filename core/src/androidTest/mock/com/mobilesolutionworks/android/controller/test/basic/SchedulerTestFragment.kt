@@ -20,8 +20,8 @@ class SchedulerTestFragment : SchedulerWorksFragment() {
         controller = controllerManager.initController(0, null, ::WorksController)
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater!!.inflate(R.layout.scheduler_test_fragment, null, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.scheduler_test_fragment, null, false)
     }
 
     override fun onResume() {

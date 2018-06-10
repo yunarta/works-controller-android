@@ -16,8 +16,8 @@ import com.mobilesolutionworks.android.controller.samples.R
 
 class Demo2Fragment2 : WorksFragment() {
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding = DataBindingUtil.inflate<ViewDataBinding>(inflater!!, R.layout.fragment_demo2_fragment2, null, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val binding = DataBindingUtil.inflate<ViewDataBinding>(inflater, R.layout.fragment_demo2_fragment2, null, false)
         return binding.root
     }
 }

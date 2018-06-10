@@ -20,7 +20,7 @@ class TestWorksDialogFragment : WorksDialogFragment(), GetController<TestWorksCo
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return AlertDialog.Builder(context)
+        return AlertDialog.Builder(controllerManager.context)
               .setMessage("Example")
               .setPositiveButton("CLOSE") { dialog, which -> dismiss() }
               .create()

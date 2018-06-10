@@ -27,10 +27,10 @@ open class EmptyWorksFragment : WorksFragment(), GetController<WorksController> 
         return inflater.inflate(R.layout.empty_fragment, container, false)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val id = view!!.findViewById(R.id.textView) as TextView
+        val id = view.findViewById(R.id.textView) as TextView
         id.text = "empty"
     }
 

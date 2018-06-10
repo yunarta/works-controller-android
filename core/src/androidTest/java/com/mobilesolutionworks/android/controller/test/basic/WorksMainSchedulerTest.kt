@@ -16,7 +16,7 @@ import android.view.View
 import com.mobilesolutionworks.android.app.controller.WorksController
 import com.mobilesolutionworks.android.controller.test.R
 import com.mobilesolutionworks.android.controller.test.util.PerformRootAction
-import junit.framework.Assert.assertEquals
+import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import java.lang.ref.WeakReference
