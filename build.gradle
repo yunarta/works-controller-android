@@ -39,7 +39,7 @@ subprojects {
         version = "1.0.0.RC6-4"
 
         defaultProfile {
-            input = "src/main/java"
+            input = "${project.projectDir.absolutePath}/src/main/kotlin"
             filters = ".*/resources/.*,.*/build/.*"
             config = file("default-detekt-config.yml")
             output = "build/reports/detekt"
