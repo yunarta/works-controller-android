@@ -1,3 +1,11 @@
-include ':samples'
-include ':core'
-include ':test-utility'
+//include ':controller'
+//project(':controller').projectDir = new File("core")
+
+include ':controller-core'
+project(':controller-core').projectDir = new File("library")
+
+include ':controller-test'
+project(':controller-test').projectDir = new File("test-app")
+
+include ':controller-example'
+project(':controller-example').projectDir = new File("example-app")

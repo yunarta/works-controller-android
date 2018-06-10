@@ -1,0 +1,39 @@
+language: android
+jdk:
+    - oraclejdk8
+android:
+  components:
+    - platform-tools
+    - tools
+    - android-27
+    - extra-android-support
+    - extra-android-m2repository
+  license:
+    - 'ConstraintLayout.*'
+before_install:
+    - mkdir "$ANDROID_HOME/licenses" || true
+    - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
+    - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
+    - export JAVA7_HOME=/usr/lib/jvm/java-7-oracle
+    - export JAVA8_HOME=/usr/lib/jvm/java-8-oracle
+    - export JAVA_HOME=$JAVA8_HOME
+sudo: false
+addons:
+  sonarqube:
+    branches:
+        - master
+        - develop
+script:
+    - android list targets
+    - echo no | android create avd --force -n emulator -t android-25 --abi armeabi-v7a
+    - emulator -avd emulator -no-audio -no-window &
+    - android-wait-for-emulator
+    - wget https://bintray.com/linkedin/maven/download_file?file_path=com%2Flinkedin%2Ftestbutler%2Ftest-butler-app%2F1.2.0%2Ftest-butler-app-1.2.0.apk -O test-butler-app-1.2.0.apk
+    - adb install test-butler-app-1.2.0.apk
+    - ./gradlew clean assemble connectedCheck
+    - chmod +x run_scanner.sh
+    - ./run_scanner.sh
+after_success:
+    - ./gradlew coveralls
+notifications:
+  slack: mobilesolutionworks:byd8liUU5IfPUfhBagB6NUYC

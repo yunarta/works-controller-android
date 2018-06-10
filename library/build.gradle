@@ -1,0 +1,84 @@
+plugins {
+    id("org.jetbrains.dokka") version "0.9.17"
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'works-publish'
+apply plugin: 'jacoco'
+
+group = 'com.mobilesolutionworks'
+version = '1.1.0'
+
+publication {
+    javadoc = 'kotlin'
+    module = file("module.properties")
+}
+
+jacoco {
+    toolVersion = "0.8.1"
+    reportsDir = file("$buildDir/reports")
+}
+
+android {
+    compileSdkVersion 27
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 27
+
+        versionCode 1
+        versionName project.version
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    sourceSets {
+        main {
+            java.srcDirs += ['src/main/kotlin']
+        }
+        test {
+            java.srcDirs += ['src/test/kotlin']
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            debuggable true
+            testCoverageEnabled true
+        }
+    }
+
+    kapt {
+        generateStubs = true
+    }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+
+            all {
+                def asBoolean = project.properties.getOrDefault("ignoreFailures", "false").toString().asBoolean()
+                ignoreFailures = asBoolean
+                jacoco {
+                    includeNoLocationClasses = true
+                }
+            }
+        }
+    }
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.12'
+
+    compileOnly 'com.android.support:appcompat-v7:27.1.1'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
