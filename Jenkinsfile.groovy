@@ -209,7 +209,7 @@ def notifyDownstream() {
         def job = readFile file: ".notify"
         def encodedJob = java.net.URLEncoder.encode(job, "UTF-8")
 
-        build job: "github/yunarta/works-controller-android/${encodedJob}", propagate: false
+        build job: "github/yunarta/works-controller-android/${encodedJob}", propagate: false, wait: false
     }
 }
 
