@@ -105,12 +105,42 @@ pipeline {
             }
         }
 
-        stage("Publish") {
+        stage("Compare") {
             parallel {
                 stage("Snapshot") {
                     when {
                         expression {
                             notIntegration() && notRelease()
+                        }
+                    }
+
+                    steps {
+                        echo "Compare snapshot"
+                        compareArtifact("snapshot", "integrate/develop")
+                    }
+                }
+
+                stage("Release") {
+                    when {
+                        expression {
+                            notIntegration() && isRelease()
+                        }
+                    }
+
+                    steps {
+                        echo "Compare release"
+                        compareArtifact("release", "integrate/release")
+                    }
+                }
+            }
+        }
+
+        stage("Publish") {
+            parallel {
+                stage("Snapshot") {
+                    when {
+                        expression {
+                            notIntegration() && notRelease() && doPublish()
                         }
                     }
 
@@ -123,7 +153,7 @@ pipeline {
                 stage("Release") {
                     when {
                         expression {
-                            notIntegration() && isRelease()
+                            notIntegration() && isRelease() && doPublish()
                         }
                     }
 
@@ -143,7 +173,7 @@ pipeline {
     }
 }
 
-def notifyDownstream() {
+def compareArtifact(String repo, String job) {
     bintrayDownload([
             dir       : ".notify",
             credential: "mobilesolutionworks.jfrog.org",
@@ -160,8 +190,23 @@ def notifyDownstream() {
             src       : "library/build/libs"
     ])
 
-    if (update && isIntegration()) {
-        build job: 'github/yunarta/works-controller-android/integrate', propagate: false
+    if (fileExists(".notify")) {
+        sh "rm .notify"
+    }
+
+    if (update) {
+        writeFile file: ".notify", text: job
+    }
+}
+
+def doPublish() {
+    return fileExists(".notify")
+}
+
+def notifyDownstream() {
+    if (fileExists(".notify")) {
+        def job = readFile file: ".notify"
+        build job: "github/yunarta/works-controller-android/${job}", propagate: false
     }
 }
 
