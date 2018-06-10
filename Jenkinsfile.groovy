@@ -13,14 +13,42 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-                seedReset()
+        stage('Select') {
+            parallel {
+                stage('Checkout') {
+                    when {
+                        expression {
+                            notIntegration()
+                        }
+                    }
+
+                    steps {
+                        checkout scm
+                        seedReset()
+                    }
+                }
+
+                stage('Integrate') {
+                    when {
+                        expression {
+                            isIntegration()
+                        }
+                    }
+
+                    steps {
+                        echo "Execute integration"
+                    }
+                }
             }
         }
 
         stage("Test & Analyze") {
+            when {
+                expression {
+                    notIntegration() && notRelease()
+                }
+            }
+
             options {
                 retry(2)
             }
@@ -48,10 +76,11 @@ pipeline {
 
         stage("Publish Test & Analyze") {
             when {
-                not {
-                    branch "release/*"
+                expression {
+                    notIntegration() && notRelease()
                 }
             }
+
             steps {
                 echo "Publishing test and analyze result"
 
@@ -64,6 +93,12 @@ pipeline {
         }
 
         stage("Build") {
+            when {
+                expression {
+                    notIntegration()
+                }
+            }
+
             steps {
                 echo "Build"
                 sh './gradlew worksCreatePublication'
@@ -74,10 +109,11 @@ pipeline {
             parallel {
                 stage("Snapshot") {
                     when {
-                        not {
-                            branch 'release/*'
+                        expression {
+                            notIntegration() && notRelease()
                         }
                     }
+
                     steps {
                         echo "Publishing snapshot"
                         publish("snapshot")
@@ -85,7 +121,12 @@ pipeline {
                 }
 
                 stage("Release") {
-                    when { branch 'release/*' }
+                    when {
+                        expression {
+                            notIntegration() && isRelease()
+                        }
+                    }
+
                     steps {
                         echo "Publishing release"
                         publish("release")
@@ -93,6 +134,34 @@ pipeline {
                 }
             }
         }
+
+        post {
+            success {
+                notifyDownstream()
+            }
+        }
+    }
+}
+
+def notifyDownstream() {
+    bintrayDownload([
+            dir       : ".notify",
+            credential: "mobilesolutionworks.jfrog.org",
+            pkg       : readProperties(file: 'library/module.properties'),
+            repo      : "mobilesolutionworks/${repo}",
+            src       : "library/build/libs"
+    ])
+
+    def update = bintrayCompare([
+            dir       : ".notify",
+            credential: "mobilesolutionworks.jfrog.org",
+            pkg       : readProperties(file: 'library/module.properties'),
+            repo      : "mobilesolutionworks/${repo}",
+            src       : "library/build/libs"
+    ])
+
+    if (update && isIntegration()) {
+        build job: 'github/yunarta/works-controller-android/integrate', propagate: false
     }
 }
 
