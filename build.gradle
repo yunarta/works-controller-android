@@ -56,7 +56,7 @@ jacoco {
     reportsDir = file("$buildDir/reports")
 }
 
-task mergeJacocoReport(type: JacocoMerge) {
+task mergeJacocoReport(type: JacocoMerge, dependsOn: ":controller-test:createDebugCoverageReport") {
     group "Reporting"
     description "Merge Jacoco Code Coverage Report"
 
@@ -65,10 +65,12 @@ task mergeJacocoReport(type: JacocoMerge) {
     ])
 
     setExecutionData(executionFiles)
-
+    outputs.dir {
+        file("build/jacoco")
+    }
 }
 
-task jacocoTestReport(type: JacocoReport, dependsOn: [":controller-test:createDebugCoverageReport", ":mergeJacocoReport"]) {
+task jacocoTestReport(type: JacocoReport, dependsOn: "mergeJacocoReport") {
 //task unifiedJacocoTestReport(type: JacocoReport) {
     group = "Reporting"
     description = "Generate Jacoco coverage reports for Debug build"
