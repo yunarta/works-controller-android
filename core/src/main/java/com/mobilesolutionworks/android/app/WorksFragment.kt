@@ -1,5 +1,6 @@
 package com.mobilesolutionworks.android.app
 
+import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -24,10 +25,9 @@ open class WorksFragment : Fragment(), WorkControllerHost {
             return loader!!.controller
         }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        loader = loaderManager.initLoader(0, null, WorksControllerManager.ControllerManagerLoaderCallbacks(activity.applicationContext)) as WorksControllerManager.ControllerManager
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        loader = loaderManager.initLoader(0, null, WorksControllerManager.ControllerManagerLoaderCallbacks(context.applicationContext)) as WorksControllerManager.ControllerManager
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -35,7 +35,7 @@ open class WorksFragment : Fragment(), WorkControllerHost {
         controllerManager.lifecycleHook.onConfigurationChanged(newConfig)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         controllerManager.lifecycleHook.onRestoreInstanceState(savedInstanceState)
     }

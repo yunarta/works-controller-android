@@ -1,5 +1,6 @@
 package com.mobilesolutionworks.android.app
 
+import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
@@ -24,10 +25,9 @@ open class WorksDialogFragment : DialogFragment(), WorkControllerHost {
             return loader!!.controller
         }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        loader = loaderManager.initLoader(0, null, WorksControllerManager.ControllerManagerLoaderCallbacks(activity.applicationContext)) as WorksControllerManager.ControllerManager
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        loader = loaderManager.initLoader(0, null, WorksControllerManager.ControllerManagerLoaderCallbacks(context.applicationContext)) as WorksControllerManager.ControllerManager
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -40,8 +40,8 @@ open class WorksDialogFragment : DialogFragment(), WorkControllerHost {
         controllerManager.getLifecycleHook().onConfigurationChanged(newConfig!!)
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
-        controllerManager.getLifecycleHook().dispatchSaveInstanceState(outState!!)
+    override fun onSaveInstanceState(outState: Bundle) {
+        controllerManager.getLifecycleHook().dispatchSaveInstanceState(outState)
         super.onSaveInstanceState(outState)
     }
 

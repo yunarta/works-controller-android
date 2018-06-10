@@ -33,10 +33,7 @@ open class WorksController(val mManager: WorksControllerManager) {
      * @return application context.
      */
     val context: Context
-        get() = when (mManager) {
-            null -> throw IllegalStateException()
-            else -> (mManager as WorksControllerManager).context
-        }
+        get() = mManager.context
 
     /**
      * Get string from context
@@ -87,7 +84,7 @@ open class WorksController(val mManager: WorksControllerManager) {
 
      * @param state contains stated that you store in onSaveInstanceState.
      */
-    protected fun onRestoreInstanceState(state: Bundle) {
+    open fun onRestoreInstanceState(state: Bundle) {
         // Lifecycle event called when host is view state is restored
     }
 
@@ -102,7 +99,7 @@ open class WorksController(val mManager: WorksControllerManager) {
 
      * @param outState bundle for storing information if required.
      */
-    protected fun onSaveInstanceState(outState: Bundle) {
+    open fun onSaveInstanceState(outState: Bundle) {
         // Lifecycle event called when host is want to save instance state
     }
 
