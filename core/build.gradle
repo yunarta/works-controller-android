@@ -1,28 +1,27 @@
+plugins {
+    id("org.jetbrains.dokka") version "0.9.17"
+}
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'maven'
+apply plugin: 'works-publish'
 
-def enablePublishing = properties.containsKey('enablePublishing')
-if (enablePublishing) {
-    println "* CORE PUBLISHING = ENABLED"
-    apply from: rootProject.file('gradle/publish.gradle')
+group = 'com.mobilesolutionworks'
+version = '1.1.0'
+
+publication {
+    javadoc = 'kotlin'
+    module = file("module.properties")
 }
 
-project.group = properties.get('POM_GROUP')
-version = properties.get('POM_VERSION')
-
 android {
-    compileSdkVersion properties.get('COMPILE_SDK_VERSION', 25)
-    buildToolsVersion properties.get('BUILD_TOOLS_VERSION', '25.0.2')
+    compileSdkVersion 27
 
     defaultConfig {
-        minSdkVersion properties.get('MIN_SDK_VERSION', 16)
-        targetSdkVersion properties.get('TARGET_SDK_VERSION', 25)
+        minSdkVersion 16
+        targetSdkVersion 27
 
         versionCode 1
-        versionName properties.get('POM_VERSION')
+        versionName project.version
 
         testApplicationId "com.mobilesolutionworks.android.controller.test"
         testInstrumentationRunner "test.runner.TestButlerTestRunner"
@@ -50,22 +49,10 @@ android {
     }
 }
 
-def supportLibVersion = properties.get('SUPPORT_LIB_VERSION', '25.1.0')
 dependencies {
-    androidTestCompile project(':test-utility')
-    testCompile 'junit:junit:4.12'
+    androidTestImplementation project(':test-utility')
+    testImplementation 'junit:junit:4.12'
 
-    provided 'com.android.support:appcompat-v7:' + supportLibVersion
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    kapt "com.android.databinding:compiler:$android_gradle_version"
-}
-
-task sourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
-}
-
-artifacts.add('archives', sourcesJar)
-repositories {
-    mavenCentral()
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
