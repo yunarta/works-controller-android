@@ -21,17 +21,12 @@ open class WorksActivity : AppCompatActivity(), WorkControllerHost {
      */
     override val controllerManager: WorksControllerManager
         get() {
-            println("loader = ${loader}")
             return loader!!.controller
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        println("supportLoaderManager = ${supportLoaderManager}")
-
         loader = supportLoaderManager.initLoader(0, null, WorksControllerManager.ControllerManagerLoaderCallbacks(this)) as WorksControllerManager.ControllerManager
-        println("loader = ${loader}")
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {

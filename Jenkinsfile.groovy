@@ -73,7 +73,7 @@ pipeline {
                         echo "Publishing test and analyze result"
 
                         jacoco execPattern: 'build/jacoco/*.exec', classPattern: 'library/build/tmp/kotlin-classes/debug', sourcePattern: ''
-                        junit allowEmptyResults: true, testResults: '**/test-results/**/*.xml'
+                        junit allowEmptyResults: true, testResults: '**/androidTest-results/connected/**/*.xml,**/test-results/**/*.xml'
                         checkstyle canComputeNew: false, defaultEncoding: '', healthy: '', pattern: '**/detekt-report.xml', unHealthy: ''
 
                         codeCoverage()
