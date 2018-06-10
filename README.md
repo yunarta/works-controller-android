@@ -1,6 +1,6 @@
 # Works Controller for Android
 [![Build Status](http://jenkins.mobilesolutionworks.com:8080/job/github/job/mobilesolutionworks/job/works-controller-android/job/master/badge/icon)](http://jenkins.mobilesolutionworks.com:8080/job/github/job/mobilesolutionworks/job/works-controller-android/job/master/)
-[![codecov](https://codecov.io/gh/yunarta/works-controller-android/branch/master/graph/badge.svg)](https://codecov.io/gh/yunarta/works-controller-android)
+[![codecov](https://codecov.io/gh/mobilesolutionworks/works-controller-android/branch/master/graph/badge.svg)](https://codecov.io/gh/mobilesolutionworks/works-controller-android)
 
 Works Controller Android is a library that will greatly help you dealing with Android Activity and 
 Fragment lifecycle with ease.
