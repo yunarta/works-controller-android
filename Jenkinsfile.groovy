@@ -175,7 +175,7 @@ pipeline {
 
 def compareArtifact(String repo, String job) {
     bintrayDownload([
-            dir       : ".notify",
+            dir       : ".compare",
             credential: "mobilesolutionworks.jfrog.org",
             pkg       : readProperties(file: 'library/module.properties'),
             repo      : "mobilesolutionworks/${repo}",
@@ -183,7 +183,7 @@ def compareArtifact(String repo, String job) {
     ])
 
     def update = bintrayCompare([
-            dir       : ".notify",
+            dir       : ".compare",
             credential: "mobilesolutionworks.jfrog.org",
             pkg       : readProperties(file: 'library/module.properties'),
             repo      : "mobilesolutionworks/${repo}",
