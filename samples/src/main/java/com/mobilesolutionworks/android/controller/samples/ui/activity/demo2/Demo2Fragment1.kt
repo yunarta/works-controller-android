@@ -32,7 +32,7 @@ class Demo2Fragment1 : WorksFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         Log.d("[demo][demo2]", this.toString() + " onCreateView() is called")
 
-        val binding = DataBindingUtil.inflate<FragmentDemo2Fragment1Binding>(inflater!!, R.layout.fragment_demo2_fragment1, null, false)
+        val binding = DataBindingUtil.inflate<FragmentDemo2Fragment1Binding>(inflater, R.layout.fragment_demo2_fragment1, null, false)
         binding.fragment = this
         binding.controller = mController
         return binding.root
@@ -70,14 +70,14 @@ class Demo2Fragment1 : WorksFragment() {
                 }
             }
 
-            if ("TO_CONTROLLER" == data!!.action) {
-                mController!!.runWhenUiIsReady(Runnable { runnable })
+            if ("TO_CONTROLLER" == data?.action) {
+                mController!!.runWhenUiIsReady(Runnable { runnable() })
             } else {
                 runnable()
             }
 
-            val pushFragment = data.getBooleanExtra("push_fragment", true)
-            if (pushFragment) {
+            val pushFragment = data?.getBooleanExtra("push_fragment", true)
+            if (pushFragment == true) {
                 fragmentManager?.apply {
                     beginTransaction().addToBackStack(null)
                             .replace(R.id.fragment_container, Demo2Fragment2())
