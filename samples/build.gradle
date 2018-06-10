@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 27
@@ -40,6 +41,10 @@ android {
     }
 }
 
+configurations {
+    kapt
+}
+
 dependencies {
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:design:27.1.1'
@@ -48,4 +53,6 @@ dependencies {
 
     implementation project(':controller-core')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    kapt 'com.android.databinding:compiler:3.1.3'
 }
