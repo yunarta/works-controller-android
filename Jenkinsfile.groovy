@@ -116,7 +116,7 @@ pipeline {
 
                     steps {
                         echo "Compare snapshot"
-                        compareArtifact("snapshot", "integrate/develop")
+                        compareArtifact("snapshot", "integrate/snapshot")
                     }
                 }
 
