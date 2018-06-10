@@ -134,11 +134,11 @@ pipeline {
                 }
             }
         }
+    }
 
-        post {
-            success {
-                notifyDownstream()
-            }
+    post {
+        success {
+            notifyDownstream()
         }
     }
 }
