@@ -42,7 +42,7 @@ interface DataBinding {
 
         private var mInflater: WeakReference<LayoutInflater>? = null
 
-        protected abstract val itemLayout: Int
+        protected abstract fun getItemLayout(): Int
 
         private fun createInflaterIfNeeded(parent: ViewGroup): LayoutInflater {
             if (mInflater == null || mInflater!!.get() == null) {
@@ -53,7 +53,7 @@ interface DataBinding {
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder<U, V> {
-            return ViewHolder(DataBindingUtil.inflate<V>(createInflaterIfNeeded(parent), itemLayout, parent, false))
+            return ViewHolder(DataBindingUtil.inflate<V>(createInflaterIfNeeded(parent), getItemLayout(), parent, false))
         }
     }
 }

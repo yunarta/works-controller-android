@@ -1,6 +1,7 @@
 plugins {
     id("org.jetbrains.dokka") version "0.9.17"
 }
+
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'works-publish'
@@ -12,6 +13,7 @@ publication {
     javadoc = 'kotlin'
     module = file("module.properties")
 }
+
 
 android {
     compileSdkVersion 27

@@ -8,7 +8,9 @@ buildscript {
         maven {
             url 'https://dl.google.com/dl/android/maven2/'
         }
-
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
         maven {
             url 'https://dl.bintray.com/mobilesolutionworks/release'
         }
@@ -16,6 +18,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.1.3'
         classpath 'com.mobilesolutionworks:works-publish:1.0.2'
+        classpath 'gradle.plugin.io.gitlab.arturbosch:detekt-gradle-plugin:1.0.0.RC7-2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -26,6 +29,23 @@ allprojects {
             url 'https://dl.google.com/dl/android/maven2/'
         }
         jcenter()
+    }
+}
+
+subprojects {
+    apply plugin: "io.gitlab.arturbosch.detekt"
+
+    detekt {
+        version = "1.0.0.RC6-4"
+
+        defaultProfile {
+            input = "src/main/java"
+            filters = ".*/resources/.*,.*/build/.*"
+            config = file("default-detekt-config.yml")
+            output = "build/reports/detekt"
+            outputName = "detekt-report"
+            baseline = "build/reports/detekt/baseline.xml"
+        }
     }
 }
 

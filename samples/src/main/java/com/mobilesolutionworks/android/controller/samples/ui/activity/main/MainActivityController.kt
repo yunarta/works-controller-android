@@ -33,12 +33,9 @@ class MainActivityController(manager: WorksControllerManager) : HostWorksControl
 
     private inner class DemoItemAdapter : DataBinding.SingleTypeAdapter<Void, CellDemoItemBinding>() {
 
-        override val itemLayout: Int
-            get() {
-                return R.layout.cell_demo_item
-            }
-
         private val mItems: MutableList<DemoItem>
+
+        override fun getItemLayout(): Int = R.layout.cell_demo_item
 
         init {
             val packageName = context.packageName
