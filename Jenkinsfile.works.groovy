@@ -34,7 +34,7 @@ pipeline {
                         echo "Build for test and analyze"
                         sh '''./gradlew detektCheck -q'''
                         androidEmulator command: "start", avd: "android-19"
-
+                        
                         sh '''echo "Execute test"
                         wget https://dl.bintray.com/linkedin/maven/com/linkedin/testbutler/test-butler-app/1.3.2/test-butler-app-1.3.2.apk -O test-butler-app.apk
                         $ANDROID_HOME/platform-tools/adb install -r test-butler-app.apk
