@@ -136,11 +136,17 @@ pipeline {
         }
 
         stage("Publish") {
+            when {
+                expression {
+                    doPublish()
+                }
+            }
+
             parallel {
                 stage("Snapshot") {
                     when {
                         expression {
-                            notIntegration() && notRelease() && doPublish()
+                            notIntegration() && notRelease()
                         }
                     }
 
@@ -153,7 +159,7 @@ pipeline {
                 stage("Release") {
                     when {
                         expression {
-                            notIntegration() && isRelease() && doPublish()
+                            notIntegration() && isRelease()
                         }
                     }
 
