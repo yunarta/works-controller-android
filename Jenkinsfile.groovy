@@ -61,8 +61,7 @@ pipeline {
                 androidEmulator command: "start", avd: "android-19"
 
                 sh """echo "Execute test"
-                        wget https://dl.bintray.com/linkedin/maven/com/linkedin/testbutler/test-butler-app/1.3.2/test-butler-app-1.3.2.apk -O test-butler-app.apk
-                        $ANDROID_HOME/platform-tools/adb install -r test-butler-app.apk
+                        $ANDROID_HOME/platform-tools/adb install -r test-app/test-butler-app-1.3.2.apk
                         ./gradlew cleanTest jacocoTestReport -PignoreFailures=${
                     seedEval("test", [1: "true", "else": "false"])
                 }"""
