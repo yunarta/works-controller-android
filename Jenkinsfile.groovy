@@ -37,6 +37,7 @@ pipeline {
 
                     steps {
                         echo "Execute integration"
+                        stopUnless(isStartedBy("upstream"))
                     }
                 }
             }
