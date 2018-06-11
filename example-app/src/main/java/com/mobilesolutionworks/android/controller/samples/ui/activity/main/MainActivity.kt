@@ -4,6 +4,7 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.mobilesolutionworks.android.app.WorksActivity
+import com.mobilesolutionworks.android.app.controller.CreateHostWorksController
 import com.mobilesolutionworks.android.app.controller.HostWorksController
 import com.mobilesolutionworks.android.controller.samples.databinding.ActivityMainBinding
 
@@ -17,7 +18,7 @@ class MainActivity : WorksActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mController = HostWorksController.create(this, 0, null, ::MainActivityController)
+        mController = HostWorksController.create(this, 0, null, CreateHostWorksController { MainActivityController(it) })
 
         val binding: ActivityMainBinding
 

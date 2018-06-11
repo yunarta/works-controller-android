@@ -10,7 +10,7 @@ import android.support.test.runner.lifecycle.Stage
 import android.view.Surface
 import android.view.View
 import com.linkedin.android.testbutler.TestButler
-import com.mobilesolutionworks.android.app.controller.CreateCallback2
+import com.mobilesolutionworks.android.app.controller.CreateWorksController
 import com.mobilesolutionworks.android.app.controller.WorksController
 import com.mobilesolutionworks.android.controller.test.base.RotationTest
 import com.mobilesolutionworks.android.controller.test.util.PerformRootAction
@@ -38,7 +38,7 @@ class ManualDestroyControllerTest : RotationTest() {
                 val resumedActivities = ArrayList(ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED))
 
                 val activity = resumedActivities[0] as WorksActivityImpl
-                activity.controllerManager.initController(0, null, CreateCallback2 { WorksController(it) })
+                activity.controllerManager.initController(0, null, CreateWorksController { WorksController(it) })
             }
         })
 

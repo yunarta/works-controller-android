@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.mobilesolutionworks.android.app.WorksFragment
+import com.mobilesolutionworks.android.app.controller.CreateHostWorksController
 import com.mobilesolutionworks.android.app.controller.HostWorksController
 import com.mobilesolutionworks.android.controller.samples.databinding.FragmentDemo2Fragment1Binding
 
@@ -24,7 +25,7 @@ class Demo2Fragment1 : WorksFragment() {
         super.onCreate(savedInstanceState)
         Log.d("[demo][demo2]", this.toString() + " onCreate()")
 
-        mController = HostWorksController.create(this, 0, null, ::Demo2Fragment1Controller)
+        mController = HostWorksController.create(this, 0, null, CreateHostWorksController { Demo2Fragment1Controller(it) })
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

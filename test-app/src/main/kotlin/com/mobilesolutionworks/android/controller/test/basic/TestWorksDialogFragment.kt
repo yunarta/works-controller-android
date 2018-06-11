@@ -4,7 +4,7 @@ import android.app.Dialog
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import com.mobilesolutionworks.android.app.WorksDialogFragment
-import com.mobilesolutionworks.android.app.controller.CreateCallback2
+import com.mobilesolutionworks.android.app.controller.CreateWorksController
 import com.mobilesolutionworks.android.controller.test.GetController
 
 /**
@@ -17,7 +17,7 @@ class TestWorksDialogFragment : WorksDialogFragment(), GetController<TestWorksCo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        controller = controllerManager.initController(0, null, CreateCallback2 { TestWorksController(it) })
+        controller = controllerManager.initController(0, null, CreateWorksController { TestWorksController(it) })
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

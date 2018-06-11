@@ -4,7 +4,7 @@ import android.app.Dialog
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import com.mobilesolutionworks.android.app.WorksDialogFragment
-import com.mobilesolutionworks.android.app.controller.CreateCallback
+import com.mobilesolutionworks.android.app.controller.CreateHostWorksController
 import com.mobilesolutionworks.android.app.controller.HostWorksController
 import com.mobilesolutionworks.android.app.controller.WorksControllerManager
 import com.mobilesolutionworks.android.controller.test.GetController
@@ -20,7 +20,7 @@ class HostWorksControllerDialogFragment : WorksDialogFragment(), GetController<H
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        controller = HostWorksController.create(this, 0, null, CreateCallback {
+        controller = HostWorksController.create(this, 0, null, CreateHostWorksController {
             DialogFragmentControllerImpl(it)
         })
     }

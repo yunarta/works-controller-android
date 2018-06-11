@@ -2,7 +2,7 @@ package com.mobilesolutionworks.android.controller.test.host
 
 import android.os.Bundle
 import com.mobilesolutionworks.android.app.WorksActivity
-import com.mobilesolutionworks.android.app.controller.CreateCallback
+import com.mobilesolutionworks.android.app.controller.CreateHostWorksController
 import com.mobilesolutionworks.android.app.controller.HostWorksController
 import com.mobilesolutionworks.android.app.controller.WorksControllerManager
 import com.mobilesolutionworks.android.controller.test.GetController
@@ -20,7 +20,7 @@ open class HostWorksControllerActivity : WorksActivity(), GetController<HostWork
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_host_activity)
 
-        controller = HostWorksController.create(this, 0, null, CreateCallback {
+        controller = HostWorksController.create(this, 0, null, CreateHostWorksController {
             ActivityControllerImpl(it)
         })
 

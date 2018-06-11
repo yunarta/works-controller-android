@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.mobilesolutionworks.android.app.WorksFragment
-import com.mobilesolutionworks.android.app.controller.CreateCallback2
+import com.mobilesolutionworks.android.app.controller.CreateWorksController
 import com.mobilesolutionworks.android.controller.test.GetController
 import com.mobilesolutionworks.android.controller.test.R
 
@@ -20,7 +20,7 @@ class TestWorksFragment : WorksFragment(), GetController<TestWorksController> {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        controller = controllerManager.initController(0, null, CreateCallback2 { TestWorksController(it) })
+        controller = controllerManager.initController(0, null, CreateWorksController { TestWorksController(it) })
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

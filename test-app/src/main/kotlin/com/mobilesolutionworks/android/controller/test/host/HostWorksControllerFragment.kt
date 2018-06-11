@@ -3,7 +3,7 @@ package com.mobilesolutionworks.android.controller.test.host
 import android.os.Bundle
 
 import com.mobilesolutionworks.android.app.WorksFragment
-import com.mobilesolutionworks.android.app.controller.CreateCallback
+import com.mobilesolutionworks.android.app.controller.CreateHostWorksController
 import com.mobilesolutionworks.android.app.controller.HostWorksController
 import com.mobilesolutionworks.android.app.controller.WorksControllerManager
 import com.mobilesolutionworks.android.controller.test.GetController
@@ -19,7 +19,7 @@ class HostWorksControllerFragment : WorksFragment(), GetController<HostWorksCont
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        controller = HostWorksController.create(this, 0, null, CreateCallback {
+        controller = HostWorksController.create(this, 0, null, CreateHostWorksController {
             FragmentControllerImpl(it)
         })
     }
