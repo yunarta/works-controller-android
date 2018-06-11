@@ -95,7 +95,7 @@ pipeline {
         stage("Build") {
             when {
                 expression {
-                    notIntegration()
+                    notIntegration() && notFeatureBranch()
                 }
             }
 
@@ -106,11 +106,18 @@ pipeline {
         }
 
         stage("Compare") {
+            when {
+                expression {
+                    notIntegration() && notFeatureBranch()
+                }
+            }
+
+
             parallel {
                 stage("Snapshot") {
                     when {
                         expression {
-                            notIntegration() && notRelease()
+                            notRelease()
                         }
                     }
 
@@ -123,7 +130,7 @@ pipeline {
                 stage("Release") {
                     when {
                         expression {
-                            notIntegration() && isRelease()
+                            isRelease()
                         }
                     }
 
