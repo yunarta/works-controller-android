@@ -43,7 +43,7 @@ pipeline {
             }
         }
 
-        stage("Test & Analyze") {
+        stage("Coverage, Analyze and Test") {
             when {
                 expression {
                     notIntegration() && notRelease()
@@ -74,7 +74,7 @@ pipeline {
             }
         }
 
-        stage("Publish Test & Analyze") {
+        stage("Publish CAT") {
             when {
                 expression {
                     notIntegration() && notRelease()
