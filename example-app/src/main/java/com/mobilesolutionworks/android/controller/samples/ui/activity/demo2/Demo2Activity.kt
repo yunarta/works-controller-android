@@ -4,6 +4,7 @@ import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.os.Bundle
 import com.mobilesolutionworks.android.app.WorksActivity
+import com.mobilesolutionworks.android.controller.samples.R
 
 /**
  * Created by yunarta on 19/3/17.

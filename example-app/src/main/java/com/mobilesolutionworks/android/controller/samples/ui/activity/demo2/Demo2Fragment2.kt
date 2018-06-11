@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.mobilesolutionworks.android.app.WorksFragment
+import com.mobilesolutionworks.android.controller.samples.R
 
 /**
  * Created by yunarta on 22/3/17.

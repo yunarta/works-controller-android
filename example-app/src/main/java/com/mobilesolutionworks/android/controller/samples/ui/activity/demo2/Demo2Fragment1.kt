@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import com.mobilesolutionworks.android.app.WorksFragment
 import com.mobilesolutionworks.android.app.controller.CreateHostWorksController
 import com.mobilesolutionworks.android.app.controller.HostWorksController
+import com.mobilesolutionworks.android.controller.samples.R
 import com.mobilesolutionworks.android.controller.samples.databinding.FragmentDemo2Fragment1Binding
 
 /**

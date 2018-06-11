@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager
 import com.mobilesolutionworks.android.app.WorksActivity
 import com.mobilesolutionworks.android.app.controller.CreateHostWorksController
 import com.mobilesolutionworks.android.app.controller.HostWorksController
+import com.mobilesolutionworks.android.controller.samples.R
 import com.mobilesolutionworks.android.controller.samples.databinding.ActivityMainBinding
 
 /**
