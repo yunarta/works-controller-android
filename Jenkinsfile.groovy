@@ -182,7 +182,7 @@ def compareArtifact(String repo, String job) {
             src       : "library/build/libs"
     ])
 
-    def update = bintrayCompare([
+    def same = bintrayCompare([
             dir       : ".compare",
             credential: "mobilesolutionworks.jfrog.org",
             pkg       : readProperties(file: 'library/module.properties'),
@@ -194,7 +194,9 @@ def compareArtifact(String repo, String job) {
         sh "rm .notify"
     }
 
-    if (update) {
+    if (same) {
+        echo "Artifact output is identical, no integration needed"
+    } else {
         writeFile file: ".notify", text: job
     }
 }
