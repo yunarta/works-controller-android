@@ -124,11 +124,6 @@ pipeline {
                     }
                 }
             }
-
-            steps {
-                echo "Build"
-
-            }
         }
 
         stage("Compare") {
