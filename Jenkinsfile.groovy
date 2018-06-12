@@ -65,6 +65,7 @@ pipeline {
                         $ANDROID_HOME/platform-tools/adb install -r test-app/test-butler-app-1.3.2.apk
                         ./gradlew cleanTest jacocoTestReport -PignoreFailures=${seedEval("test", [1: "true", "else": "false"])}"""
             }
+
             post {
                 always {
                     androidEmulator command: "stop"
@@ -106,7 +107,6 @@ pipeline {
                     }
 
                     steps {
-                        echo "Compare snapshot"
                         sh './gradlew clean worksGeneratePublication'
                     }
                 }
@@ -119,8 +119,15 @@ pipeline {
                     }
 
                     steps {
-                        echo "Compare release"
-                        sh './gradlew clean connectedAndroidTest worksGeneratePublication -PignoreFailures=false'
+                        androidEmulator command: "start", avd: "android-19"
+                        sh """$ANDROID_HOME/platform-tools/adb install -r test-app/test-butler-app-1.3.2.apk
+                        ./gradlew cleanTest connectedAndroidTest worksGeneratePublication -PignoreFailures=false"""
+                    }
+
+                    post {
+                        always {
+                            androidEmulator command: "stop"
+                        }
                     }
                 }
             }
