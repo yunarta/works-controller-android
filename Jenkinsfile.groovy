@@ -3,7 +3,7 @@ buildCount = env.DEFAULT_HISTORY_COUNT ?: "5"
 pipeline {
     agent {
         node {
-            label 'android'
+            label 'android && emulator'
         }
     }
 
@@ -63,10 +63,9 @@ pipeline {
 
                 sh """echo "Execute test"
                         $ANDROID_HOME/platform-tools/adb install -r test-app/test-butler-app-1.3.2.apk
-                        ./gradlew cleanTest jacocoTestReport -PignoreFailures=${
-                    seedEval("test", [1: "true", "else": "false"])
-                }"""
+                        ./gradlew cleanTest jacocoTestReport -PignoreFailures=${seedEval("test", [1: "true", "else": "false"])}"""
             }
+
             post {
                 always {
                     androidEmulator command: "stop"
@@ -99,9 +98,38 @@ pipeline {
                 }
             }
 
-            steps {
-                echo "Build"
-                sh './gradlew clean worksGeneratePublication'
+            parallel {
+                stage("Snapshot") {
+                    when {
+                        expression {
+                            notRelease()
+                        }
+                    }
+
+                    steps {
+                        sh './gradlew clean worksGeneratePublication'
+                    }
+                }
+
+                stage("Release") {
+                    when {
+                        expression {
+                            isRelease()
+                        }
+                    }
+
+                    steps {
+                        androidEmulator command: "start", avd: "android-19"
+                        sh """$ANDROID_HOME/platform-tools/adb install -r test-app/test-butler-app-1.3.2.apk
+                        ./gradlew cleanTest connectedAndroidTest worksGeneratePublication -PignoreFailures=false"""
+                    }
+
+                    post {
+                        always {
+                            androidEmulator command: "stop"
+                        }
+                    }
+                }
             }
         }
 
