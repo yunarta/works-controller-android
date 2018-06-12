@@ -8,7 +8,7 @@ import android.support.test.runner.AndroidJUnit4
 import android.support.test.runner.lifecycle.ActivityLifecycleMonitorRegistry
 import android.support.test.runner.lifecycle.Stage
 import android.view.View
-import com.mobilesolutionworks.android.app.controller.CreateCallback2
+import com.mobilesolutionworks.android.app.controller.CreateWorksController
 import com.mobilesolutionworks.android.controller.test.util.HostAndHostController
 import com.mobilesolutionworks.android.controller.test.util.PerformRootAction
 import org.junit.Assert
@@ -42,7 +42,7 @@ class ForcingHostTest {
                 activityCheck.set(activity)
 
                 try {
-                    activity.controllerManager.initController(1, null, CreateCallback2 { HostWorksControllerActivity.ActivityControllerImpl(it) })
+                    activity.controllerManager.initController(1, null, CreateWorksController { HostWorksControllerActivity.ActivityControllerImpl(it) })
                     Assert.fail("HostWorksController should not be created directly")
                 } catch (e: Exception) {
                     // no action

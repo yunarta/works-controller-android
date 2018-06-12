@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import com.mobilesolutionworks.android.app.controller.HostWorksController
 import com.mobilesolutionworks.android.app.controller.WorksControllerManager
+import com.mobilesolutionworks.android.controller.samples.R
 import com.mobilesolutionworks.android.controller.samples.databinding.CellDemoItemBinding
 import com.mobilesolutionworks.android.controller.samples.ui.databinding.DataBinding
 import java.util.*

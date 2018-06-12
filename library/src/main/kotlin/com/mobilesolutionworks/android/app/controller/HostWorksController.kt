@@ -7,7 +7,6 @@ import java.lang.ref.WeakReference
 /**
  * Controller with host storing feature.
  *
- *
  * In actual development, developer will most likely use this class rather than WorksController.
  * As the host is updated  after device rotation, the controller can consider that the host is
  * always available when making update in [.runWhenUiIsReady] scope.
@@ -48,9 +47,9 @@ abstract class HostWorksController<H : WorkControllerHost>(manager: WorksControl
 
     companion object {
 
-        fun <C : HostWorksController<H>, H : WorkControllerHost> create(host: H, id: Int, args: Bundle?, callback: CreateCallback<C, H>): C {
+        fun <C : HostWorksController<H>, H : WorkControllerHost> create(host: H, id: Int, args: Bundle?, callback: CreateHostWorksController<C, H>): C {
             // SuppressWarnings("squid:S1604")
-            val controller: C = host.controllerManager.initController(id, args, CreateCallback2 {
+            val controller: C = host.controllerManager.initController(id, args, CreateWorksController {
                 val controller: C = callback.create(it)
                 controller.updateHost(host)
                 controller
@@ -58,16 +57,5 @@ abstract class HostWorksController<H : WorkControllerHost>(manager: WorksControl
             controller.updateHost(host)
             return controller
         }
-
-//        inline fun <reified C : HostWorksController<H>, H : WorkControllerHost> create(host: H, id: Int, args: Bundle?, noinline callback: (WorksControllerManager) -> C): C {
-//            // SuppressWarnings("squid:S1604")
-//            val controller: C = host.controllerManager.initController(id, args, {
-//                val controller: C = callback(it)
-//                controller.updateHost(host)
-//                controller
-//            })
-//            controller.updateHost(host)
-//            return controller
-//        }
     }
 }

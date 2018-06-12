@@ -3,7 +3,9 @@ package com.mobilesolutionworks.android.controller.samples.ui.activity.demo1
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import com.mobilesolutionworks.android.app.WorksActivity
+import com.mobilesolutionworks.android.app.controller.CreateHostWorksController
 import com.mobilesolutionworks.android.app.controller.HostWorksController
+import com.mobilesolutionworks.android.controller.samples.R
 import com.mobilesolutionworks.android.controller.samples.databinding.ActivityDemo1Binding
 
 /**
@@ -19,7 +21,7 @@ class Demo1Activity : WorksActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mController = HostWorksController.create(this, 0, null, callback = ::Demo1ActivityController)
+        mController = HostWorksController.create(this, 0, null, CreateHostWorksController { Demo1ActivityController(it) })
 
 
 //        mController = HostWorksController.create(this, 0, null, callback = object : WorksControllerManager.ControllerCallbacks<Demo1ActivityController> {

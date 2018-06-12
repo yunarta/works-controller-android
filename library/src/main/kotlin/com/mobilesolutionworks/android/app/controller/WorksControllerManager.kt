@@ -77,7 +77,7 @@ class WorksControllerManager private constructor(context: Context) {
      * *
      * @return returns controller implementation immediately, if one is already created before than it will be returned.
      */
-    fun initWorksController(id: Int, args: Bundle?, callback: CreateCallback2<out WorksController>): WorksController {
+    fun initWorksController(id: Int, args: Bundle?, callback: CreateWorksController<out WorksController>): WorksController {
         val controller: WorksController? = controllers.get(id)
         if (controller == null) {
             val newController = callback.create(this)
@@ -90,7 +90,7 @@ class WorksControllerManager private constructor(context: Context) {
         }
     }
 
-    fun <D : WorksController> initController(id: Int, args: Bundle?, callback: CreateCallback2<D>): D {
+    fun <D : WorksController> initController(id: Int, args: Bundle?, callback: CreateWorksController<D>): D {
         val controller = initWorksController(id, args, callback)
         @Suppress("UNCHECKED_CAST")
         val test = controller as? D
