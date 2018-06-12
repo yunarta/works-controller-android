@@ -63,9 +63,7 @@ pipeline {
 
                 sh """echo "Execute test"
                         $ANDROID_HOME/platform-tools/adb install -r test-app/test-butler-app-1.3.2.apk
-                        ./gradlew cleanTest jacocoTestReport -PignoreFailures=${
-                    seedEval("test", [1: "true", "else": "false"])
-                }"""
+                        ./gradlew cleanTest jacocoTestReport -PignoreFailures=${seedEval("test", [1: "true", "else": "false"])}"""
             }
             post {
                 always {
@@ -99,9 +97,37 @@ pipeline {
                 }
             }
 
+            parallel {
+                stage("Snapshot") {
+                    when {
+                        expression {
+                            notRelease()
+                        }
+                    }
+
+                    steps {
+                        echo "Compare snapshot"
+                        sh './gradlew clean worksGeneratePublication'
+                    }
+                }
+
+                stage("Release") {
+                    when {
+                        expression {
+                            isRelease()
+                        }
+                    }
+
+                    steps {
+                        echo "Compare release"
+                        sh './gradlew clean connectedAndroidTest worksGeneratePublication -PignoreFailures=false'
+                    }
+                }
+            }
+
             steps {
                 echo "Build"
-                sh './gradlew clean worksGeneratePublication'
+
             }
         }
 
