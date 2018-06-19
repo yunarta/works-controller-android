@@ -275,7 +275,7 @@ def publish(String repo) {
     if (who == "works") {
         bintrayPublish([
                 credential: "mobilesolutionworks.jfrog.org",
-                pkg       : readProperties(file: 'library/module.properties'),
+                pkg       : readYaml(file: 'library/module.yaml'),
                 repo      : "mobilesolutionworks/${repo}",
                 src       : "library/build/libs"
         ])
