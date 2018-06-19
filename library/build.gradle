@@ -9,11 +9,11 @@ apply plugin: 'works-publish'
 apply plugin: 'jacoco'
 
 group = 'com.mobilesolutionworks'
-version = '1.1.0'
+version = '1.1.2'
 
 publication {
     javadoc = 'kotlin'
-    module = file("module.properties")
+    module = file("module.yaml")
 }
 
 jacoco {

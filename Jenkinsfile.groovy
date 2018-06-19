@@ -107,6 +107,7 @@ pipeline {
                     }
 
                     steps {
+                        updateVersion()
                         sh './gradlew clean worksGeneratePublication'
                     }
                 }
@@ -151,7 +152,7 @@ pipeline {
 
                     steps {
                         echo "Compare snapshot"
-                        compareArtifact("snapshot", "integrate/snapshot")
+                        compareArtifact("snapshot", "integrate/snapshot", false)
                     }
                 }
 
@@ -164,7 +165,7 @@ pipeline {
 
                     steps {
                         echo "Compare release"
-                        compareArtifact("release", "integrate/release")
+                        compareArtifact("release", "integrate/release", true)
                     }
                 }
             }
@@ -214,42 +215,55 @@ pipeline {
     }
 }
 
-def compareArtifact(String repo, String job) {
-    bintrayDownload([
-            dir       : ".compare",
-            credential: "mobilesolutionworks.jfrog.org",
-            pkg       : readProperties(file: 'library/module.properties'),
-            repo      : "mobilesolutionworks/${repo}",
-            src       : "library/build/libs"
-    ])
+def updateVersion() {
+    bintrayDownloadMatches repository: "mobilesolutionworks/snapshot",
+            packageInfo: readYaml(file: 'library/module.yaml'),
+            credential: "mobilesolutionworks.jfrog.org"
 
-    def same = bintrayCompare([
-            dir       : ".compare",
-            credential: "mobilesolutionworks.jfrog.org",
-            pkg       : readProperties(file: 'library/module.properties'),
-            repo      : "mobilesolutionworks/${repo}",
-            src       : "library/build/libs"
-    ])
+    def properties = readYaml(file: 'library/module.yaml')
+    def incremented = versionIncrementQualifier()
+    if (incremented != null) {
+        properties.version = incremented
+    } else {
+        properties.version = properties.version + "-BUILD-1"
+    }
 
-    if (fileExists(".notify")) {
-        sh "rm .notify"
+    sh "rm library/module.yaml"
+    writeYaml file: 'library/module.yaml', data: properties
+}
+
+
+def compareArtifact(String repo, String job, boolean download) {
+    if (download) {
+        bintrayDownloadMatches repository: "mobilesolutionworks/${repo}",
+                packageInfo: readYaml(file: 'library/module.yaml'),
+                credential: "mobilesolutionworks.jfrog.org"
+    }
+
+    def same = bintrayCompare repository: "mobilesolutionworks/${repo}",
+            packageInfo: readYaml(file: 'library/module.yaml'),
+            credential: "mobilesolutionworks.jfrog.org",
+            path: "library/build/libs"
+
+    if (fileExists(".jenkins/notify")) {
+        sh "rm .jenkins/notify"
     }
 
     if (same) {
         echo "Artifact output is identical, no integration needed"
     } else {
-        writeFile file: ".notify", text: job
+        writeFile file: ".jenkins/notify", text: job
     }
 }
 
 def doPublish() {
-    return fileExists(".notify")
+    return fileExists(".jenkins/notify")
 }
 
 def notifyDownstream() {
-    if (fileExists(".notify")) {
+    if (fileExists(".jenkins/notify")) {
 
-        def job = readFile file: ".notify"
+        def job = readFile file: ".jenkins/notify"
         def encodedJob = java.net.URLEncoder.encode(job, "UTF-8")
 
         build job: "github/yunarta/works-controller-android/${encodedJob}", propagate: false, wait: false
